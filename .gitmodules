@@ -1,0 +1,4 @@
+[submodule "iota-mam-sys/entangled"]
+	path = iota-mam-sys/entangled
+	url = https://github.com/iotaledger/entangled.git
+	branch = develop

@@ -3,5 +3,20 @@ name = "mam-rs"
 version = "0.1.0"
 authors = ["Yolier Galan Tasse <gallegogt@gmail.com>"]
 edition = "2018"
+homepage = "https://github.com/gallegogt/iota.mam.rust"
+repository = "https://github.com/gallegogt/iota.mam.rust"
+keywords = [ "IOTA", "IoT", "MAM", "messaging" ]
+license = "MIT"
+description = """
+Rust wrapper for the IOTA MAM Library.
+"""
+
 
 [dependencies]
+iota-mam-sys = { version = "0.1", path = "iota-mam-sys", default-features = false }
+libc = "0.2"
+
+[features]
+default = ["bundled", "build_bindgen"]
+bundled = ["iota-mam-sys/bundled"]
+build_bindgen = ["iota-mam-sys/build_bindgen"]

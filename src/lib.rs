@@ -1,4 +1,10 @@
+#[macro_use]
+extern crate log;
+
 extern crate iota_mam_sys as ffi;
+
+mod endpoint;
+mod errors;
 
 
 #[cfg(test)]

@@ -1,4 +1,4 @@
-# IOTA MAM Rust Client Library
+# IOTA MAM(Masked Authenticated Messaging Version 2) Rust Client Library
 
 This repository contains the source for [IOTA MAM](https://github.com/iotaledger/entangled/tree/develop/mam) Rust library
 

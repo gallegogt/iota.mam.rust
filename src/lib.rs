@@ -1,3 +1,6 @@
+extern crate iota_mam_sys as ffi;
+
+
 #[cfg(test)]
 mod tests {
     #[test]

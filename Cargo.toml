@@ -14,7 +14,9 @@ Rust wrapper for the IOTA MAM Library.
 
 [dependencies]
 iota-mam-sys = { version = "0.1", path = "iota-mam-sys", default-features = false }
-libc = "0.2"
+libc = "^0.2"
+log = "^0.4"
+env_logger = "^0.6"
 
 [features]
 default = ["bundled", "build_bindgen"]

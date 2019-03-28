@@ -32,7 +32,7 @@ fn run<F>(name: &str, mut configure: F)
 #[cfg(not(feature = "bundled"))]
 mod build {
     pub fn main() {
-
+        bindings::place_bindings(Vec::new())
     }
 }
 

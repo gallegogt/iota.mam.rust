@@ -5,14 +5,11 @@ This repository contains the source for [IOTA MAM](https://github.com/iotaledger
 
 ## Features
 
-------
 
 The initial version of the library is a wrapper for the MAM C library, and I will try to include all of the features available in the C library for the last version
 
 
 ## Building the Crate
-
-------
 
 
 The library is a standard Rust "crate" using the Cargo build tool. It uses the standard cargo commands for building:

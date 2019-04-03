@@ -101,8 +101,10 @@ mod build {
     use std::process::Command;
     use semver::Version;
 
-    const TARGETS: &'static str = "-- mam/mam:all mam/api:all";
+    const TARGETS: &'static str = "-- common/errors mam/mam:all mam/api:all";
 
+    const ENTANGLED_COMMON: &'static str =
+        "errors";
     const MAM_LIBRARIES: &'static str =
         "channel:endpoint:message:mam_channel_t_set:mam_endpoint_t_set:mam_pk_t_set";
     const MAM_API_LIBRARIES: &'static str =
@@ -132,7 +134,7 @@ mod build {
         let source = PathBuf::from("entangled/");
         log_var!(source);
 
-        let lib_dir = output.join(format!("lib-{}", LIB_OUTPUT));
+        let lib_dir = output; //.join(format!("lib-{}", LIB_OUTPUT));
         log_var!(lib_dir);
 
         if lib_dir.exists() {
@@ -183,6 +185,8 @@ mod build {
             .join("bazel-bin")
             .join("mam");
 
+        println!("cargo:root={}", lib_dir.display());
+
         for name in MAM_LIBRARIES.split(":") {
             let libname =  format!("lib{}.a", name);
             let target_bazel_bin = entangled_target_bazel_bin.join("mam").join(&libname);
@@ -191,7 +195,7 @@ mod build {
             if !target_path.exists() {
                 log!("Copying {:?} to {:?}", target_bazel_bin, target_path);
                 fs::copy(target_bazel_bin, target_path).unwrap();
-                println!("cargo:rustc-link-lib=static={}", &libname);
+                println!("cargo:rustc-link-lib=static={}", &name);
             }
         }
 
@@ -203,7 +207,19 @@ mod build {
             if !library_path.exists() {
                 log!("Copying {:?} to {:?}", target_bazel_bin, library_path);
                 fs::copy(target_bazel_bin, library_path).unwrap();
-                println!("cargo:rustc-link-lib=static={}", &libname);
+                println!("cargo:rustc-link-lib=static={}", &name);
+            }
+        }
+        let source_entangled = source.join("bazel-bin");
+        for name in ENTANGLED_COMMON.split(":") {
+            let libname =  format!("lib{}.a", name);
+            let target_bazel_bin = source_entangled.join("common").join(&libname);
+            let library_path = lib_dir.join(&libname);
+
+            if !library_path.exists() {
+                log!("Copying {:?} to {:?}", target_bazel_bin, library_path);
+                fs::copy(target_bazel_bin, library_path).unwrap();
+                println!("cargo:rustc-link-lib=static={}", &name);
             }
         }
 
@@ -212,6 +228,7 @@ mod build {
         // println!("cargo:rustc-link-lib=dylib={}", FRAMEWORK_LIBRARY);
         // println!("cargo:rustc-link-lib=dylib={}", LIBRARY);
         // println!("cargo:rustc-link-search={}", lib_dir.display());
+        // println!("cargo:libdir={}", lib_dir.display());
     }
 
     ///

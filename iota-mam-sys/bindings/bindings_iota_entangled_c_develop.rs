@@ -1160,6 +1160,24 @@ pub const NUM_TRYTES_ATTACHMENT_TIMESTAMP_LOWER: u32 = 9;
 pub const NUM_TRYTES_ATTACHMENT_TIMESTAMP_UPPER: u32 = 9;
 pub const NUM_TRYTES_NONCE: u32 = 27;
 pub const NUM_TRYTES_HASH: u32 = 81;
+pub const NUM_FLEX_TRITS_SERIALIZED_TRANSACTION: u32 = 8019;
+pub const NUM_FLEX_TRITS_SIGNATURE: u32 = 6561;
+pub const NUM_FLEX_TRITS_MESSAGE: u32 = 6561;
+pub const NUM_FLEX_TRITS_ADDRESS: u32 = 243;
+pub const NUM_FLEX_TRITS_VALUE: u32 = 81;
+pub const NUM_FLEX_TRITS_OBSOLETE_TAG: u32 = 81;
+pub const NUM_FLEX_TRITS_TIMESTAMP: u32 = 27;
+pub const NUM_FLEX_TRITS_CURRENT_INDEX: u32 = 27;
+pub const NUM_FLEX_TRITS_LAST_INDEX: u32 = 27;
+pub const NUM_FLEX_TRITS_BUNDLE: u32 = 243;
+pub const NUM_FLEX_TRITS_TRUNK: u32 = 243;
+pub const NUM_FLEX_TRITS_BRANCH: u32 = 243;
+pub const NUM_FLEX_TRITS_TAG: u32 = 81;
+pub const NUM_FLEX_TRITS_ATTACHMENT_TIMESTAMP: u32 = 27;
+pub const NUM_FLEX_TRITS_ATTACHMENT_TIMESTAMP_LOWER: u32 = 27;
+pub const NUM_FLEX_TRITS_ATTACHMENT_TIMESTAMP_UPPER: u32 = 27;
+pub const NUM_FLEX_TRITS_NONCE: u32 = 81;
+pub const NUM_FLEX_TRITS_HASH: u32 = 243;
 pub const NUM_TRITS_ESSENCE: u32 = 486;
 pub const MAX_IOTA_SUPPLY: u64 = 2779530283277761;
 pub type __int8_t = ::std::os::raw::c_schar;
@@ -1746,7 +1764,6 @@ fn bindgen_test_layout_accessx_descriptor() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_getattrlistbulk"]
     pub fn getattrlistbulk(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_void,
@@ -1756,7 +1773,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getattrlistat"]
     pub fn getattrlistat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1767,7 +1783,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setattrlistat"]
     pub fn setattrlistat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1793,7 +1808,6 @@ pub type syscall_arg_t = u_int64_t;
 pub type uid_t = __darwin_uid_t;
 pub type gid_t = __darwin_gid_t;
 extern "C" {
-    #[link_name = "\u{1}_faccessat"]
     pub fn faccessat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1802,7 +1816,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fchownat"]
     pub fn fchownat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1812,7 +1825,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_linkat"]
     pub fn linkat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1822,7 +1834,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_readlinkat"]
     pub fn readlinkat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1831,7 +1842,6 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_symlinkat"]
     pub fn symlinkat(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -1839,7 +1849,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_unlinkat"]
     pub fn unlinkat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -1850,26 +1859,21 @@ pub type off_t = __darwin_off_t;
 pub type pid_t = __darwin_pid_t;
 pub type useconds_t = __darwin_useconds_t;
 extern "C" {
-    #[link_name = "\u{1}__exit"]
     pub fn _exit(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
-    #[link_name = "\u{1}_access"]
     pub fn access(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_alarm"]
     pub fn alarm(arg1: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    #[link_name = "\u{1}_chdir"]
     pub fn chdir(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_chown"]
     pub fn chown(
         arg1: *const ::std::os::raw::c_char,
         arg2: uid_t,
@@ -1877,19 +1881,15 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_close"]
     pub fn close(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_dup"]
     pub fn dup(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_dup2"]
     pub fn dup2(arg1: ::std::os::raw::c_int, arg2: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_execl"]
     pub fn execl(
         __path: *const ::std::os::raw::c_char,
         __arg0: *const ::std::os::raw::c_char,
@@ -1897,7 +1897,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_execle"]
     pub fn execle(
         __path: *const ::std::os::raw::c_char,
         __arg0: *const ::std::os::raw::c_char,
@@ -1905,7 +1904,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_execlp"]
     pub fn execlp(
         __file: *const ::std::os::raw::c_char,
         __arg0: *const ::std::os::raw::c_char,
@@ -1913,14 +1911,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_execv"]
     pub fn execv(
         __path: *const ::std::os::raw::c_char,
         __argv: *const *mut ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_execve"]
     pub fn execve(
         __file: *const ::std::os::raw::c_char,
         __argv: *const *mut ::std::os::raw::c_char,
@@ -1928,95 +1924,75 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_execvp"]
     pub fn execvp(
         __file: *const ::std::os::raw::c_char,
         __argv: *const *mut ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fork"]
     pub fn fork() -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_fpathconf"]
     pub fn fpathconf(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_getcwd"]
     pub fn getcwd(arg1: *mut ::std::os::raw::c_char, arg2: usize) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getegid"]
     pub fn getegid() -> gid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_geteuid"]
     pub fn geteuid() -> uid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getgid"]
     pub fn getgid() -> gid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getgroups"]
     pub fn getgroups(arg1: ::std::os::raw::c_int, arg2: *mut gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getlogin"]
     pub fn getlogin() -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getpgrp"]
     pub fn getpgrp() -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getpid"]
     pub fn getpid() -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getppid"]
     pub fn getppid() -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getuid"]
     pub fn getuid() -> uid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_isatty"]
     pub fn isatty(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_link"]
     pub fn link(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_lseek"]
     pub fn lseek(arg1: ::std::os::raw::c_int, arg2: off_t, arg3: ::std::os::raw::c_int) -> off_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_pathconf"]
     pub fn pathconf(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_pause"]
     pub fn pause() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_pipe"]
     pub fn pipe(arg1: *mut ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_read"]
     pub fn read(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_void,
@@ -2024,47 +2000,36 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_rmdir"]
     pub fn rmdir(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setgid"]
     pub fn setgid(arg1: gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setpgid"]
     pub fn setpgid(arg1: pid_t, arg2: pid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setsid"]
     pub fn setsid() -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_setuid"]
     pub fn setuid(arg1: uid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sleep"]
     pub fn sleep(arg1: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    #[link_name = "\u{1}_sysconf"]
     pub fn sysconf(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_tcgetpgrp"]
     pub fn tcgetpgrp(arg1: ::std::os::raw::c_int) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_tcsetpgrp"]
     pub fn tcsetpgrp(arg1: ::std::os::raw::c_int, arg2: pid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ttyname"]
     pub fn ttyname(arg1: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_ttyname_r"]
     pub fn ttyname_r(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_char,
@@ -2072,11 +2037,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_unlink"]
     pub fn unlink(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_write"]
     pub fn write(
         __fd: ::std::os::raw::c_int,
         __buf: *const ::std::os::raw::c_void,
@@ -2084,7 +2047,6 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_confstr"]
     pub fn confstr(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_char,
@@ -2092,7 +2054,6 @@ extern "C" {
     ) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_getopt"]
     pub fn getopt(
         arg1: ::std::os::raw::c_int,
         arg2: *const *mut ::std::os::raw::c_char,
@@ -2100,78 +2061,60 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_optarg"]
     pub static mut optarg: *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_optind"]
     pub static mut optind: ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_opterr"]
     pub static mut opterr: ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_optopt"]
     pub static mut optopt: ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_brk"]
     pub fn brk(arg1: *const ::std::os::raw::c_void) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_chroot"]
     pub fn chroot(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_crypt"]
     pub fn crypt(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_ctermid"]
     pub fn ctermid(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_encrypt"]
     pub fn encrypt(arg1: *mut ::std::os::raw::c_char, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    #[link_name = "\u{1}_fchdir"]
     pub fn fchdir(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_gethostid"]
     pub fn gethostid() -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_getpgid"]
     pub fn getpgid(arg1: pid_t) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getsid"]
     pub fn getsid(arg1: pid_t) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getdtablesize"]
     pub fn getdtablesize() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getpagesize"]
     pub fn getpagesize() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getpass"]
     pub fn getpass(arg1: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getwd"]
     pub fn getwd(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_lchown"]
     pub fn lchown(
         arg1: *const ::std::os::raw::c_char,
         arg2: uid_t,
@@ -2179,7 +2122,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_lockf"]
     pub fn lockf(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
@@ -2187,11 +2129,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_nice"]
     pub fn nice(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_pread"]
     pub fn pread(
         __fd: ::std::os::raw::c_int,
         __buf: *mut ::std::os::raw::c_void,
@@ -2200,7 +2140,6 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_pwrite"]
     pub fn pwrite(
         __fd: ::std::os::raw::c_int,
         __buf: *const ::std::os::raw::c_void,
@@ -2209,23 +2148,18 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_sbrk"]
     pub fn sbrk(arg1: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_setpgrp"]
     pub fn setpgrp() -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_setregid"]
     pub fn setregid(arg1: gid_t, arg2: gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setreuid"]
     pub fn setreuid(arg1: uid_t, arg2: uid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_swab"]
     pub fn swab(
         arg1: *const ::std::os::raw::c_void,
         arg2: *mut ::std::os::raw::c_void,
@@ -2233,47 +2167,36 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_sync"]
     pub fn sync();
 }
 extern "C" {
-    #[link_name = "\u{1}_truncate"]
     pub fn truncate(arg1: *const ::std::os::raw::c_char, arg2: off_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ualarm"]
     pub fn ualarm(arg1: useconds_t, arg2: useconds_t) -> useconds_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_usleep"]
     pub fn usleep(arg1: useconds_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vfork"]
     pub fn vfork() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fsync"]
     pub fn fsync(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ftruncate"]
     pub fn ftruncate(arg1: ::std::os::raw::c_int, arg2: off_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getlogin_r"]
     pub fn getlogin_r(arg1: *mut ::std::os::raw::c_char, arg2: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fchown"]
     pub fn fchown(arg1: ::std::os::raw::c_int, arg2: uid_t, arg3: gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_gethostname"]
     pub fn gethostname(arg1: *mut ::std::os::raw::c_char, arg2: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_readlink"]
     pub fn readlink(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut ::std::os::raw::c_char,
@@ -2281,15 +2204,12 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_setegid"]
     pub fn setegid(arg1: gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_seteuid"]
     pub fn seteuid(arg1: uid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_symlink"]
     pub fn symlink(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -2405,7 +2325,6 @@ pub type time_t = __darwin_time_t;
 pub type suseconds_t = __darwin_suseconds_t;
 pub type sigset_t = __darwin_sigset_t;
 extern "C" {
-    #[link_name = "\u{1}_pselect$1050"]
     pub fn pselect(
         arg1: ::std::os::raw::c_int,
         arg2: *mut fd_set,
@@ -2416,7 +2335,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_select$1050"]
     pub fn select(
         arg1: ::std::os::raw::c_int,
         arg2: *mut fd_set,
@@ -2429,11 +2347,9 @@ pub type dev_t = __darwin_dev_t;
 pub type mode_t = __darwin_mode_t;
 pub type uuid_t = __darwin_uuid_t;
 extern "C" {
-    #[link_name = "\u{1}__Exit"]
     pub fn _Exit(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
-    #[link_name = "\u{1}_accessx_np"]
     pub fn accessx_np(
         arg1: *const accessx_descriptor,
         arg2: usize,
@@ -2442,11 +2358,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_acct"]
     pub fn acct(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_add_profil"]
     pub fn add_profil(
         arg1: *mut ::std::os::raw::c_char,
         arg2: usize,
@@ -2455,11 +2369,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_endusershell"]
     pub fn endusershell();
 }
 extern "C" {
-    #[link_name = "\u{1}_execvP"]
     pub fn execvP(
         __file: *const ::std::os::raw::c_char,
         __searchpath: *const ::std::os::raw::c_char,
@@ -2467,18 +2379,15 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fflagstostr"]
     pub fn fflagstostr(arg1: ::std::os::raw::c_ulong) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getdomainname"]
     pub fn getdomainname(
         arg1: *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getgrouplist"]
     pub fn getgrouplist(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -2487,18 +2396,15 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_gethostuuid"]
     pub fn gethostuuid(
         arg1: *mut ::std::os::raw::c_uchar,
         arg2: *const timespec,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getmode"]
     pub fn getmode(arg1: *const ::std::os::raw::c_void, arg2: mode_t) -> mode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_getpeereid"]
     pub fn getpeereid(
         arg1: ::std::os::raw::c_int,
         arg2: *mut uid_t,
@@ -2506,40 +2412,33 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getsgroups_np"]
     pub fn getsgroups_np(
         arg1: *mut ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getusershell"]
     pub fn getusershell() -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getwgroups_np"]
     pub fn getwgroups_np(
         arg1: *mut ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_initgroups"]
     pub fn initgroups(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_issetugid"]
     pub fn issetugid() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkdtemp"]
     pub fn mkdtemp(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_mknod"]
     pub fn mknod(
         arg1: *const ::std::os::raw::c_char,
         arg2: mode_t,
@@ -2547,11 +2446,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkpath_np"]
     pub fn mkpath_np(path: *const ::std::os::raw::c_char, omode: mode_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkpathat_np"]
     pub fn mkpathat_np(
         dfd: ::std::os::raw::c_int,
         path: *const ::std::os::raw::c_char,
@@ -2559,29 +2456,24 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkstemp"]
     pub fn mkstemp(arg1: *mut ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkstemps"]
     pub fn mkstemps(
         arg1: *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mktemp"]
     pub fn mktemp(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkostemp"]
     pub fn mkostemp(
         path: *mut ::std::os::raw::c_char,
         oflags: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkostemps"]
     pub fn mkostemps(
         path: *mut ::std::os::raw::c_char,
         slen: ::std::os::raw::c_int,
@@ -2589,7 +2481,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkstemp_dprotected_np"]
     pub fn mkstemp_dprotected_np(
         path: *mut ::std::os::raw::c_char,
         dpclass: ::std::os::raw::c_int,
@@ -2597,14 +2488,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkdtempat_np"]
     pub fn mkdtempat_np(
         dfd: ::std::os::raw::c_int,
         path: *mut ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkstempsat_np"]
     pub fn mkstempsat_np(
         dfd: ::std::os::raw::c_int,
         path: *mut ::std::os::raw::c_char,
@@ -2612,7 +2501,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mkostempsat_np"]
     pub fn mkostempsat_np(
         dfd: ::std::os::raw::c_int,
         path: *mut ::std::os::raw::c_char,
@@ -2621,14 +2509,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_nfssvc"]
     pub fn nfssvc(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_profil"]
     pub fn profil(
         arg1: *mut ::std::os::raw::c_char,
         arg2: usize,
@@ -2637,23 +2523,18 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_pthread_setugid_np"]
     pub fn pthread_setugid_np(arg1: uid_t, arg2: gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_pthread_getugid_np"]
     pub fn pthread_getugid_np(arg1: *mut uid_t, arg2: *mut gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_reboot"]
     pub fn reboot(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_revoke"]
     pub fn revoke(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_rcmd"]
     pub fn rcmd(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -2664,7 +2545,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_rcmd_af"]
     pub fn rcmd_af(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -2676,18 +2556,15 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_rresvport"]
     pub fn rresvport(arg1: *mut ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_rresvport_af"]
     pub fn rresvport_af(
         arg1: *mut ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_iruserok"]
     pub fn iruserok(
         arg1: ::std::os::raw::c_ulong,
         arg2: ::std::os::raw::c_int,
@@ -2696,7 +2573,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_iruserok_sa"]
     pub fn iruserok_sa(
         arg1: *const ::std::os::raw::c_void,
         arg2: ::std::os::raw::c_int,
@@ -2706,7 +2582,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ruserok"]
     pub fn ruserok(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -2715,67 +2590,54 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setdomainname"]
     pub fn setdomainname(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setgroups"]
     pub fn setgroups(arg1: ::std::os::raw::c_int, arg2: *const gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sethostid"]
     pub fn sethostid(arg1: ::std::os::raw::c_long);
 }
 extern "C" {
-    #[link_name = "\u{1}_sethostname"]
     pub fn sethostname(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setkey"]
     pub fn setkey(arg1: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    #[link_name = "\u{1}_setlogin"]
     pub fn setlogin(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setmode"]
     pub fn setmode(arg1: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_setrgid"]
     pub fn setrgid(arg1: gid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setruid"]
     pub fn setruid(arg1: uid_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setsgroups_np"]
     pub fn setsgroups_np(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setusershell"]
     pub fn setusershell();
 }
 extern "C" {
-    #[link_name = "\u{1}_setwgroups_np"]
     pub fn setwgroups_np(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtofflags"]
     pub fn strtofflags(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *mut ::std::os::raw::c_ulong,
@@ -2783,35 +2645,27 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_swapon"]
     pub fn swapon(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ttyslot"]
     pub fn ttyslot() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_undelete"]
     pub fn undelete(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_unwhiteout"]
     pub fn unwhiteout(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_valloc"]
     pub fn valloc(arg1: usize) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_syscall"]
     pub fn syscall(arg1: ::std::os::raw::c_int, ...) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_suboptarg"]
     pub static mut suboptarg: *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getsubopt"]
     pub fn getsubopt(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *const *mut ::std::os::raw::c_char,
@@ -2819,7 +2673,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fgetattrlist"]
     pub fn fgetattrlist(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_void,
@@ -2829,7 +2682,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fsetattrlist"]
     pub fn fsetattrlist(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_void,
@@ -2839,7 +2691,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getattrlist"]
     pub fn getattrlist(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut ::std::os::raw::c_void,
@@ -2849,7 +2700,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setattrlist"]
     pub fn setattrlist(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut ::std::os::raw::c_void,
@@ -2859,7 +2709,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_exchangedata"]
     pub fn exchangedata(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -2867,7 +2716,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getdirentriesattr"]
     pub fn getdirentriesattr(
         arg1: ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_void,
@@ -2890,7 +2738,6 @@ pub struct searchstate {
     _unused: [u8; 0],
 }
 extern "C" {
-    #[link_name = "\u{1}_searchfs"]
     pub fn searchfs(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut fssearchblock,
@@ -2901,7 +2748,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fsctl"]
     pub fn fsctl(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_ulong,
@@ -2910,7 +2756,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ffsctl"]
     pub fn ffsctl(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_ulong,
@@ -2919,21 +2764,18 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fsync_volume_np"]
     pub fn fsync_volume_np(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sync_volume_np"]
     pub fn sync_volume_np(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_optreset"]
     pub static mut optreset: ::std::os::raw::c_int;
 }
 pub type int_least8_t = i8;
@@ -2957,27 +2799,21 @@ pub type uintmax_t = ::std::os::raw::c_ulong;
 pub type trit_t = i8;
 pub type tryte_t = i8;
 extern "C" {
-    #[link_name = "\u{1}_get_trit_at"]
     pub fn get_trit_at(trytes: *const tryte_t, length: usize, index: usize) -> trit_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_set_trit_at"]
     pub fn set_trit_at(trytes: *mut tryte_t, length: usize, index: usize, trit: trit_t) -> u8;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_to_trytes"]
     pub fn trits_to_trytes(trits: *const trit_t, trytes: *mut tryte_t, length: usize);
 }
 extern "C" {
-    #[link_name = "\u{1}_trytes_to_trits"]
     pub fn trytes_to_trits(trytes: *const tryte_t, trits: *mut trit_t, length: usize);
 }
 extern "C" {
-    #[link_name = "\u{1}_ascii_to_trytes"]
     pub fn ascii_to_trytes(input: *const ::std::os::raw::c_char, output: *mut tryte_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trytes_to_ascii"]
     pub fn trytes_to_ascii(
         intput: *const tryte_t,
         input_size: usize,
@@ -2985,19 +2821,15 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_sum"]
     pub fn trit_sum(a: trit_t, b: trit_t) -> trit_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_add_assign"]
     pub fn add_assign(t: *mut trit_t, s: usize, v: i64) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_add_trits"]
     pub fn add_trits(lh: *const trit_t, rh: *mut trit_t, len: usize);
 }
 extern "C" {
-    #[link_name = "\u{1}_memchr"]
     pub fn memchr(
         __s: *const ::std::os::raw::c_void,
         __c: ::std::os::raw::c_int,
@@ -3005,7 +2837,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_memcmp"]
     pub fn memcmp(
         __s1: *const ::std::os::raw::c_void,
         __s2: *const ::std::os::raw::c_void,
@@ -3013,7 +2844,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_memcpy"]
     pub fn memcpy(
         __dst: *mut ::std::os::raw::c_void,
         __src: *const ::std::os::raw::c_void,
@@ -3021,7 +2851,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_memmove"]
     pub fn memmove(
         __dst: *mut ::std::os::raw::c_void,
         __src: *const ::std::os::raw::c_void,
@@ -3029,7 +2858,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_memset"]
     pub fn memset(
         __b: *mut ::std::os::raw::c_void,
         __c: ::std::os::raw::c_int,
@@ -3037,57 +2865,48 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_strcat"]
     pub fn strcat(
         __s1: *mut ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strchr"]
     pub fn strchr(
         __s: *const ::std::os::raw::c_char,
         __c: ::std::os::raw::c_int,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strcmp"]
     pub fn strcmp(
         __s1: *const ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strcoll"]
     pub fn strcoll(
         __s1: *const ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strcpy"]
     pub fn strcpy(
         __dst: *mut ::std::os::raw::c_char,
         __src: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strcspn"]
     pub fn strcspn(
         __s: *const ::std::os::raw::c_char,
         __charset: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strerror"]
     pub fn strerror(__errnum: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strlen"]
     pub fn strlen(__s: *const ::std::os::raw::c_char) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strncat"]
     pub fn strncat(
         __s1: *mut ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
@@ -3095,7 +2914,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strncmp"]
     pub fn strncmp(
         __s1: *const ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
@@ -3103,7 +2921,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strncpy"]
     pub fn strncpy(
         __dst: *mut ::std::os::raw::c_char,
         __src: *const ::std::os::raw::c_char,
@@ -3111,42 +2928,36 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strpbrk"]
     pub fn strpbrk(
         __s: *const ::std::os::raw::c_char,
         __charset: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strrchr"]
     pub fn strrchr(
         __s: *const ::std::os::raw::c_char,
         __c: ::std::os::raw::c_int,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strspn"]
     pub fn strspn(
         __s: *const ::std::os::raw::c_char,
         __charset: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strstr"]
     pub fn strstr(
         __big: *const ::std::os::raw::c_char,
         __little: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtok"]
     pub fn strtok(
         __str: *mut ::std::os::raw::c_char,
         __sep: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strxfrm"]
     pub fn strxfrm(
         __s1: *mut ::std::os::raw::c_char,
         __s2: *const ::std::os::raw::c_char,
@@ -3154,7 +2965,6 @@ extern "C" {
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtok_r"]
     pub fn strtok_r(
         __str: *mut ::std::os::raw::c_char,
         __sep: *const ::std::os::raw::c_char,
@@ -3162,7 +2972,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strerror_r"]
     pub fn strerror_r(
         __errnum: ::std::os::raw::c_int,
         __strerrbuf: *mut ::std::os::raw::c_char,
@@ -3170,11 +2979,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strdup"]
     pub fn strdup(__s1: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_memccpy"]
     pub fn memccpy(
         __dst: *mut ::std::os::raw::c_void,
         __src: *const ::std::os::raw::c_void,
@@ -3183,14 +2990,12 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_stpcpy"]
     pub fn stpcpy(
         __dst: *mut ::std::os::raw::c_char,
         __src: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_stpncpy"]
     pub fn stpncpy(
         __dst: *mut ::std::os::raw::c_char,
         __src: *const ::std::os::raw::c_char,
@@ -3198,24 +3003,20 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strndup"]
     pub fn strndup(
         __s1: *const ::std::os::raw::c_char,
         __n: ::std::os::raw::c_ulong,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strnlen"]
     pub fn strnlen(__s1: *const ::std::os::raw::c_char, __n: usize) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_strsignal"]
     pub fn strsignal(__sig: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_char;
 }
 pub type rsize_t = __darwin_size_t;
 pub type errno_t = ::std::os::raw::c_int;
 extern "C" {
-    #[link_name = "\u{1}_memset_s"]
     pub fn memset_s(
         __s: *mut ::std::os::raw::c_void,
         __smax: rsize_t,
@@ -3224,7 +3025,6 @@ extern "C" {
     ) -> errno_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_memmem"]
     pub fn memmem(
         __big: *const ::std::os::raw::c_void,
         __big_len: usize,
@@ -3233,7 +3033,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_memset_pattern4"]
     pub fn memset_pattern4(
         __b: *mut ::std::os::raw::c_void,
         __pattern4: *const ::std::os::raw::c_void,
@@ -3241,7 +3040,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_memset_pattern8"]
     pub fn memset_pattern8(
         __b: *mut ::std::os::raw::c_void,
         __pattern8: *const ::std::os::raw::c_void,
@@ -3249,7 +3047,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_memset_pattern16"]
     pub fn memset_pattern16(
         __b: *mut ::std::os::raw::c_void,
         __pattern16: *const ::std::os::raw::c_void,
@@ -3257,14 +3054,12 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_strcasestr"]
     pub fn strcasestr(
         __big: *const ::std::os::raw::c_char,
         __little: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strnstr"]
     pub fn strnstr(
         __big: *const ::std::os::raw::c_char,
         __little: *const ::std::os::raw::c_char,
@@ -3272,7 +3067,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_strlcat"]
     pub fn strlcat(
         __dst: *mut ::std::os::raw::c_char,
         __source: *const ::std::os::raw::c_char,
@@ -3280,7 +3074,6 @@ extern "C" {
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strlcpy"]
     pub fn strlcpy(
         __dst: *mut ::std::os::raw::c_char,
         __source: *const ::std::os::raw::c_char,
@@ -3288,18 +3081,15 @@ extern "C" {
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strmode"]
     pub fn strmode(__mode: ::std::os::raw::c_int, __bp: *mut ::std::os::raw::c_char);
 }
 extern "C" {
-    #[link_name = "\u{1}_strsep"]
     pub fn strsep(
         __stringp: *mut *mut ::std::os::raw::c_char,
         __delim: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_timingsafe_bcmp"]
     pub fn timingsafe_bcmp(
         __b1: *const ::std::os::raw::c_void,
         __b2: *const ::std::os::raw::c_void,
@@ -3307,7 +3097,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_bcmp"]
     pub fn bcmp(
         arg1: *const ::std::os::raw::c_void,
         arg2: *const ::std::os::raw::c_void,
@@ -3315,7 +3104,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_bcopy"]
     pub fn bcopy(
         arg1: *const ::std::os::raw::c_void,
         arg2: *mut ::std::os::raw::c_void,
@@ -3323,36 +3111,30 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_bzero"]
     pub fn bzero(arg1: *mut ::std::os::raw::c_void, arg2: ::std::os::raw::c_ulong);
 }
 extern "C" {
-    #[link_name = "\u{1}_index"]
     pub fn index(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_rindex"]
     pub fn rindex(
         arg1: *const ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_ffs"]
     pub fn ffs(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strcasecmp"]
     pub fn strcasecmp(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_strncasecmp"]
     pub fn strncasecmp(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -3360,23 +3142,18 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ffsl"]
     pub fn ffsl(arg1: ::std::os::raw::c_long) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ffsll"]
     pub fn ffsll(arg1: ::std::os::raw::c_longlong) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fls"]
     pub fn fls(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_flsl"]
     pub fn flsl(arg1: ::std::os::raw::c_long) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_flsll"]
     pub fn flsll(arg1: ::std::os::raw::c_longlong) -> ::std::os::raw::c_int;
 }
 pub type wchar_t = ::std::os::raw::c_int;
@@ -10227,16 +10004,10 @@ fn bindgen_test_layout_sigstack() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_signal"]
     pub fn signal(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::option::Option<unsafe extern "C" fn(arg1: ::std::os::raw::c_int)>,
-    ) -> ::std::option::Option<
-        unsafe extern "C" fn(
-            arg1: ::std::os::raw::c_int,
-            arg2: ::std::option::Option<unsafe extern "C" fn(arg1: ::std::os::raw::c_int)>,
-        ),
-    >;
+    ) -> ::std::option::Option<unsafe extern "C" fn(arg1: ::std::os::raw::c_int)>;
 }
 pub type rlim_t = __uint64_t;
 #[repr(C)]
@@ -11979,26 +11750,21 @@ fn bindgen_test_layout_proc_rlimit_control_wakeupmon() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_getpriority"]
     pub fn getpriority(arg1: ::std::os::raw::c_int, arg2: id_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getiopolicy_np"]
     pub fn getiopolicy_np(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getrlimit"]
     pub fn getrlimit(arg1: ::std::os::raw::c_int, arg2: *mut rlimit) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getrusage"]
     pub fn getrusage(arg1: ::std::os::raw::c_int, arg2: *mut rusage) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setpriority"]
     pub fn setpriority(
         arg1: ::std::os::raw::c_int,
         arg2: id_t,
@@ -12006,7 +11772,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setiopolicy_np"]
     pub fn setiopolicy_np(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
@@ -12014,7 +11779,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setrlimit"]
     pub fn setrlimit(arg1: ::std::os::raw::c_int, arg2: *const rlimit) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
@@ -12227,11 +11991,9 @@ fn bindgen_test_layout_wait() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_wait"]
     pub fn wait(arg1: *mut ::std::os::raw::c_int) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_waitpid"]
     pub fn waitpid(
         arg1: pid_t,
         arg2: *mut ::std::os::raw::c_int,
@@ -12239,7 +12001,6 @@ extern "C" {
     ) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_waitid"]
     pub fn waitid(
         arg1: idtype_t,
         arg2: id_t,
@@ -12248,7 +12009,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_wait3"]
     pub fn wait3(
         arg1: *mut ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
@@ -12256,7 +12016,6 @@ extern "C" {
     ) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_wait4"]
     pub fn wait4(
         arg1: pid_t,
         arg2: *mut ::std::os::raw::c_int,
@@ -12265,7 +12024,6 @@ extern "C" {
     ) -> pid_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_alloca"]
     pub fn alloca(arg1: ::std::os::raw::c_ulong) -> *mut ::std::os::raw::c_void;
 }
 pub type ct_rune_t = __darwin_ct_rune_t;
@@ -12388,33 +12146,27 @@ fn bindgen_test_layout_lldiv_t() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}___mb_cur_max"]
     pub static mut __mb_cur_max: ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_malloc"]
     pub fn malloc(__size: ::std::os::raw::c_ulong) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_calloc"]
     pub fn calloc(
         __count: ::std::os::raw::c_ulong,
         __size: ::std::os::raw::c_ulong,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_free"]
     pub fn free(arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    #[link_name = "\u{1}_realloc"]
     pub fn realloc(
         __ptr: *mut ::std::os::raw::c_void,
         __size: ::std::os::raw::c_ulong,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_posix_memalign"]
     pub fn posix_memalign(
         __memptr: *mut *mut ::std::os::raw::c_void,
         __alignment: usize,
@@ -12422,35 +12174,27 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_abort"]
     pub fn abort();
 }
 extern "C" {
-    #[link_name = "\u{1}_abs"]
     pub fn abs(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_atexit"]
     pub fn atexit(arg1: ::std::option::Option<unsafe extern "C" fn()>) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_atof"]
     pub fn atof(arg1: *const ::std::os::raw::c_char) -> f64;
 }
 extern "C" {
-    #[link_name = "\u{1}_atoi"]
     pub fn atoi(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_atol"]
     pub fn atol(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_atoll"]
     pub fn atoll(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_longlong;
 }
 extern "C" {
-    #[link_name = "\u{1}_bsearch"]
     pub fn bsearch(
         __key: *const ::std::os::raw::c_void,
         __base: *const ::std::os::raw::c_void,
@@ -12458,50 +12202,40 @@ extern "C" {
         __width: usize,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *const ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
+                __key: *const ::std::os::raw::c_void,
+                __base: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_div"]
     pub fn div(arg1: ::std::os::raw::c_int, arg2: ::std::os::raw::c_int) -> div_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_exit"]
     pub fn exit(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
-    #[link_name = "\u{1}_getenv"]
     pub fn getenv(arg1: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_labs"]
     pub fn labs(arg1: ::std::os::raw::c_long) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_ldiv"]
     pub fn ldiv(arg1: ::std::os::raw::c_long, arg2: ::std::os::raw::c_long) -> ldiv_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_llabs"]
     pub fn llabs(arg1: ::std::os::raw::c_longlong) -> ::std::os::raw::c_longlong;
 }
 extern "C" {
-    #[link_name = "\u{1}_lldiv"]
     pub fn lldiv(arg1: ::std::os::raw::c_longlong, arg2: ::std::os::raw::c_longlong) -> lldiv_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mblen"]
     pub fn mblen(__s: *const ::std::os::raw::c_char, __n: usize) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mbstowcs"]
     pub fn mbstowcs(arg1: *mut wchar_t, arg2: *const ::std::os::raw::c_char, arg3: usize) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mbtowc"]
     pub fn mbtowc(
         arg1: *mut wchar_t,
         arg2: *const ::std::os::raw::c_char,
@@ -12509,43 +12243,37 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_qsort"]
     pub fn qsort(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
         __width: usize,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *const ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
+                __base: *const ::std::os::raw::c_void,
+                __nel: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_rand"]
     pub fn rand() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_srand"]
     pub fn srand(arg1: ::std::os::raw::c_uint);
 }
 extern "C" {
-    #[link_name = "\u{1}_strtod"]
     pub fn strtod(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut *mut ::std::os::raw::c_char,
     ) -> f64;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtof"]
     pub fn strtof(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut *mut ::std::os::raw::c_char,
     ) -> f32;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtol"]
     pub fn strtol(
         __str: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -12553,14 +12281,12 @@ extern "C" {
     ) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtold"]
     pub fn strtold(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut *mut ::std::os::raw::c_char,
     ) -> u128;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtoll"]
     pub fn strtoll(
         __str: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -12568,7 +12294,6 @@ extern "C" {
     ) -> ::std::os::raw::c_longlong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtoul"]
     pub fn strtoul(
         __str: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -12576,7 +12301,6 @@ extern "C" {
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtoull"]
     pub fn strtoull(
         __str: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -12584,27 +12308,21 @@ extern "C" {
     ) -> ::std::os::raw::c_ulonglong;
 }
 extern "C" {
-    #[link_name = "\u{1}_system"]
     pub fn system(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_wcstombs"]
     pub fn wcstombs(arg1: *mut ::std::os::raw::c_char, arg2: *const wchar_t, arg3: usize) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_wctomb"]
     pub fn wctomb(arg1: *mut ::std::os::raw::c_char, arg2: wchar_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_a64l"]
     pub fn a64l(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_drand48"]
     pub fn drand48() -> f64;
 }
 extern "C" {
-    #[link_name = "\u{1}_ecvt"]
     pub fn ecvt(
         arg1: f64,
         arg2: ::std::os::raw::c_int,
@@ -12613,11 +12331,9 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_erand48"]
     pub fn erand48(arg1: *mut ::std::os::raw::c_ushort) -> f64;
 }
 extern "C" {
-    #[link_name = "\u{1}_fcvt"]
     pub fn fcvt(
         arg1: f64,
         arg2: ::std::os::raw::c_int,
@@ -12626,7 +12342,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_gcvt"]
     pub fn gcvt(
         arg1: f64,
         arg2: ::std::os::raw::c_int,
@@ -12634,11 +12349,9 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_grantpt"]
     pub fn grantpt(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_initstate"]
     pub fn initstate(
         arg1: ::std::os::raw::c_uint,
         arg2: *mut ::std::os::raw::c_char,
@@ -12646,39 +12359,30 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_jrand48"]
     pub fn jrand48(arg1: *mut ::std::os::raw::c_ushort) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_l64a"]
     pub fn l64a(arg1: ::std::os::raw::c_long) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_lcong48"]
     pub fn lcong48(arg1: *mut ::std::os::raw::c_ushort);
 }
 extern "C" {
-    #[link_name = "\u{1}_lrand48"]
     pub fn lrand48() -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_mrand48"]
     pub fn mrand48() -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_nrand48"]
     pub fn nrand48(arg1: *mut ::std::os::raw::c_ushort) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_posix_openpt"]
     pub fn posix_openpt(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ptsname"]
     pub fn ptsname(arg1: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_ptsname_r"]
     pub fn ptsname_r(
         fildes: ::std::os::raw::c_int,
         buffer: *mut ::std::os::raw::c_char,
@@ -12686,30 +12390,24 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_putenv"]
     pub fn putenv(arg1: *mut ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_random"]
     pub fn random() -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_rand_r"]
     pub fn rand_r(arg1: *mut ::std::os::raw::c_uint) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_realpath$DARWIN_EXTSN"]
     pub fn realpath(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_seed48"]
     pub fn seed48(arg1: *mut ::std::os::raw::c_ushort) -> *mut ::std::os::raw::c_ushort;
 }
 extern "C" {
-    #[link_name = "\u{1}_setenv"]
     pub fn setenv(
         __name: *const ::std::os::raw::c_char,
         __value: *const ::std::os::raw::c_char,
@@ -12717,51 +12415,39 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setstate"]
     pub fn setstate(arg1: *const ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_srand48"]
     pub fn srand48(arg1: ::std::os::raw::c_long);
 }
 extern "C" {
-    #[link_name = "\u{1}_srandom"]
     pub fn srandom(arg1: ::std::os::raw::c_uint);
 }
 extern "C" {
-    #[link_name = "\u{1}_unlockpt"]
     pub fn unlockpt(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_unsetenv"]
     pub fn unsetenv(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_arc4random"]
     pub fn arc4random() -> u32;
 }
 extern "C" {
-    #[link_name = "\u{1}_arc4random_addrandom"]
     pub fn arc4random_addrandom(arg1: *mut ::std::os::raw::c_uchar, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    #[link_name = "\u{1}_arc4random_buf"]
     pub fn arc4random_buf(__buf: *mut ::std::os::raw::c_void, __nbytes: usize);
 }
 extern "C" {
-    #[link_name = "\u{1}_arc4random_stir"]
     pub fn arc4random_stir();
 }
 extern "C" {
-    #[link_name = "\u{1}_arc4random_uniform"]
     pub fn arc4random_uniform(__upper_bound: u32) -> u32;
 }
 extern "C" {
-    #[link_name = "\u{1}_atexit_b"]
     pub fn atexit_b(arg1: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_bsearch_b"]
     pub fn bsearch_b(
         __key: *const ::std::os::raw::c_void,
         __base: *const ::std::os::raw::c_void,
@@ -12771,7 +12457,6 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetcap"]
     pub fn cgetcap(
         arg1: *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -12779,11 +12464,9 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetclose"]
     pub fn cgetclose() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetent"]
     pub fn cgetent(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *mut *mut ::std::os::raw::c_char,
@@ -12791,28 +12474,24 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetfirst"]
     pub fn cgetfirst(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *mut *mut ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetmatch"]
     pub fn cgetmatch(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetnext"]
     pub fn cgetnext(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *mut *mut ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetnum"]
     pub fn cgetnum(
         arg1: *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -12820,11 +12499,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetset"]
     pub fn cgetset(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetstr"]
     pub fn cgetstr(
         arg1: *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -12832,7 +12509,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_cgetustr"]
     pub fn cgetustr(
         arg1: *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -12840,18 +12516,15 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_daemon$1050"]
     pub fn daemon(
         arg1: ::std::os::raw::c_int,
         arg2: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_devname"]
     pub fn devname(arg1: dev_t, arg2: mode_t) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_devname_r"]
     pub fn devname_r(
         arg1: dev_t,
         arg2: mode_t,
@@ -12860,36 +12533,31 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getbsize"]
     pub fn getbsize(
         arg1: *mut ::std::os::raw::c_int,
         arg2: *mut ::std::os::raw::c_long,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_getloadavg"]
     pub fn getloadavg(arg1: *mut f64, arg2: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getprogname"]
     pub fn getprogname() -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_heapsort"]
     pub fn heapsort(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
         __width: usize,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *const ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
+                __base: *const ::std::os::raw::c_void,
+                __nel: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_heapsort_b"]
     pub fn heapsort_b(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
@@ -12898,21 +12566,19 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mergesort"]
     pub fn mergesort(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
         __width: usize,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *const ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
+                __base: *const ::std::os::raw::c_void,
+                __nel: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_mergesort_b"]
     pub fn mergesort_b(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
@@ -12921,21 +12587,19 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_psort"]
     pub fn psort(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
         __width: usize,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *const ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
+                __base: *const ::std::os::raw::c_void,
+                __nel: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_psort_b"]
     pub fn psort_b(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
@@ -12944,7 +12608,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_psort_r"]
     pub fn psort_r(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
@@ -12952,15 +12615,14 @@ extern "C" {
         arg1: *mut ::std::os::raw::c_void,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *mut ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
-                arg3: *const ::std::os::raw::c_void,
+                __base: *mut ::std::os::raw::c_void,
+                __nel: *const ::std::os::raw::c_void,
+                __width: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_qsort_b"]
     pub fn qsort_b(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
@@ -12969,7 +12631,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_qsort_r"]
     pub fn qsort_r(
         __base: *mut ::std::os::raw::c_void,
         __nel: usize,
@@ -12977,15 +12638,14 @@ extern "C" {
         arg1: *mut ::std::os::raw::c_void,
         __compar: ::std::option::Option<
             unsafe extern "C" fn(
-                arg1: *mut ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_void,
-                arg3: *const ::std::os::raw::c_void,
+                __base: *mut ::std::os::raw::c_void,
+                __nel: *const ::std::os::raw::c_void,
+                __width: *const ::std::os::raw::c_void,
             ) -> ::std::os::raw::c_int,
         >,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_radixsort"]
     pub fn radixsort(
         __base: *mut *const ::std::os::raw::c_uchar,
         __nel: ::std::os::raw::c_int,
@@ -12994,11 +12654,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setprogname"]
     pub fn setprogname(arg1: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    #[link_name = "\u{1}_sradixsort"]
     pub fn sradixsort(
         __base: *mut *const ::std::os::raw::c_uchar,
         __nel: ::std::os::raw::c_int,
@@ -13007,22 +12665,18 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sranddev"]
     pub fn sranddev();
 }
 extern "C" {
-    #[link_name = "\u{1}_srandomdev"]
     pub fn srandomdev();
 }
 extern "C" {
-    #[link_name = "\u{1}_reallocf"]
     pub fn reallocf(
         __ptr: *mut ::std::os::raw::c_void,
         __size: usize,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtoq"]
     pub fn strtoq(
         __str: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -13030,7 +12684,6 @@ extern "C" {
     ) -> ::std::os::raw::c_longlong;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtouq"]
     pub fn strtouq(
         __str: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -13333,7 +12986,6 @@ fn bindgen_test_layout_UT_hash_handle() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_imaxabs"]
     pub fn imaxabs(j: intmax_t) -> intmax_t;
 }
 #[repr(C)]
@@ -13376,11 +13028,9 @@ fn bindgen_test_layout_imaxdiv_t() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_imaxdiv"]
     pub fn imaxdiv(__numer: intmax_t, __denom: intmax_t) -> imaxdiv_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtoimax"]
     pub fn strtoimax(
         __nptr: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -13388,7 +13038,6 @@ extern "C" {
     ) -> intmax_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_strtoumax"]
     pub fn strtoumax(
         __nptr: *const ::std::os::raw::c_char,
         __endptr: *mut *mut ::std::os::raw::c_char,
@@ -13396,7 +13045,6 @@ extern "C" {
     ) -> uintmax_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_wcstoimax"]
     pub fn wcstoimax(
         __nptr: *const wchar_t,
         __endptr: *mut *mut wchar_t,
@@ -13404,7 +13052,6 @@ extern "C" {
     ) -> intmax_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_wcstoumax"]
     pub fn wcstoumax(
         __nptr: *const wchar_t,
         __endptr: *mut *mut wchar_t,
@@ -13413,7 +13060,6 @@ extern "C" {
 }
 pub type va_list = __darwin_va_list;
 extern "C" {
-    #[link_name = "\u{1}_renameat"]
     pub fn renameat(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -13422,7 +13068,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_renamex_np"]
     pub fn renamex_np(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -13430,7 +13075,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_renameatx_np"]
     pub fn renameatx_np(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -13743,47 +13387,36 @@ fn bindgen_test_layout___sFILE() {
 }
 pub type FILE = __sFILE;
 extern "C" {
-    #[link_name = "\u{1}___stdinp"]
     pub static mut __stdinp: *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}___stdoutp"]
     pub static mut __stdoutp: *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}___stderrp"]
     pub static mut __stderrp: *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_clearerr"]
     pub fn clearerr(arg1: *mut FILE);
 }
 extern "C" {
-    #[link_name = "\u{1}_fclose"]
     pub fn fclose(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_feof"]
     pub fn feof(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ferror"]
     pub fn ferror(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fflush"]
     pub fn fflush(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fgetc"]
     pub fn fgetc(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fgetpos"]
     pub fn fgetpos(arg1: *mut FILE, arg2: *mut fpos_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fgets"]
     pub fn fgets(
         arg1: *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -13791,14 +13424,12 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_fopen"]
     pub fn fopen(
         __filename: *const ::std::os::raw::c_char,
         __mode: *const ::std::os::raw::c_char,
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_fprintf"]
     pub fn fprintf(
         arg1: *mut FILE,
         arg2: *const ::std::os::raw::c_char,
@@ -13806,15 +13437,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fputc"]
     pub fn fputc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fputs"]
     pub fn fputs(arg1: *const ::std::os::raw::c_char, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fread"]
     pub fn fread(
         __ptr: *mut ::std::os::raw::c_void,
         __size: ::std::os::raw::c_ulong,
@@ -13823,7 +13451,6 @@ extern "C" {
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_freopen"]
     pub fn freopen(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -13831,7 +13458,6 @@ extern "C" {
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_fscanf"]
     pub fn fscanf(
         arg1: *mut FILE,
         arg2: *const ::std::os::raw::c_char,
@@ -13839,7 +13465,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fseek"]
     pub fn fseek(
         arg1: *mut FILE,
         arg2: ::std::os::raw::c_long,
@@ -13847,15 +13472,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fsetpos"]
     pub fn fsetpos(arg1: *mut FILE, arg2: *const fpos_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ftell"]
     pub fn ftell(arg1: *mut FILE) -> ::std::os::raw::c_long;
 }
 extern "C" {
-    #[link_name = "\u{1}_fwrite"]
     pub fn fwrite(
         __ptr: *const ::std::os::raw::c_void,
         __size: ::std::os::raw::c_ulong,
@@ -13864,62 +13486,48 @@ extern "C" {
     ) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
-    #[link_name = "\u{1}_getc"]
     pub fn getc(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getchar"]
     pub fn getchar() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_gets"]
     pub fn gets(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_perror"]
     pub fn perror(arg1: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    #[link_name = "\u{1}_printf"]
     pub fn printf(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_putc"]
     pub fn putc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_putchar"]
     pub fn putchar(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_puts"]
     pub fn puts(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_remove"]
     pub fn remove(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_rename"]
     pub fn rename(
         __old: *const ::std::os::raw::c_char,
         __new: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_rewind"]
     pub fn rewind(arg1: *mut FILE);
 }
 extern "C" {
-    #[link_name = "\u{1}_scanf"]
     pub fn scanf(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setbuf"]
     pub fn setbuf(arg1: *mut FILE, arg2: *mut ::std::os::raw::c_char);
 }
 extern "C" {
-    #[link_name = "\u{1}_setvbuf"]
     pub fn setvbuf(
         arg1: *mut FILE,
         arg2: *mut ::std::os::raw::c_char,
@@ -13928,7 +13536,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sprintf"]
     pub fn sprintf(
         arg1: *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -13936,7 +13543,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sscanf"]
     pub fn sscanf(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -13944,19 +13550,15 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_tmpfile"]
     pub fn tmpfile() -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_tmpnam"]
     pub fn tmpnam(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_ungetc"]
     pub fn ungetc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vfprintf"]
     pub fn vfprintf(
         arg1: *mut FILE,
         arg2: *const ::std::os::raw::c_char,
@@ -13964,14 +13566,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vprintf"]
     pub fn vprintf(
         arg1: *const ::std::os::raw::c_char,
         arg2: *mut __va_list_tag,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vsprintf"]
     pub fn vsprintf(
         arg1: *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -13979,30 +13579,24 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_fdopen"]
     pub fn fdopen(arg1: ::std::os::raw::c_int, arg2: *const ::std::os::raw::c_char) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_fileno"]
     pub fn fileno(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_pclose"]
     pub fn pclose(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_popen"]
     pub fn popen(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}___srget"]
     pub fn __srget(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}___svfscanf"]
     pub fn __svfscanf(
         arg1: *mut FILE,
         arg2: *const ::std::os::raw::c_char,
@@ -14010,54 +13604,42 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}___swbuf"]
     pub fn __swbuf(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_flockfile"]
     pub fn flockfile(arg1: *mut FILE);
 }
 extern "C" {
-    #[link_name = "\u{1}_ftrylockfile"]
     pub fn ftrylockfile(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_funlockfile"]
     pub fn funlockfile(arg1: *mut FILE);
 }
 extern "C" {
-    #[link_name = "\u{1}_getc_unlocked"]
     pub fn getc_unlocked(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getchar_unlocked"]
     pub fn getchar_unlocked() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_putc_unlocked"]
     pub fn putc_unlocked(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_putchar_unlocked"]
     pub fn putchar_unlocked(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getw"]
     pub fn getw(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_putw"]
     pub fn putw(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_tempnam"]
     pub fn tempnam(
         __dir: *const ::std::os::raw::c_char,
         __prefix: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_fseeko"]
     pub fn fseeko(
         __stream: *mut FILE,
         __offset: off_t,
@@ -14065,11 +13647,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ftello"]
     pub fn ftello(__stream: *mut FILE) -> off_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_snprintf"]
     pub fn snprintf(
         __str: *mut ::std::os::raw::c_char,
         __size: ::std::os::raw::c_ulong,
@@ -14078,7 +13658,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vfscanf"]
     pub fn vfscanf(
         __stream: *mut FILE,
         __format: *const ::std::os::raw::c_char,
@@ -14086,14 +13665,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vscanf"]
     pub fn vscanf(
         __format: *const ::std::os::raw::c_char,
         arg1: *mut __va_list_tag,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vsnprintf"]
     pub fn vsnprintf(
         __str: *mut ::std::os::raw::c_char,
         __size: ::std::os::raw::c_ulong,
@@ -14102,7 +13679,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vsscanf"]
     pub fn vsscanf(
         __str: *const ::std::os::raw::c_char,
         __format: *const ::std::os::raw::c_char,
@@ -14110,7 +13686,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_dprintf"]
     pub fn dprintf(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -14118,7 +13693,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vdprintf"]
     pub fn vdprintf(
         arg1: ::std::os::raw::c_int,
         arg2: *const ::std::os::raw::c_char,
@@ -14126,7 +13700,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_getdelim"]
     pub fn getdelim(
         __linep: *mut *mut ::std::os::raw::c_char,
         __linecapp: *mut usize,
@@ -14135,7 +13708,6 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_getline"]
     pub fn getline(
         __linep: *mut *mut ::std::os::raw::c_char,
         __linecapp: *mut usize,
@@ -14143,7 +13715,6 @@ extern "C" {
     ) -> isize;
 }
 extern "C" {
-    #[link_name = "\u{1}_fmemopen"]
     pub fn fmemopen(
         __buf: *mut ::std::os::raw::c_void,
         __size: usize,
@@ -14151,22 +13722,18 @@ extern "C" {
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_open_memstream"]
     pub fn open_memstream(
         __bufp: *mut *mut ::std::os::raw::c_char,
         __sizep: *mut usize,
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_sys_nerr"]
     pub static sys_nerr: ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_sys_errlist"]
     pub static mut sys_errlist: [*const ::std::os::raw::c_char; 0usize];
 }
 extern "C" {
-    #[link_name = "\u{1}_asprintf"]
     pub fn asprintf(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -14174,26 +13741,21 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ctermid_r"]
     pub fn ctermid_r(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_fgetln"]
     pub fn fgetln(arg1: *mut FILE, arg2: *mut usize) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_fmtcheck"]
     pub fn fmtcheck(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_fpurge"]
     pub fn fpurge(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_setbuffer"]
     pub fn setbuffer(
         arg1: *mut FILE,
         arg2: *mut ::std::os::raw::c_char,
@@ -14201,11 +13763,9 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_setlinebuf"]
     pub fn setlinebuf(arg1: *mut FILE) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_vasprintf"]
     pub fn vasprintf(
         arg1: *mut *mut ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -14213,7 +13773,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_zopen"]
     pub fn zopen(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -14221,7 +13780,6 @@ extern "C" {
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}_funopen"]
     pub fn funopen(
         arg1: *const ::std::os::raw::c_void,
         arg2: ::std::option::Option<
@@ -14251,7 +13809,6 @@ extern "C" {
     ) -> *mut FILE;
 }
 extern "C" {
-    #[link_name = "\u{1}___sprintf_chk"]
     pub fn __sprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -14261,7 +13818,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}___snprintf_chk"]
     pub fn __snprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
         arg2: usize,
@@ -14272,7 +13828,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}___vsprintf_chk"]
     pub fn __vsprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
@@ -14282,7 +13837,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}___vsnprintf_chk"]
     pub fn __vsnprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
         arg2: usize,
@@ -14532,11 +14086,9 @@ pub const retcode_t_RC_CRYPTO_UNSUPPORTED_SPONGE_TYPE: retcode_t = 45441;
 #[doc = " Return Codes"]
 pub type retcode_t = u32;
 extern "C" {
-    #[link_name = "\u{1}_error_2_string"]
     pub fn error_2_string(err: retcode_t) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}___assert_rtn"]
     pub fn __assert_rtn(
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
@@ -14549,27 +14101,22 @@ extern "C" {
 pub type trint1_t = i8;
 extern "C" {
     #[doc = " \\brief Return `x + s (mods 3)`."]
-    #[link_name = "\u{1}_trit_add"]
     pub fn trit_add(x: trit_t, s: trit_t) -> trit_t;
 }
 extern "C" {
     #[doc = " \\brief Return `y - s (mods 3)`."]
-    #[link_name = "\u{1}_trit_sub"]
     pub fn trit_sub(y: trit_t, s: trit_t) -> trit_t;
 }
 #[doc = " \\brief Signed integer type capable of storing 3 trits"]
 #[doc = "with values in range [-13,..,-1,0,1,..,13]."]
 pub type trint3_t = i8;
 extern "C" {
-    #[link_name = "\u{1}_tryte_from_trits"]
     pub fn tryte_from_trits(t0: trit_t, t1: trit_t, t2: trit_t) -> tryte_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_tryte_to_char"]
     pub fn tryte_to_char(t: tryte_t) -> ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_tryte_from_char"]
     pub fn tryte_from_char(t: *mut tryte_t, c: ::std::os::raw::c_char) -> bool;
 }
 #[doc = " \\brief Signed integer type capable of storing 6 trits"]
@@ -14641,234 +14188,185 @@ fn bindgen_test_layout_trits_s() {
 pub type trits_t = trits_s;
 extern "C" {
     #[doc = " \\brief Check `x.n` against zero."]
-    #[link_name = "\u{1}_trits_is_empty"]
     pub fn trits_is_empty(x: trits_t) -> bool;
 }
 extern "C" {
     #[doc = " \\brief Size of `x`."]
-    #[link_name = "\u{1}_trits_size"]
     pub fn trits_size(x: trits_t) -> usize;
 }
 extern "C" {
     #[doc = " \\brief Minimum of the size of `x` and `s`."]
-    #[link_name = "\u{1}_trits_size_min"]
     pub fn trits_size_min(x: trits_t, s: usize) -> usize;
 }
 extern "C" {
     #[doc = " \\brief Construct `n` trits from representation `w`."]
-    #[link_name = "\u{1}_trits_from_rep"]
     pub fn trits_from_rep(n: usize, t: *const trit_t) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Take the first `n` trits from `x`."]
-    #[link_name = "\u{1}_trits_take"]
     pub fn trits_take(x: trits_t, n: usize) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Take at most `n` first trits from `x`."]
-    #[link_name = "\u{1}_trits_take_min"]
     pub fn trits_take_min(x: trits_t, n: usize) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Drop the first `n` trits from `x`."]
-    #[link_name = "\u{1}_trits_drop"]
     pub fn trits_drop(x: trits_t, n: usize) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Drop at most `n` first trits from `x`."]
-    #[link_name = "\u{1}_trits_drop_min"]
     pub fn trits_drop_min(x: trits_t, n: usize) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Pickup `n` trits previously dropped from `x`."]
-    #[link_name = "\u{1}_trits_pickup"]
     pub fn trits_pickup(x: trits_t, n: usize) -> trits_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_pickup_all"]
     pub fn trits_pickup_all(x: trits_t) -> trits_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_advance"]
     pub fn trits_advance(b: *mut trits_t, n: usize) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Get the first trit."]
-    #[link_name = "\u{1}_trits_get1"]
     pub fn trits_get1(x: trits_t) -> trint1_t;
 }
 extern "C" {
     #[doc = " \\brief Put the first trit."]
-    #[link_name = "\u{1}_trits_put1"]
     pub fn trits_put1(x: trits_t, t: trint1_t);
 }
 extern "C" {
     #[doc = " \\brief Get the first tryte."]
-    #[link_name = "\u{1}_trits_get3"]
     pub fn trits_get3(x: trits_t) -> trint3_t;
 }
 extern "C" {
     #[doc = " \\brief Put the first tryte."]
-    #[link_name = "\u{1}_trits_put3"]
     pub fn trits_put3(x: trits_t, t: trint3_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_get6"]
     pub fn trits_get6(x: trits_t) -> trint6_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_put6"]
     pub fn trits_put6(x: trits_t, t: trint6_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_get9"]
     pub fn trits_get9(x: trits_t) -> trint9_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_put9"]
     pub fn trits_put9(x: trits_t, t: trint9_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_get18"]
     pub fn trits_get18(x: trits_t) -> trint18_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_put18"]
     pub fn trits_put18(x: trits_t, t: trint18_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_get_char"]
     pub fn trits_get_char(x: trits_t) -> ::std::os::raw::c_char;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_put_char"]
     pub fn trits_put_char(x: trits_t, c: ::std::os::raw::c_char) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_get_byte"]
     pub fn trits_get_byte(x: trits_t) -> byte;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_put_byte"]
     pub fn trits_put_byte(x: trits_t, b: byte) -> bool;
 }
 extern "C" {
     #[doc = " \\brief Convert trytes to string."]
     #[doc = "\\note `trits_size(x)` must be multiple of 3."]
     #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
-    #[link_name = "\u{1}_trits_to_str"]
     pub fn trits_to_str(x: trits_t, s: *mut ::std::os::raw::c_char);
 }
 extern "C" {
     #[doc = " \\brief Convert trytes from string."]
     #[doc = "\\note `trits_size(x)` must be multiple of 3."]
     #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
-    #[link_name = "\u{1}_trits_from_str"]
     pub fn trits_from_str(x: trits_t, s: *const ::std::os::raw::c_char) -> bool;
 }
 extern "C" {
     #[doc = " \\brief Copy minimal number of trits contained in `x` and `y`."]
     #[doc = "Return number of trits copied."]
-    #[link_name = "\u{1}_trits_copy_min"]
     pub fn trits_copy_min(x: trits_t, y: trits_t) -> usize;
 }
 extern "C" {
     #[doc = " \\brief Pad trits: `y := c0 || 0^{|y|-1}`."]
-    #[link_name = "\u{1}_trits_padc0"]
     pub fn trits_padc0(c0: trit_t, y: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Copy and pad trits: `y := x || c0 || 0^{|y|-|x|-1}`."]
-    #[link_name = "\u{1}_trits_copy_padc0"]
     pub fn trits_copy_padc0(c0: trit_t, x: trits_t, y: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Pad non-empty trits: `y := c0 || 0^{|y|-1}` if `|y|>0`."]
-    #[link_name = "\u{1}_trits_padc"]
     pub fn trits_padc(c0: trit_t, y: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Copy and pad non-empty trits: `y := x || c0 || 0^{|y|-|x|-1}` if `|y|"]
     #[doc = " > |x|` else `y := x`."]
-    #[link_name = "\u{1}_trits_copy_padc"]
     pub fn trits_copy_padc(c0: trit_t, x: trits_t, y: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Add trits: `y` := `x` + `s`."]
-    #[link_name = "\u{1}_trits_add"]
     pub fn trits_add(x: trits_t, s: trits_t, y: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Sub trits: `x` := `y` - `s`."]
-    #[link_name = "\u{1}_trits_sub"]
     pub fn trits_sub(y: trits_t, s: trits_t, x: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Copy and add trits: `y` := `x` + `s`, `s` := `x`."]
-    #[link_name = "\u{1}_trits_copy_add"]
     pub fn trits_copy_add(x: trits_t, s: trits_t, y: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Copy and sub trits: `x` := `y` - `s`, `s` := `x`."]
-    #[link_name = "\u{1}_trits_copy_sub"]
     pub fn trits_copy_sub(y: trits_t, s: trits_t, x: trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_swap_add"]
     pub fn trits_swap_add(x: trits_t, s: trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_swap_sub"]
     pub fn trits_swap_sub(y: trits_t, s: trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_swap_add"]
     pub fn trit_swap_add(x: *mut trit_t, s: *mut trit_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_swap_sub"]
     pub fn trit_swap_sub(y: *mut trit_t, s: *mut trit_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_copy_add_min"]
     pub fn trits_copy_add_min(x: trits_t, s: trits_t, y: trits_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_copy_sub_min"]
     pub fn trits_copy_sub_min(x: trits_t, s: trits_t, y: trits_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_swap_add_min"]
     pub fn trits_swap_add_min(x: trits_t, s: trits_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_swap_sub_min"]
     pub fn trits_swap_sub_min(x: trits_t, s: trits_t) -> usize;
 }
 extern "C" {
     #[doc = " \\brief Compare trits: `x` <=> `y`."]
-    #[link_name = "\u{1}_trits_cmp_grlex"]
     pub fn trits_cmp_grlex(x: trits_t, y: trits_t) -> ::std::os::raw::c_int;
 }
 extern "C" {
     #[doc = " \\brief Compare trits: `x` =? `y`."]
-    #[link_name = "\u{1}_trits_cmp_eq"]
     pub fn trits_cmp_eq(x: trits_t, y: trits_t) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_cmp_eq_str"]
     pub fn trits_cmp_eq_str(x: trits_t, y: *const ::std::os::raw::c_char) -> bool;
 }
 extern "C" {
     #[doc = " \\brief Return `x` such that:"]
     #[doc = "`trits_is_same(trits_drop(begin, trits_size(x)), end)` and"]
     #[doc = "`trits_is_same(trits_take(begin, trits_size(x)), x)`."]
-    #[link_name = "\u{1}_trits_diff"]
     pub fn trits_diff(begin: trits_t, end: trits_t) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Null trits."]
-    #[link_name = "\u{1}_trits_null"]
     pub fn trits_null() -> trits_t;
 }
 extern "C" {
@@ -14878,31 +14376,25 @@ extern "C" {
     #[doc = "to allocate memory for trits. But in certain cases where the size of memory"]
     #[doc = "is difficult to trac memory can be allocated within a callee."]
     #[doc = "In such case trits should be passed by pointer: `trits_t *x`."]
-    #[link_name = "\u{1}_trits_is_null"]
     pub fn trits_is_null(x: trits_t) -> bool;
 }
 extern "C" {
     #[doc = " \\brief Increment trits with carry. Return false if overflow would occur."]
-    #[link_name = "\u{1}_trits_inc"]
     pub fn trits_inc(x: trits_t) -> bool;
 }
 extern "C" {
     #[doc = " \\brief Alloc `n` trits."]
-    #[link_name = "\u{1}_trits_alloc"]
     pub fn trits_alloc(n: usize) -> trits_t;
 }
 extern "C" {
     #[doc = " \\brief Free trits `x`."]
-    #[link_name = "\u{1}_trits_free"]
     pub fn trits_free(x: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Print string rep of `x` into stdout."]
-    #[link_name = "\u{1}_trits_print"]
     pub fn trits_print(x: trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_trits_print2"]
     pub fn trits_print2(
         pfx: *const ::std::os::raw::c_char,
         x: trits_t,
@@ -14948,14 +14440,12 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param prng A PRNG interface"]
     #[doc = " @param secret_key A secret key of size MAM_PRNG_KEY_SIZE"]
-    #[link_name = "\u{1}_mam_prng_init"]
     pub fn mam_prng_init(prng: *mut mam_prng_t, secret_key: trits_t);
 }
 extern "C" {
     #[doc = " PRNG deinitialization"]
     #[doc = ""]
     #[doc = " @param prng A PRNG interface"]
-    #[link_name = "\u{1}_mam_prng_destroy"]
     pub fn mam_prng_destroy(prng: *mut mam_prng_t);
 }
 extern "C" {
@@ -14965,7 +14455,6 @@ extern "C" {
     #[doc = " @param destination A destination tryte"]
     #[doc = " @param nonce The nonce"]
     #[doc = " @param output Pseudorandom output trits"]
-    #[link_name = "\u{1}_mam_prng_gen"]
     pub fn mam_prng_gen(
         prng: *const mam_prng_t,
         destination: mam_prng_destination_tryte_t,
@@ -14981,7 +14470,6 @@ extern "C" {
     #[doc = " @param nonce1 The first nonce"]
     #[doc = " @param nonce2 The second nonce"]
     #[doc = " @param output Pseudorandom output trits"]
-    #[link_name = "\u{1}_mam_prng_gen2"]
     pub fn mam_prng_gen2(
         prng: *const mam_prng_t,
         destination: mam_prng_destination_tryte_t,
@@ -14999,7 +14487,6 @@ extern "C" {
     #[doc = " @param nonce2 The second nonce"]
     #[doc = " @param nonce3 The third nonce"]
     #[doc = " @param output Pseudorandom output trits"]
-    #[link_name = "\u{1}_mam_prng_gen3"]
     pub fn mam_prng_gen3(
         prng: *const mam_prng_t,
         destination: mam_prng_destination_tryte_t,
@@ -15010,15 +14497,12 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_prng_serialized_size"]
     pub fn mam_prng_serialized_size() -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_prng_serialize"]
     pub fn mam_prng_serialize(prng: *const mam_prng_t, buffer: *mut trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_prng_deserialize"]
     pub fn mam_prng_deserialize(buffer: *mut trits_t, prng: *mut mam_prng_t) -> retcode_t;
 }
 #[doc = " Sponge interface"]
@@ -15060,21 +14544,18 @@ extern "C" {
     #[doc = " @param sponge Sponge interface"]
     #[doc = ""]
     #[doc = " @return the trits"]
-    #[link_name = "\u{1}_mam_sponge_outer_trits"]
     pub fn mam_sponge_outer_trits(sponge: *const mam_sponge_t) -> trits_t;
 }
 extern "C" {
     #[doc = " Sponge state initialization"]
     #[doc = ""]
     #[doc = " @param sponge Sponge interface"]
-    #[link_name = "\u{1}_mam_sponge_init"]
     pub fn mam_sponge_init(sponge: *mut mam_sponge_t);
 }
 extern "C" {
     #[doc = " Internal state transformation"]
     #[doc = ""]
     #[doc = " @param sponge Sponge interface"]
-    #[link_name = "\u{1}_mam_sponge_transform"]
     pub fn mam_sponge_transform(sponge: *mut mam_sponge_t);
 }
 extern "C" {
@@ -15082,7 +14563,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param sponge Sponge interface"]
     #[doc = " @param fork Sponge interface"]
-    #[link_name = "\u{1}_mam_sponge_fork"]
     pub fn mam_sponge_fork(sponge: *const mam_sponge_t, fork: *mut mam_sponge_t);
 }
 extern "C" {
@@ -15091,7 +14571,6 @@ extern "C" {
     #[doc = " @param sponge Sponge interface"]
     #[doc = " @param c2 Control trit encoding output data type"]
     #[doc = " @param data Input data blocks"]
-    #[link_name = "\u{1}_mam_sponge_absorb"]
     pub fn mam_sponge_absorb(sponge: *mut mam_sponge_t, c2: trit_t, data: trits_t);
 }
 extern "C" {
@@ -15101,7 +14580,6 @@ extern "C" {
     #[doc = " @param c2 Control trit encoding output data type"]
     #[doc = " @param n Input data blocks count"]
     #[doc = " @param data_blocks Input data blocks"]
-    #[link_name = "\u{1}_mam_sponge_absorbn"]
     pub fn mam_sponge_absorbn(
         sponge: *mut mam_sponge_t,
         c2: trit_t,
@@ -15115,7 +14593,6 @@ extern "C" {
     #[doc = " @param sponge Sponge interface"]
     #[doc = " @param c2 Control trit encoding output data type"]
     #[doc = " @param squeezed Output data"]
-    #[link_name = "\u{1}_mam_sponge_squeeze"]
     pub fn mam_sponge_squeeze(sponge: *mut mam_sponge_t, c2: trit_t, squeezed: trits_t);
 }
 extern "C" {
@@ -15124,7 +14601,6 @@ extern "C" {
     #[doc = " @param sponge Sponge interface"]
     #[doc = " @param plaintext Input data"]
     #[doc = " @param ciphertext Hash value"]
-    #[link_name = "\u{1}_mam_sponge_encr"]
     pub fn mam_sponge_encr(sponge: *mut mam_sponge_t, plaintext: trits_t, ciphertext: trits_t);
 }
 extern "C" {
@@ -15133,7 +14609,6 @@ extern "C" {
     #[doc = " @param sponge Sponge interface"]
     #[doc = " @param ciphertext Hash value"]
     #[doc = " @param plaintext Input data"]
-    #[link_name = "\u{1}_mam_sponge_decr"]
     pub fn mam_sponge_decr(sponge: *mut mam_sponge_t, ciphertext: trits_t, plaintext: trits_t);
 }
 extern "C" {
@@ -15142,7 +14617,6 @@ extern "C" {
     #[doc = " @param sponge Sponge interface"]
     #[doc = " @param plaintext Input data"]
     #[doc = " @param digest Hash value"]
-    #[link_name = "\u{1}_mam_sponge_hash"]
     pub fn mam_sponge_hash(sponge: *mut mam_sponge_t, plaintext: trits_t, digest: trits_t);
 }
 extern "C" {
@@ -15152,7 +14626,6 @@ extern "C" {
     #[doc = " @param n Input data blocks count"]
     #[doc = " @param plaintext_blocks Input data blocks"]
     #[doc = " @param digest Hash value"]
-    #[link_name = "\u{1}_mam_sponge_hashn"]
     pub fn mam_sponge_hashn(
         sponge: *mut mam_sponge_t,
         n: usize,
@@ -15201,22 +14674,18 @@ fn bindgen_test_layout_mam_spongos_s() {
 }
 pub type mam_spongos_t = mam_spongos_s;
 extern "C" {
-    #[link_name = "\u{1}_mam_spongos_serialized_size"]
     pub fn mam_spongos_serialized_size(spongos: *const mam_spongos_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_spongos_serialize"]
     pub fn mam_spongos_serialize(spongos: *const mam_spongos_t, trits: *mut trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_spongos_deserialize"]
     pub fn mam_spongos_deserialize(trits: *mut trits_t, spongos: *mut mam_spongos_t) -> retcode_t;
 }
 extern "C" {
     #[doc = " Initializes a spongos state"]
     #[doc = ""]
     #[doc = " @param spongos A spongos interface"]
-    #[link_name = "\u{1}_mam_spongos_init"]
     pub fn mam_spongos_init(spongos: *mut mam_spongos_t);
 }
 extern "C" {
@@ -15224,14 +14693,12 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param fork The fork"]
-    #[link_name = "\u{1}_mam_mam_spongos_fork"]
     pub fn mam_mam_spongos_fork(spongos: *const mam_spongos_t, fork: *mut mam_spongos_t);
 }
 extern "C" {
     #[doc = " Commits changes in the rate part"]
     #[doc = ""]
     #[doc = " @param spongos A spongos interface"]
-    #[link_name = "\u{1}_mam_spongos_commit"]
     pub fn mam_spongos_commit(spongos: *mut mam_spongos_t);
 }
 extern "C" {
@@ -15239,7 +14706,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param input Input data"]
-    #[link_name = "\u{1}_mam_spongos_absorb"]
     pub fn mam_spongos_absorb(spongos: *mut mam_spongos_t, input: trits_t);
 }
 extern "C" {
@@ -15248,7 +14714,6 @@ extern "C" {
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param n Number of input data"]
     #[doc = " @param inputs Inputs data"]
-    #[link_name = "\u{1}_mam_spongos_absorbn"]
     pub fn mam_spongos_absorbn(spongos: *mut mam_spongos_t, n: usize, inputs: *mut trits_t);
 }
 extern "C" {
@@ -15256,7 +14721,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param output Output data"]
-    #[link_name = "\u{1}_mam_spongos_squeeze"]
     pub fn mam_spongos_squeeze(spongos: *mut mam_spongos_t, output: trits_t);
 }
 extern "C" {
@@ -15264,7 +14728,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param expected_output Expected output data"]
-    #[link_name = "\u{1}_mam_spongos_squeeze_eq"]
     pub fn mam_spongos_squeeze_eq(spongos: *mut mam_spongos_t, expected_output: trits_t) -> bool;
 }
 extern "C" {
@@ -15273,7 +14736,6 @@ extern "C" {
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param input Input data"]
     #[doc = " @param output Output data"]
-    #[link_name = "\u{1}_mam_spongos_hash"]
     pub fn mam_spongos_hash(spongos: *mut mam_spongos_t, input: trits_t, output: trits_t);
 }
 extern "C" {
@@ -15283,7 +14745,6 @@ extern "C" {
     #[doc = " @param n Number of input data"]
     #[doc = " @param inputs Inputs data"]
     #[doc = " @param output Output data"]
-    #[link_name = "\u{1}_mam_spongos_hashn"]
     pub fn mam_spongos_hashn(
         spongos: *mut mam_spongos_t,
         n: usize,
@@ -15297,7 +14758,6 @@ extern "C" {
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param plaintext Plaintext input"]
     #[doc = " @param ciphertext Ciphertext output"]
-    #[link_name = "\u{1}_mam_spongos_encr"]
     pub fn mam_spongos_encr(spongos: *mut mam_spongos_t, plaintext: trits_t, ciphertext: trits_t);
 }
 extern "C" {
@@ -15306,7 +14766,6 @@ extern "C" {
     #[doc = " @param spongos A spongos interface"]
     #[doc = " @param ciphertext Ciphertext input"]
     #[doc = " @param plaintext Plaintext output"]
-    #[link_name = "\u{1}_mam_spongos_decr"]
     pub fn mam_spongos_decr(spongos: *mut mam_spongos_t, ciphertext: trits_t, plaintext: trits_t);
 }
 extern "C" {
@@ -15314,7 +14773,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param src The source"]
     #[doc = " @param dst The destination"]
-    #[link_name = "\u{1}_mam_spongos_copy"]
     pub fn mam_spongos_copy(src: *const mam_spongos_t, dst: *mut mam_spongos_t);
 }
 #[repr(C)]
@@ -15350,14 +14808,12 @@ extern "C" {
     #[doc = " Initializes a WOTS interface with a sponge"]
     #[doc = ""]
     #[doc = " @param wots A WOTS interface"]
-    #[link_name = "\u{1}_mam_wots_init"]
     pub fn mam_wots_init(wots: *mut mam_wots_t);
 }
 extern "C" {
     #[doc = " Deallocates memory for WOTS secret key"]
     #[doc = ""]
     #[doc = " @param wots A WOTS interface"]
-    #[link_name = "\u{1}_mam_wots_destroy"]
     pub fn mam_wots_destroy(wots: *mut mam_wots_t);
 }
 extern "C" {
@@ -15366,7 +14822,6 @@ extern "C" {
     #[doc = " @param wots A WOTS interface"]
     #[doc = " @param prng A PRNG interface"]
     #[doc = " @param nonce The nonce"]
-    #[link_name = "\u{1}_mam_wots_gen_sk"]
     pub fn mam_wots_gen_sk(wots: *mut mam_wots_t, prng: *const mam_prng_t, nonce: trits_t);
 }
 extern "C" {
@@ -15376,7 +14831,6 @@ extern "C" {
     #[doc = " @param prng A PRNG interface"]
     #[doc = " @param nonce1 The first nonce"]
     #[doc = " @param nonce2 The second nonce"]
-    #[link_name = "\u{1}_mam_wots_gen_sk2"]
     pub fn mam_wots_gen_sk2(
         wots: *mut mam_wots_t,
         prng: *const mam_prng_t,
@@ -15392,7 +14846,6 @@ extern "C" {
     #[doc = " @param nonce1 The first nonce"]
     #[doc = " @param nonce2 The second nonce"]
     #[doc = " @param nonce3 The third nonce"]
-    #[link_name = "\u{1}_mam_wots_gen_sk3"]
     pub fn mam_wots_gen_sk3(
         wots: *mut mam_wots_t,
         prng: *const mam_prng_t,
@@ -15407,7 +14860,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param wots A WOTS interface"]
     #[doc = " @param public_key The public key"]
-    #[link_name = "\u{1}_mam_wots_calc_pk"]
     pub fn mam_wots_calc_pk(wots: *mut mam_wots_t, public_key: trits_t);
 }
 extern "C" {
@@ -15416,7 +14868,6 @@ extern "C" {
     #[doc = " @param wots A WOTS interface"]
     #[doc = " @param hash A hash to be signed"]
     #[doc = " @param signature The signature"]
-    #[link_name = "\u{1}_mam_wots_sign"]
     pub fn mam_wots_sign(wots: *mut mam_wots_t, hash: trits_t, signature: trits_t);
 }
 extern "C" {
@@ -15426,7 +14877,6 @@ extern "C" {
     #[doc = " @param hash A signed hash"]
     #[doc = " @param signature The signature"]
     #[doc = " @param public_key The recovered public key"]
-    #[link_name = "\u{1}_mam_wots_recover"]
     pub fn mam_wots_recover(
         spongos: *mut mam_spongos_t,
         hash: trits_t,
@@ -15443,7 +14893,6 @@ extern "C" {
     #[doc = " @param public_key The presumed public key"]
     #[doc = ""]
     #[doc = " @return true if valid, false otherwise"]
-    #[link_name = "\u{1}_mam_wots_verify"]
     pub fn mam_wots_verify(
         spongos: *mut mam_spongos_t,
         hash: trits_t,
@@ -15565,7 +15014,6 @@ extern "C" {
     #[doc = " @param nonce2 [in] second nonce"]
     #[doc = ""]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_init"]
     pub fn mam_mss_init(
         mss: *mut mam_mss_t,
         prng: *mut mam_prng_t,
@@ -15579,7 +15027,6 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param mss [in] MSS interface"]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_gen"]
     pub fn mam_mss_gen(mss: *mut mam_mss_t);
 }
 extern "C" {
@@ -15588,7 +15035,6 @@ extern "C" {
     #[doc = " @param mss [in] MSS interface"]
     #[doc = " @param skn [out] encoded height and current private key number"]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_skn"]
     pub fn mam_mss_skn(mss: *const mam_mss_t, skn: trits_t);
 }
 extern "C" {
@@ -15601,7 +15047,6 @@ extern "C" {
     #[doc = " @param path [out] authentication path"]
     #[doc = ""]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_auth_path"]
     pub fn mam_mss_auth_path(mss: *mut mam_mss_t, skn: mss_mt_idx_t, path: trits_t);
 }
 extern "C" {
@@ -15612,7 +15057,6 @@ extern "C" {
     #[doc = " @param sig [out] the signature"]
     #[doc = ""]
     #[doc = " @return retcode"]
-    #[link_name = "\u{1}_mam_mss_sign"]
     pub fn mam_mss_sign(mss: *mut mam_mss_t, hash: trits_t, sig: trits_t) -> retcode_t;
 }
 extern "C" {
@@ -15623,7 +15067,6 @@ extern "C" {
     #[doc = " @param sig [out] the signature"]
     #[doc = ""]
     #[doc = " @return retcode"]
-    #[link_name = "\u{1}_mam_mss_sign_and_next"]
     pub fn mam_mss_sign_and_next(mss: *mut mam_mss_t, hash: trits_t, sig: trits_t) -> retcode_t;
 }
 extern "C" {
@@ -15632,7 +15075,6 @@ extern "C" {
     #[doc = " @param mss [in] MSS interface"]
     #[doc = ""]
     #[doc = " @return True if can produce next signature"]
-    #[link_name = "\u{1}_mam_mss_next"]
     pub fn mam_mss_next(mss: *mut mam_mss_t) -> bool;
 }
 extern "C" {
@@ -15641,7 +15083,6 @@ extern "C" {
     #[doc = " @param mss [in] MSS interface"]
     #[doc = ""]
     #[doc = " @return The number of remaining signatures"]
-    #[link_name = "\u{1}_mam_mss_num_remaining_sks"]
     pub fn mam_mss_num_remaining_sks(mss: *const mam_mss_t) -> usize;
 }
 extern "C" {
@@ -15654,7 +15095,6 @@ extern "C" {
     #[doc = " @param [in] public key (Merkle-tree root)"]
     #[doc = ""]
     #[doc = " @return bool True is the signature is correct, False otherwise"]
-    #[link_name = "\u{1}_mam_mss_verify"]
     pub fn mam_mss_verify(
         mt_spongos: *mut mam_spongos_t,
         wots_spongos: *mut mam_spongos_t,
@@ -15675,7 +15115,6 @@ extern "C" {
     #[doc = " @param height [in] the tree\'s height"]
     #[doc = ""]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_create"]
     pub fn mam_mss_create(mss: *mut mam_mss_t, height: mss_mt_height_t) -> retcode_t;
 }
 extern "C" {
@@ -15685,7 +15124,6 @@ extern "C" {
     #[doc = " @param mss [out] MSS interface"]
     #[doc = ""]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_destroy"]
     pub fn mam_mss_destroy(mss: *mut mam_mss_t);
 }
 extern "C" {
@@ -15694,7 +15132,6 @@ extern "C" {
     #[doc = " @param mss [in] MSS interface"]
     #[doc = ""]
     #[doc = " @return size_t The size for stored MT"]
-    #[link_name = "\u{1}_mam_mss_serialized_size"]
     pub fn mam_mss_serialized_size(mss: *const mam_mss_t) -> usize;
 }
 extern "C" {
@@ -15704,7 +15141,6 @@ extern "C" {
     #[doc = " @param buffer [out] The serialized MT buffer"]
     #[doc = ""]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_serialize"]
     pub fn mam_mss_serialize(mss: *const mam_mss_t, buffer: trits_t);
 }
 extern "C" {
@@ -15714,7 +15150,6 @@ extern "C" {
     #[doc = " @param buffer [in] The serialized MT buffer"]
     #[doc = ""]
     #[doc = " @return void"]
-    #[link_name = "\u{1}_mam_mss_deserialize"]
     pub fn mam_mss_deserialize(buffer: *mut trits_t, mss: *mut mam_mss_t) -> retcode_t;
 }
 #[repr(C)]
@@ -15765,7 +15200,6 @@ extern "C" {
     #[doc = " @param endpoint The endpoint"]
     #[doc = ""]
     #[doc = " @return the endpoint\'s id"]
-    #[link_name = "\u{1}_mam_endpoint_id"]
     pub fn mam_endpoint_id(endpoint: *const mam_endpoint_t) -> trits_t;
 }
 extern "C" {
@@ -15774,7 +15208,6 @@ extern "C" {
     #[doc = " @param endpoint The endpoint"]
     #[doc = ""]
     #[doc = " @return the endpoint channel\'s name"]
-    #[link_name = "\u{1}_mam_endpoint_channel_name"]
     pub fn mam_endpoint_channel_name(endpoint: *const mam_endpoint_t) -> trits_t;
 }
 extern "C" {
@@ -15783,7 +15216,6 @@ extern "C" {
     #[doc = " @param endpoint The endpoint"]
     #[doc = ""]
     #[doc = " @return the endpoint\'s name"]
-    #[link_name = "\u{1}_mam_endpoint_name"]
     pub fn mam_endpoint_name(endpoint: *const mam_endpoint_t) -> trits_t;
 }
 extern "C" {
@@ -15797,7 +15229,6 @@ extern "C" {
     #[doc = " @param endpoint The endpoint"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_endpoint_create"]
     pub fn mam_endpoint_create(
         prng: *mut mam_prng_t,
         height: mss_mt_height_t,
@@ -15811,7 +15242,6 @@ extern "C" {
     #[doc = " @param endpoint The endpoint"]
     #[doc = ""]
     #[doc = " @return number of remaining secret keys"]
-    #[link_name = "\u{1}_mam_endpoint_num_remaining_sks"]
     pub fn mam_endpoint_num_remaining_sks(endpoint: *const mam_endpoint_t) -> usize;
 }
 extern "C" {
@@ -15819,23 +15249,18 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param allocator A MAM allocator"]
     #[doc = " @param endpoint The endpoint"]
-    #[link_name = "\u{1}_mam_endpoint_destroy"]
     pub fn mam_endpoint_destroy(endpoint: *mut mam_endpoint_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoints_destroy"]
     pub fn mam_endpoints_destroy(endpoints: *mut mam_endpoint_t_set_t) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_serialized_size"]
     pub fn mam_endpoint_serialized_size(endpoint: *const mam_endpoint_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_serialize"]
     pub fn mam_endpoint_serialize(endpoint: *const mam_endpoint_t, buffer: *mut trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_deserialize"]
     pub fn mam_endpoint_deserialize(
         buffer: *mut trits_t,
         channel_name: trits_t,
@@ -15844,15 +15269,12 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoints_serialized_size"]
     pub fn mam_endpoints_serialized_size(endpoints: mam_endpoint_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoints_serialize"]
     pub fn mam_endpoints_serialize(endpoints: mam_endpoint_t_set_t, buffer: *mut trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoints_deserialize"]
     pub fn mam_endpoints_deserialize(
         buffer: *mut trits_t,
         channel_name: trits_t,
@@ -15908,46 +15330,39 @@ pub type mam_endpoint_t_on_container_func = ::std::option::Option<
     ) -> retcode_t,
 >;
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_size"]
     pub fn mam_endpoint_t_set_size(set: mam_endpoint_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_add"]
     pub fn mam_endpoint_t_set_add(
         set: *mut mam_endpoint_t_set_t,
         value: *const mam_endpoint_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_remove"]
     pub fn mam_endpoint_t_set_remove(
         set: *mut mam_endpoint_t_set_t,
         value: *const mam_endpoint_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_remove_entry"]
     pub fn mam_endpoint_t_set_remove_entry(
         set: *mut mam_endpoint_t_set_t,
         entry: *mut mam_endpoint_t_set_entry_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_append"]
     pub fn mam_endpoint_t_set_append(
         set1: *const mam_endpoint_t_set_t,
         set2: *mut mam_endpoint_t_set_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_contains"]
     pub fn mam_endpoint_t_set_contains(
         set: *const mam_endpoint_t_set_t,
         value: *const mam_endpoint_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_find"]
     pub fn mam_endpoint_t_set_find(
         set: *const mam_endpoint_t_set_t,
         arg1: *const mam_endpoint_t,
@@ -15955,11 +15370,9 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_free"]
     pub fn mam_endpoint_t_set_free(set: *mut mam_endpoint_t_set_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_for_each"]
     pub fn mam_endpoint_t_set_for_each(
         set: *const mam_endpoint_t_set_t,
         func: mam_endpoint_t_on_container_func,
@@ -15967,7 +15380,6 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_endpoint_t_set_cmp"]
     pub fn mam_endpoint_t_set_cmp(
         lhs: *const mam_endpoint_t_set_t,
         rhs: *const mam_endpoint_t_set_t,
@@ -16088,7 +15500,6 @@ extern "C" {
     #[doc = " @param channel The channel"]
     #[doc = ""]
     #[doc = " @return the channel\'s id"]
-    #[link_name = "\u{1}_mam_channel_id"]
     pub fn mam_channel_id(channel: *const mam_channel_t) -> trits_t;
 }
 extern "C" {
@@ -16097,7 +15508,6 @@ extern "C" {
     #[doc = " @param channel The channel"]
     #[doc = ""]
     #[doc = " @return the channel\'s name"]
-    #[link_name = "\u{1}_mam_channel_name"]
     pub fn mam_channel_name(channel: *const mam_channel_t) -> trits_t;
 }
 extern "C" {
@@ -16106,7 +15516,6 @@ extern "C" {
     #[doc = " @param channel The channel"]
     #[doc = ""]
     #[doc = " @return the channel\'s msg_ord"]
-    #[link_name = "\u{1}_mam_channel_msg_ord"]
     pub fn mam_channel_msg_ord(channel: *const mam_channel_t) -> trits_t;
 }
 extern "C" {
@@ -16119,7 +15528,6 @@ extern "C" {
     #[doc = " @param channel The channel"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_channel_create"]
     pub fn mam_channel_create(
         prng: *mut mam_prng_t,
         height: mss_mt_height_t,
@@ -16132,7 +15540,6 @@ extern "C" {
     #[doc = " @param channel The channel"]
     #[doc = ""]
     #[doc = " @return number of remaining secret keys"]
-    #[link_name = "\u{1}_mam_channel_num_remaining_sks"]
     pub fn mam_channel_num_remaining_sks(channel: *const mam_channel_t) -> usize;
 }
 extern "C" {
@@ -16141,23 +15548,18 @@ extern "C" {
     #[doc = ""]
     #[doc = " @param allocator A MAM allocator"]
     #[doc = " @param channel The channel"]
-    #[link_name = "\u{1}_mam_channel_destroy"]
     pub fn mam_channel_destroy(channel: *mut mam_channel_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channels_destroy"]
     pub fn mam_channels_destroy(channels: *mut mam_channel_t_set_t) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channel_serialized_size"]
     pub fn mam_channel_serialized_size(channel: *const mam_channel_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channel_serialize"]
     pub fn mam_channel_serialize(channel: *const mam_channel_t, buffer: *mut trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channel_deserialize"]
     pub fn mam_channel_deserialize(
         buffer: *mut trits_t,
         prng: *mut mam_prng_t,
@@ -16165,15 +15567,12 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channels_serialized_size"]
     pub fn mam_channels_serialized_size(channels: mam_channel_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channels_serialize"]
     pub fn mam_channels_serialize(channels: mam_channel_t_set_t, buffer: *mut trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_channels_deserialize"]
     pub fn mam_channels_deserialize(
         buffer: *mut trits_t,
         prng: *mut mam_prng_t,
@@ -16225,35 +15624,28 @@ pub type mam_pk_t_on_container_func = ::std::option::Option<
     unsafe extern "C" fn(container: *mut ::std::os::raw::c_void, type_: *mut mam_pk_t) -> retcode_t,
 >;
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_size"]
     pub fn mam_pk_t_set_size(set: mam_pk_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_add"]
     pub fn mam_pk_t_set_add(set: *mut mam_pk_t_set_t, value: *const mam_pk_t) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_remove"]
     pub fn mam_pk_t_set_remove(set: *mut mam_pk_t_set_t, value: *const mam_pk_t) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_remove_entry"]
     pub fn mam_pk_t_set_remove_entry(
         set: *mut mam_pk_t_set_t,
         entry: *mut mam_pk_t_set_entry_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_append"]
     pub fn mam_pk_t_set_append(set1: *const mam_pk_t_set_t, set2: *mut mam_pk_t_set_t)
         -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_contains"]
     pub fn mam_pk_t_set_contains(set: *const mam_pk_t_set_t, value: *const mam_pk_t) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_find"]
     pub fn mam_pk_t_set_find(
         set: *const mam_pk_t_set_t,
         arg1: *const mam_pk_t,
@@ -16261,11 +15653,9 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_free"]
     pub fn mam_pk_t_set_free(set: *mut mam_pk_t_set_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_for_each"]
     pub fn mam_pk_t_set_for_each(
         set: *const mam_pk_t_set_t,
         func: mam_pk_t_on_container_func,
@@ -16273,7 +15663,6 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_pk_t_set_cmp"]
     pub fn mam_pk_t_set_cmp(lhs: *const mam_pk_t_set_t, rhs: *const mam_pk_t_set_t) -> bool;
 }
 pub type poly_coeff_t = trint9_t;
@@ -16282,27 +15671,22 @@ pub type poly_t = [poly_coeff_t; 1024usize];
 extern "C" {
     #[doc = " Convert integer into internal polynomial coefficient representation"]
     #[doc = " The input integer must be within the range [-(Q-1)/2,...,(Q-1)/2]"]
-    #[link_name = "\u{1}_poly_coeff_from_trint9"]
     pub fn poly_coeff_from_trint9(t: trint9_t) -> poly_coeff_t;
 }
 extern "C" {
     #[doc = " Convert internal polynomial coefficient representation into an integer"]
     #[doc = " The output integer will be within the range [-(Q-1)/2,...,(Q-1)/2]"]
-    #[link_name = "\u{1}_poly_coeff_to_trint9"]
     pub fn poly_coeff_to_trint9(c: poly_coeff_t) -> trint9_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_poly_coeff_add"]
     pub fn poly_coeff_add(a: poly_coeff_t, b: poly_coeff_t) -> poly_coeff_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_poly_coeff_inv"]
     pub fn poly_coeff_inv(a: poly_coeff_t) -> poly_coeff_t;
 }
 extern "C" {
     #[doc = " t(x) := NTT(f)"]
     #[doc = " t\u{2c7c} = f(\u{3b3}\u{b2}\u{2b2}\u{207a}\u{b9}) \u{2261} \u{3a3}\u{1d62}f\u{1d62}\u{3b3}\u{207d}\u{b2}\u{2b2}\u{207a}\u{b9}\u{207e}\u{2071}"]
-    #[link_name = "\u{1}_poly_ntt"]
     pub fn poly_ntt(f: *mut poly_coeff_t, t: *mut poly_coeff_t);
 }
 extern "C" {
@@ -16315,15 +15699,12 @@ extern "C" {
     #[doc = " \u{2261} \u{3a3}\u{1d62}f\u{1d62}(\u{3a3}\u{2c7c}\u{3b3}\u{207d}\u{b2}\u{2b2}\u{207a}\u{b9}\u{207e}\u{2071}\u{207b}\u{b2}\u{1d4f}\u{2b2})"]
     #[doc = " \u{2261} \u{3a3}\u{1d62}f\u{1d62}\u{3b3}\u{2071}(\u{3a3}\u{2c7c}\u{3b3}\u{b2}\u{2b2}\u{207d}\u{2071}\u{207b}\u{1d4f}\u{207e})"]
     #[doc = " \u{2261} f\u{2096}\u{3b3}\u{1d4f}n"]
-    #[link_name = "\u{1}_poly_intt"]
     pub fn poly_intt(t: *mut poly_coeff_t, f: *mut poly_coeff_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_poly_round_to_trits"]
     pub fn poly_round_to_trits(f: *mut poly_coeff_t, t: trits_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_poly_from_trits"]
     pub fn poly_from_trits(f: *mut poly_coeff_t, t: trits_t) -> bool;
 }
 #[doc = " The NTRU layer supports an NTRU-style public key encryption scheme"]
@@ -16460,46 +15841,39 @@ pub type mam_ntru_pk_t_on_container_func = ::std::option::Option<
     ) -> retcode_t,
 >;
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_size"]
     pub fn mam_ntru_pk_t_set_size(set: mam_ntru_pk_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_add"]
     pub fn mam_ntru_pk_t_set_add(
         set: *mut mam_ntru_pk_t_set_t,
         value: *const mam_ntru_pk_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_remove"]
     pub fn mam_ntru_pk_t_set_remove(
         set: *mut mam_ntru_pk_t_set_t,
         value: *const mam_ntru_pk_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_remove_entry"]
     pub fn mam_ntru_pk_t_set_remove_entry(
         set: *mut mam_ntru_pk_t_set_t,
         entry: *mut mam_ntru_pk_t_set_entry_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_append"]
     pub fn mam_ntru_pk_t_set_append(
         set1: *const mam_ntru_pk_t_set_t,
         set2: *mut mam_ntru_pk_t_set_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_contains"]
     pub fn mam_ntru_pk_t_set_contains(
         set: *const mam_ntru_pk_t_set_t,
         value: *const mam_ntru_pk_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_find"]
     pub fn mam_ntru_pk_t_set_find(
         set: *const mam_ntru_pk_t_set_t,
         arg1: *const mam_ntru_pk_t,
@@ -16507,11 +15881,9 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_free"]
     pub fn mam_ntru_pk_t_set_free(set: *mut mam_ntru_pk_t_set_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_for_each"]
     pub fn mam_ntru_pk_t_set_for_each(
         set: *const mam_ntru_pk_t_set_t,
         func: mam_ntru_pk_t_on_container_func,
@@ -16519,7 +15891,6 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_pk_t_set_cmp"]
     pub fn mam_ntru_pk_t_set_cmp(
         lhs: *const mam_ntru_pk_t_set_t,
         rhs: *const mam_ntru_pk_t_set_t,
@@ -16571,46 +15942,39 @@ pub type mam_ntru_sk_t_on_container_func = ::std::option::Option<
     ) -> retcode_t,
 >;
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_size"]
     pub fn mam_ntru_sk_t_set_size(set: mam_ntru_sk_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_add"]
     pub fn mam_ntru_sk_t_set_add(
         set: *mut mam_ntru_sk_t_set_t,
         value: *const mam_ntru_sk_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_remove"]
     pub fn mam_ntru_sk_t_set_remove(
         set: *mut mam_ntru_sk_t_set_t,
         value: *const mam_ntru_sk_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_remove_entry"]
     pub fn mam_ntru_sk_t_set_remove_entry(
         set: *mut mam_ntru_sk_t_set_t,
         entry: *mut mam_ntru_sk_t_set_entry_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_append"]
     pub fn mam_ntru_sk_t_set_append(
         set1: *const mam_ntru_sk_t_set_t,
         set2: *mut mam_ntru_sk_t_set_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_contains"]
     pub fn mam_ntru_sk_t_set_contains(
         set: *const mam_ntru_sk_t_set_t,
         value: *const mam_ntru_sk_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_find"]
     pub fn mam_ntru_sk_t_set_find(
         set: *const mam_ntru_sk_t_set_t,
         arg1: *const mam_ntru_sk_t,
@@ -16618,11 +15982,9 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_free"]
     pub fn mam_ntru_sk_t_set_free(set: *mut mam_ntru_sk_t_set_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_for_each"]
     pub fn mam_ntru_sk_t_set_for_each(
         set: *const mam_ntru_sk_t_set_t,
         func: mam_ntru_sk_t_on_container_func,
@@ -16630,7 +15992,6 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_ntru_sk_t_set_cmp"]
     pub fn mam_ntru_sk_t_set_cmp(
         lhs: *const mam_ntru_sk_t_set_t,
         rhs: *const mam_ntru_sk_t_set_t,
@@ -16647,7 +16008,6 @@ extern "C" {
     #[doc = " @param encrypted_session_key The encrypted session key"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_ntru_pk_encr"]
     pub fn ntru_pk_encr(
         ntru_pk: *const mam_ntru_pk_t,
         prng: *const mam_prng_t,
@@ -16667,7 +16027,6 @@ extern "C" {
     #[doc = " @param encrypted_session_key The encrypted session key"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_ntru_pk_encr_r"]
     pub fn ntru_pk_encr_r(
         ntru_pk: *const mam_ntru_pk_t,
         spongos: *mut mam_spongos_t,
@@ -16682,7 +16041,6 @@ extern "C" {
     #[doc = " @param ntru_pks The set of NTRU public keys"]
     #[doc = ""]
     #[doc = " @return the serialized size"]
-    #[link_name = "\u{1}_mam_ntru_pks_serialized_size"]
     pub fn mam_ntru_pks_serialized_size(ntru_pks: mam_ntru_pk_t_set_t) -> usize;
 }
 extern "C" {
@@ -16692,7 +16050,6 @@ extern "C" {
     #[doc = " @param trits The trits buffer to serialize into"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_ntru_pks_serialize"]
     pub fn mam_ntru_pks_serialize(ntru_pks: mam_ntru_pk_t_set_t, trits: *mut trits_t) -> retcode_t;
 }
 extern "C" {
@@ -16702,7 +16059,6 @@ extern "C" {
     #[doc = " @param ntru_pks The set of NTRU public keys"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_ntru_pks_deserialize"]
     pub fn mam_ntru_pks_deserialize(
         trits: *mut trits_t,
         ntru_pks: *mut mam_ntru_pk_t_set_t,
@@ -16714,7 +16070,6 @@ extern "C" {
     #[doc = " @param ntru_sk The NTRU secret key"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_ntru_sk_reset"]
     pub fn ntru_sk_reset(ntru_sk: *mut mam_ntru_sk_t) -> retcode_t;
 }
 extern "C" {
@@ -16723,7 +16078,6 @@ extern "C" {
     #[doc = " @param ntru_sk The NTRU secret key"]
     #[doc = " @param prng A PRNG interface"]
     #[doc = " @param nonce A nonce"]
-    #[link_name = "\u{1}_ntru_sk_gen"]
     pub fn ntru_sk_gen(ntru_sk: *const mam_ntru_sk_t, prng: *const mam_prng_t, nonce: trits_t);
 }
 extern "C" {
@@ -16735,7 +16089,6 @@ extern "C" {
     #[doc = " @param session_key The decrypted session symmetric key"]
     #[doc = ""]
     #[doc = " @return true if decryption succeeded,false otherwise"]
-    #[link_name = "\u{1}_ntru_sk_decr"]
     pub fn ntru_sk_decr(
         ntru_sk: *const mam_ntru_sk_t,
         spongos: *mut mam_spongos_t,
@@ -16747,7 +16100,6 @@ extern "C" {
     #[doc = " Loads the internal representation of a NTRU secret key"]
     #[doc = ""]
     #[doc = " @param ntru_sk A NTRU secret key"]
-    #[link_name = "\u{1}_ntru_sk_load"]
     pub fn ntru_sk_load(ntru_sk: *mut mam_ntru_sk_t);
 }
 extern "C" {
@@ -16755,7 +16107,6 @@ extern "C" {
     #[doc = " releasing memory"]
     #[doc = ""]
     #[doc = " @param ntru_pks The set of NTRU public keys"]
-    #[link_name = "\u{1}_mam_ntru_sks_destroy"]
     pub fn mam_ntru_sks_destroy(ntru_sks: *mut mam_ntru_sk_t_set_t);
 }
 extern "C" {
@@ -16764,7 +16115,6 @@ extern "C" {
     #[doc = " @param ntru_sks The set of NTRU secret keys"]
     #[doc = ""]
     #[doc = " @return the serialized size"]
-    #[link_name = "\u{1}_mam_ntru_sks_serialized_size"]
     pub fn mam_ntru_sks_serialized_size(ntru_sks: mam_ntru_sk_t_set_t) -> usize;
 }
 extern "C" {
@@ -16774,7 +16124,6 @@ extern "C" {
     #[doc = " @param trits The trits buffer to serialize into"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_ntru_sks_serialize"]
     pub fn mam_ntru_sks_serialize(ntru_sks: mam_ntru_sk_t_set_t, trits: *mut trits_t) -> retcode_t;
 }
 extern "C" {
@@ -16784,7 +16133,6 @@ extern "C" {
     #[doc = " @param ntru_sks The set of NTRU secret keys"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_ntru_sks_deserialize"]
     pub fn mam_ntru_sks_deserialize(
         trits: *mut trits_t,
         ntru_sks: *mut mam_ntru_sk_t_set_t,
@@ -16846,7 +16194,6 @@ extern "C" {
     #[doc = " @param nonce_length Length of the trytes nonce"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_psk_gen"]
     pub fn mam_psk_gen(
         psk: *mut mam_psk_t,
         prng: *const mam_prng_t,
@@ -16859,7 +16206,6 @@ extern "C" {
     #[doc = " Safely destroys a pre-shared key by clearing its secret part"]
     #[doc = ""]
     #[doc = " @param psk The pre-shared key"]
-    #[link_name = "\u{1}_mam_psk_destroy"]
     pub fn mam_psk_destroy(psk: *mut mam_psk_t);
 }
 extern "C" {
@@ -16868,7 +16214,6 @@ extern "C" {
     #[doc = " @param psk The pre-shared key"]
     #[doc = ""]
     #[doc = " @return the pre-shared key id trits"]
-    #[link_name = "\u{1}_mam_psk_id"]
     pub fn mam_psk_id(psk: *const mam_psk_t) -> trits_t;
 }
 extern "C" {
@@ -16877,7 +16222,6 @@ extern "C" {
     #[doc = " @param psk The pre-shared key"]
     #[doc = ""]
     #[doc = " @return the pre-shared key trits"]
-    #[link_name = "\u{1}_mam_psk_key"]
     pub fn mam_psk_key(psk: *const mam_psk_t) -> trits_t;
 }
 extern "C" {
@@ -16885,7 +16229,6 @@ extern "C" {
     #[doc = " releasing memory"]
     #[doc = ""]
     #[doc = " @param psks The set of pre-shared keys"]
-    #[link_name = "\u{1}_mam_psks_destroy"]
     pub fn mam_psks_destroy(psks: *mut mam_psk_t_set_t);
 }
 extern "C" {
@@ -16894,7 +16237,6 @@ extern "C" {
     #[doc = " @param psks The set of pre-shared keys"]
     #[doc = ""]
     #[doc = " @return the serialized size"]
-    #[link_name = "\u{1}_mam_psks_serialized_size"]
     pub fn mam_psks_serialized_size(psks: mam_psk_t_set_t) -> usize;
 }
 extern "C" {
@@ -16904,7 +16246,6 @@ extern "C" {
     #[doc = " @param trits The trits buffer to serialize into"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_psks_serialize"]
     pub fn mam_psks_serialize(psks: mam_psk_t_set_t, trits: *mut trits_t) -> retcode_t;
 }
 extern "C" {
@@ -16914,7 +16255,6 @@ extern "C" {
     #[doc = " @param psks The set of pre-shared keys"]
     #[doc = ""]
     #[doc = " @return a status code"]
-    #[link_name = "\u{1}_mam_psks_deserialize"]
     pub fn mam_psks_deserialize(trits: *mut trits_t, psks: *mut mam_psk_t_set_t) -> retcode_t;
 }
 #[repr(C)]
@@ -16963,37 +16303,30 @@ pub type mam_psk_t_on_container_func = ::std::option::Option<
     ) -> retcode_t,
 >;
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_size"]
     pub fn mam_psk_t_set_size(set: mam_psk_t_set_t) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_add"]
     pub fn mam_psk_t_set_add(set: *mut mam_psk_t_set_t, value: *const mam_psk_t) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_remove"]
     pub fn mam_psk_t_set_remove(set: *mut mam_psk_t_set_t, value: *const mam_psk_t) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_remove_entry"]
     pub fn mam_psk_t_set_remove_entry(
         set: *mut mam_psk_t_set_t,
         entry: *mut mam_psk_t_set_entry_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_append"]
     pub fn mam_psk_t_set_append(
         set1: *const mam_psk_t_set_t,
         set2: *mut mam_psk_t_set_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_contains"]
     pub fn mam_psk_t_set_contains(set: *const mam_psk_t_set_t, value: *const mam_psk_t) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_find"]
     pub fn mam_psk_t_set_find(
         set: *const mam_psk_t_set_t,
         arg1: *const mam_psk_t,
@@ -17001,11 +16334,9 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_free"]
     pub fn mam_psk_t_set_free(set: *mut mam_psk_t_set_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_for_each"]
     pub fn mam_psk_t_set_for_each(
         set: *const mam_psk_t_set_t,
         func: mam_psk_t_on_container_func,
@@ -17013,7 +16344,6 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_mam_psk_t_set_cmp"]
     pub fn mam_psk_t_set_cmp(lhs: *const mam_psk_t_set_t, rhs: *const mam_psk_t_set_t) -> bool;
 }
 pub const mam_msg_pubkey_e_mam_msg_pubkey_chid: mam_msg_pubkey_e = 0;
@@ -17155,7 +16485,6 @@ extern "C" {
     #[doc = " @param ntru_pks - The set of the NTRU public keys[in]"]
     #[doc = ""]
     #[doc = " @return return the size of the header"]
-    #[link_name = "\u{1}_mam_msg_header_size"]
     pub fn mam_msg_header_size(
         ch: *const mam_channel_t,
         ep: *const mam_endpoint_t,
@@ -17181,7 +16510,6 @@ extern "C" {
     #[doc = " @param msg - The buffer[out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_write_header"]
     pub fn mam_msg_write_header(
         ctx: *mut mam_msg_write_context_t,
         prng: *const mam_prng_t,
@@ -17205,7 +16533,6 @@ extern "C" {
     #[doc = " @param payload_size - The size of the payload to encode into the packet[in]"]
     #[doc = ""]
     #[doc = " @return return the size of the packet"]
-    #[link_name = "\u{1}_mam_msg_packet_size"]
     pub fn mam_msg_packet_size(
         checksum: mam_msg_checksum_t,
         mss: *const mam_mss_t,
@@ -17221,7 +16548,6 @@ extern "C" {
     #[doc = " @param buffer - The buffer where the packet is encoded[out]"]
     #[doc = ""]
     #[doc = " @return return the size of the packet"]
-    #[link_name = "\u{1}_mam_msg_write_packet"]
     pub fn mam_msg_write_packet(
         ctx: *mut mam_msg_write_context_t,
         checksum: mam_msg_checksum_t,
@@ -17241,7 +16567,6 @@ extern "C" {
     #[doc = " @param trusted_endpoints_pks - The set of trusted endpoint pks [in, out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_read_header"]
     pub fn mam_msg_read_header(
         ctx: *mut mam_msg_read_context_t,
         msg: *mut trits_t,
@@ -17260,7 +16585,6 @@ extern "C" {
     #[doc = " @param payload - The decoded payload[out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_read_packet"]
     pub fn mam_msg_read_packet(
         ctx: *mut mam_msg_read_context_t,
         buffer: *mut trits_t,
@@ -17273,7 +16597,6 @@ extern "C" {
     #[doc = " @param ctx - The context[in]"]
     #[doc = ""]
     #[doc = " @return return the size"]
-    #[link_name = "\u{1}_mam_msg_write_ctx_serialized_size"]
     pub fn mam_msg_write_ctx_serialized_size(ctx: *const mam_msg_write_context_t) -> usize;
 }
 extern "C" {
@@ -17283,7 +16606,6 @@ extern "C" {
     #[doc = " @param buffer - The buffer[out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_write_ctx_serialize"]
     pub fn mam_msg_write_ctx_serialize(ctx: *const mam_msg_write_context_t, buffer: *mut trits_t);
 }
 extern "C" {
@@ -17293,7 +16615,6 @@ extern "C" {
     #[doc = " @param ctx - The context[in, out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_write_ctx_deserialize"]
     pub fn mam_msg_write_ctx_deserialize(
         buffer: *mut trits_t,
         ctx: *mut mam_msg_write_context_t,
@@ -17306,7 +16627,6 @@ extern "C" {
     #[doc = " @param ctx - The context[in]"]
     #[doc = ""]
     #[doc = " @return return the size"]
-    #[link_name = "\u{1}_mam_msg_read_ctx_serialized_size"]
     pub fn mam_msg_read_ctx_serialized_size(ctx: *const mam_msg_read_context_t) -> usize;
 }
 extern "C" {
@@ -17316,7 +16636,6 @@ extern "C" {
     #[doc = " @param buffer - The buffer[out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_read_ctx_serialize"]
     pub fn mam_msg_read_ctx_serialize(ctx: *const mam_msg_read_context_t, buffer: *mut trits_t);
 }
 extern "C" {
@@ -17326,7 +16645,6 @@ extern "C" {
     #[doc = " @param ctx - The context[in, out]"]
     #[doc = ""]
     #[doc = " @return return error code"]
-    #[link_name = "\u{1}_mam_msg_read_ctx_deserialize"]
     pub fn mam_msg_read_ctx_deserialize(
         buffer: *mut trits_t,
         ctx: *mut mam_msg_read_context_t,
@@ -17338,7 +16656,6 @@ extern "C" {
     #[doc = " @param[in] trits - An array of trits"]
     #[doc = " @param[in] num_trits - the number of trits to convert"]
     #[doc = " @return byte_t - the num_trits trits packed into a byte"]
-    #[link_name = "\u{1}_trits_to_byte"]
     pub fn trits_to_byte(trits: *const trit_t, num_trits: usize) -> byte_t;
 }
 extern "C" {
@@ -17347,7 +16664,6 @@ extern "C" {
     #[doc = " @param[in] cum - the accumulator, maybe be not 0"]
     #[doc = " @param[in] num_trits - the number of trits to convert"]
     #[doc = " @return byte_t - the num_trits trits packed into a byte"]
-    #[link_name = "\u{1}_trits_to_bytes"]
     pub fn trits_to_bytes(trits: *const trit_t, bytes: *mut byte_t, num_trits: usize);
 }
 extern "C" {
@@ -17355,7 +16671,6 @@ extern "C" {
     #[doc = " @param[in] byte - A byte of packed trits"]
     #[doc = " @param[in] trits - An array of trits"]
     #[doc = " @param[in] num_trits - the number of trits to unpack (max 5)"]
-    #[link_name = "\u{1}_byte_to_trits"]
     pub fn byte_to_trits(byte: byte_t, trits: *mut trit_t, num_trits: usize);
 }
 extern "C" {
@@ -17364,7 +16679,6 @@ extern "C" {
     #[doc = " @param[in] n_bytes - the number of bytes in the array"]
     #[doc = " @param[in] trits - An array of trits"]
     #[doc = " @param[in] num_trits - the number of trits to unpack"]
-    #[link_name = "\u{1}_bytes_to_trits"]
     pub fn bytes_to_trits(
         bytes: *const byte_t,
         num_bytes: usize,
@@ -17383,7 +16697,6 @@ extern "C" {
     #[doc = " @param[in] start - the start index in the original array"]
     #[doc = " @param[in] num_trits - the number of trits to extract"]
     #[doc = " @return size_t - the number of trits extracted"]
-    #[link_name = "\u{1}_flex_trits_slice"]
     pub fn flex_trits_slice(
         to_flex_trits: *mut flex_trit_t,
         to_len: usize,
@@ -17403,7 +16716,6 @@ extern "C" {
     #[doc = " @param[in] start - the start index in the destination array"]
     #[doc = " @param[in] num_trits - the number of trits to copy over"]
     #[doc = " @return size_t - the number of trits copied over"]
-    #[link_name = "\u{1}_flex_trits_insert"]
     pub fn flex_trits_insert(
         to_flex_trits: *mut flex_trit_t,
         to_len: usize,
@@ -17424,7 +16736,6 @@ extern "C" {
     #[doc = " @param[in] dst_start_pos - the start index on the destination array"]
     #[doc = " @param[in] num_trits - the number of trits to copy over"]
     #[doc = " @return size_t - the number of trits copied over"]
-    #[link_name = "\u{1}_flex_trits_insert_from_pos"]
     pub fn flex_trits_insert_from_pos(
         dst_trits: *mut flex_trit_t,
         dst_len: usize,
@@ -17444,7 +16755,6 @@ extern "C" {
     #[doc = " @param[in] len - the number of trits the flex_trits array stores"]
     #[doc = " @param[in] num_trits - the number of trits to extract"]
     #[doc = " @return size_t - the number of trits encoded"]
-    #[link_name = "\u{1}_flex_trits_to_trits"]
     pub fn flex_trits_to_trits(
         trits: *mut trit_t,
         to_len: usize,
@@ -17461,7 +16771,6 @@ extern "C" {
     #[doc = " @param[in] len - the number of trits the trits array contains"]
     #[doc = " @param[in] num_trits - the number of trits to pack"]
     #[doc = " @return size_t - the number of trits decoded"]
-    #[link_name = "\u{1}_flex_trits_from_trits"]
     pub fn flex_trits_from_trits(
         to_flex_trits: *mut flex_trit_t,
         to_len: usize,
@@ -17478,7 +16787,6 @@ extern "C" {
     #[doc = " @param[in] len - the number of trits the flex_trits array contains"]
     #[doc = " @param[in] num_trits - the number of trits to pack"]
     #[doc = " @return size_t - the number of trits encoded"]
-    #[link_name = "\u{1}_flex_trits_to_trytes"]
     pub fn flex_trits_to_trytes(
         trytes: *mut tryte_t,
         to_len: usize,
@@ -17495,7 +16803,6 @@ extern "C" {
     #[doc = " @param[in] len - the number of trytes in the trytes array"]
     #[doc = " @param[in] num_trytes - the size of trytes to unpack"]
     #[doc = " @return size_t - the number of trytes decoded"]
-    #[link_name = "\u{1}_flex_trits_from_trytes"]
     pub fn flex_trits_from_trytes(
         to_flex_trits: *mut flex_trit_t,
         to_len: usize,
@@ -17512,7 +16819,6 @@ extern "C" {
     #[doc = " @param[in] len - the number of trits the flex_trits array contains"]
     #[doc = " @param[in] num_trits - the number of trits to pack"]
     #[doc = " @return size_t - the number of trits encoded"]
-    #[link_name = "\u{1}_flex_trits_to_bytes"]
     pub fn flex_trits_to_bytes(
         bytes: *mut byte_t,
         to_len: usize,
@@ -17529,7 +16835,6 @@ extern "C" {
     #[doc = " @param[in] len - the number of trits in the bytes array"]
     #[doc = " @param[in] num_trits - the number of trits to unpack"]
     #[doc = " @return size_t - the number of trits decoded"]
-    #[link_name = "\u{1}_flex_trits_from_bytes"]
     pub fn flex_trits_from_bytes(
         to_flex_trits: *mut flex_trit_t,
         to_len: usize,
@@ -17539,23 +16844,18 @@ extern "C" {
     ) -> usize;
 }
 extern "C" {
-    #[link_name = "\u{1}_normalize_hash_to_trits"]
     pub fn normalize_hash_to_trits(hash: *const trit_t, normalized_hash: *mut trit_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_normalize_flex_hash"]
     pub fn normalize_flex_hash(hash: *const flex_trit_t, normalized_hash: *mut byte_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_normalize_flex_hash_to_trits"]
     pub fn normalize_flex_hash_to_trits(hash: *const flex_trit_t, normalized_hash: *mut trit_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_Initialize"]
     pub fn KeccakP1600_Initialize(state: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_AddByte"]
     pub fn KeccakP1600_AddByte(
         state: *mut ::std::os::raw::c_void,
         data: ::std::os::raw::c_uchar,
@@ -17563,7 +16863,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_AddBytes"]
     pub fn KeccakP1600_AddBytes(
         state: *mut ::std::os::raw::c_void,
         data: *const ::std::os::raw::c_uchar,
@@ -17572,7 +16871,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_OverwriteBytes"]
     pub fn KeccakP1600_OverwriteBytes(
         state: *mut ::std::os::raw::c_void,
         data: *const ::std::os::raw::c_uchar,
@@ -17581,29 +16879,24 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_OverwriteWithZeroes"]
     pub fn KeccakP1600_OverwriteWithZeroes(
         state: *mut ::std::os::raw::c_void,
         byteCount: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_Permute_Nrounds"]
     pub fn KeccakP1600_Permute_Nrounds(
         state: *mut ::std::os::raw::c_void,
         nrounds: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_Permute_12rounds"]
     pub fn KeccakP1600_Permute_12rounds(state: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_Permute_24rounds"]
     pub fn KeccakP1600_Permute_24rounds(state: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_ExtractBytes"]
     pub fn KeccakP1600_ExtractBytes(
         state: *const ::std::os::raw::c_void,
         data: *mut ::std::os::raw::c_uchar,
@@ -17612,7 +16905,6 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakP1600_ExtractAndAddBytes"]
     pub fn KeccakP1600_ExtractAndAddBytes(
         state: *const ::std::os::raw::c_void,
         input: *const ::std::os::raw::c_uchar,
@@ -17702,7 +16994,6 @@ fn bindgen_test_layout_KeccakWidth1600_SpongeInstanceStruct() {
 }
 pub type KeccakWidth1600_SpongeInstance = KeccakWidth1600_SpongeInstanceStruct;
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_Sponge"]
     pub fn KeccakWidth1600_Sponge(
         rate: ::std::os::raw::c_uint,
         capacity: ::std::os::raw::c_uint,
@@ -17714,7 +17005,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_SpongeInitialize"]
     pub fn KeccakWidth1600_SpongeInitialize(
         spongeInstance: *mut KeccakWidth1600_SpongeInstance,
         rate: ::std::os::raw::c_uint,
@@ -17722,7 +17012,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_SpongeAbsorb"]
     pub fn KeccakWidth1600_SpongeAbsorb(
         spongeInstance: *mut KeccakWidth1600_SpongeInstance,
         data: *const ::std::os::raw::c_uchar,
@@ -17730,14 +17019,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_SpongeAbsorbLastFewBits"]
     pub fn KeccakWidth1600_SpongeAbsorbLastFewBits(
         spongeInstance: *mut KeccakWidth1600_SpongeInstance,
         delimitedData: ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_SpongeSqueeze"]
     pub fn KeccakWidth1600_SpongeSqueeze(
         spongeInstance: *mut KeccakWidth1600_SpongeInstance,
         data: *mut ::std::os::raw::c_uchar,
@@ -17825,7 +17112,6 @@ fn bindgen_test_layout_KeccakWidth1600_12rounds_SpongeInstanceStruct() {
 }
 pub type KeccakWidth1600_12rounds_SpongeInstance = KeccakWidth1600_12rounds_SpongeInstanceStruct;
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_12rounds_Sponge"]
     pub fn KeccakWidth1600_12rounds_Sponge(
         rate: ::std::os::raw::c_uint,
         capacity: ::std::os::raw::c_uint,
@@ -17837,7 +17123,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_12rounds_SpongeInitialize"]
     pub fn KeccakWidth1600_12rounds_SpongeInitialize(
         spongeInstance: *mut KeccakWidth1600_12rounds_SpongeInstance,
         rate: ::std::os::raw::c_uint,
@@ -17845,7 +17130,6 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_12rounds_SpongeAbsorb"]
     pub fn KeccakWidth1600_12rounds_SpongeAbsorb(
         spongeInstance: *mut KeccakWidth1600_12rounds_SpongeInstance,
         data: *const ::std::os::raw::c_uchar,
@@ -17853,14 +17137,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_12rounds_SpongeAbsorbLastFewBits"]
     pub fn KeccakWidth1600_12rounds_SpongeAbsorbLastFewBits(
         spongeInstance: *mut KeccakWidth1600_12rounds_SpongeInstance,
         delimitedData: ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_KeccakWidth1600_12rounds_SpongeSqueeze"]
     pub fn KeccakWidth1600_12rounds_SpongeSqueeze(
         spongeInstance: *mut KeccakWidth1600_12rounds_SpongeInstance,
         data: *mut ::std::os::raw::c_uchar,
@@ -17941,7 +17223,6 @@ extern "C" {
     #[doc = "                         the Keccak_SpongeAbsorbLastFewBits() function."]
     #[doc = " @pre    One must have r+c=1600 and the rate a multiple of 8 bits in this implementation."]
     #[doc = " @return SUCCESS if successful, FAIL otherwise."]
-    #[link_name = "\u{1}_Keccak_HashInitialize"]
     pub fn Keccak_HashInitialize(
         hashInstance: *mut Keccak_HashInstance,
         rate: ::std::os::raw::c_uint,
@@ -17959,7 +17240,6 @@ extern "C" {
     #[doc = " @param  databitLen  The number of input bits provided in the input data."]
     #[doc = " @pre    In the previous call to Keccak_HashUpdate(), databitlen was a multiple of 8."]
     #[doc = " @return SUCCESS if successful, FAIL otherwise."]
-    #[link_name = "\u{1}_Keccak_HashUpdate"]
     pub fn Keccak_HashUpdate(
         hashInstance: *mut Keccak_HashInstance,
         data: *const BitSequence,
@@ -17976,7 +17256,6 @@ extern "C" {
     #[doc = "     must be extracted using the Keccak_HashSqueeze() function."]
     #[doc = " @param  hashval     Pointer to the buffer where to store the output data."]
     #[doc = " @return SUCCESS if successful, FAIL otherwise."]
-    #[link_name = "\u{1}_Keccak_HashFinal"]
     pub fn Keccak_HashFinal(
         hashInstance: *mut Keccak_HashInstance,
         hashval: *mut BitSequence,
@@ -17990,7 +17269,6 @@ extern "C" {
     #[doc = " @pre    Keccak_HashFinal() must have been already called."]
     #[doc = " @pre    @a databitlen is a multiple of 8."]
     #[doc = " @return SUCCESS if successful, FAIL otherwise."]
-    #[link_name = "\u{1}_Keccak_HashSqueeze"]
     pub fn Keccak_HashSqueeze(
         hashInstance: *mut Keccak_HashInstance,
         data: *mut BitSequence,
@@ -18026,19 +17304,15 @@ fn bindgen_test_layout_Kerl() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_kerl_init"]
     pub fn kerl_init(ctx: *mut Kerl);
 }
 extern "C" {
-    #[link_name = "\u{1}_kerl_absorb"]
     pub fn kerl_absorb(ctx: *mut Kerl, trits: *const trit_t, length: usize);
 }
 extern "C" {
-    #[link_name = "\u{1}_kerl_squeeze"]
     pub fn kerl_squeeze(ctx: *mut Kerl, trits: *mut trit_t, length: usize);
 }
 extern "C" {
-    #[link_name = "\u{1}_kerl_reset"]
     pub fn kerl_reset(ctx: *mut Kerl);
 }
 pub type ctor_f = ::std::option::Option<
@@ -18169,15 +17443,12 @@ fn bindgen_test_layout_UT_array() {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_ut_str_icd"]
     pub static ut_str_icd: UT_icd;
 }
 extern "C" {
-    #[link_name = "\u{1}_ut_int_icd"]
     pub static ut_int_icd: UT_icd;
 }
 extern "C" {
-    #[link_name = "\u{1}_ut_ptr_icd"]
     pub static ut_ptr_icd: UT_icd;
 }
 #[doc = " Transaction data structure"]
@@ -18746,20 +18017,16 @@ pub type _field_mask_metadata = u32;
 pub use self::_field_mask_metadata as field_mask_metadata_e;
 extern "C" {
     #[doc = " Utility functions"]
-    #[link_name = "\u{1}_transaction_reset"]
     pub fn transaction_reset(transaction: *mut iota_transaction_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_transaction_weight_magnitude"]
     pub fn transaction_weight_magnitude(transaction: *const iota_transaction_t) -> u8;
 }
 extern "C" {
     #[doc = " Constructors"]
-    #[link_name = "\u{1}_transaction_new"]
     pub fn transaction_new() -> *mut iota_transaction_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_transaction_deserialize"]
     pub fn transaction_deserialize(
         trits: *const flex_trit_t,
         compute_hash: bool,
@@ -18767,11 +18034,9 @@ extern "C" {
 }
 extern "C" {
     #[doc = " Serialization"]
-    #[link_name = "\u{1}_transaction_serialize"]
     pub fn transaction_serialize(transaction: *const iota_transaction_t) -> *mut flex_trit_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_transaction_serialize_on_flex_trits"]
     pub fn transaction_serialize_on_flex_trits(
         transaction: *const iota_transaction_t,
         trits: *mut flex_trit_t,
@@ -18779,7 +18044,6 @@ extern "C" {
 }
 extern "C" {
     #[doc = " Deserialization"]
-    #[link_name = "\u{1}_transaction_deserialize_from_trits"]
     pub fn transaction_deserialize_from_trits(
         transaction: *mut iota_transaction_t,
         trits: *const flex_trit_t,
@@ -18788,12 +18052,10 @@ extern "C" {
 }
 extern "C" {
     #[doc = " Destructor"]
-    #[link_name = "\u{1}_transaction_free"]
     pub fn transaction_free(transaction: *mut iota_transaction_t);
 }
 pub type transaction_array_t = UT_array;
 extern "C" {
-    #[link_name = "\u{1}_ut_transactions_icd"]
     pub static ut_transactions_icd: UT_icd;
 }
 pub const bundle_status_e_BUNDLE_VALID: bundle_status_e = 0;
@@ -18810,22 +18072,18 @@ pub use self::bundle_status_e as bundle_status_t;
 pub type bundle_transactions_t = UT_array;
 pub type bundle_hashes_t = UT_array;
 extern "C" {
-    #[link_name = "\u{1}_bundle_transactions_new"]
     pub fn bundle_transactions_new(bundle: *mut *mut bundle_transactions_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_bundle_transactions_free"]
     pub fn bundle_transactions_free(bundle: *mut *mut bundle_transactions_t);
 }
 extern "C" {
-    #[link_name = "\u{1}_bundle_transactions_add"]
     pub fn bundle_transactions_add(
         bundle: *mut bundle_transactions_t,
         transaction: *const iota_transaction_t,
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_bundle_calculate_hash"]
     pub fn bundle_calculate_hash(
         bundle: *mut bundle_transactions_t,
         kerl: *mut Kerl,
@@ -18833,18 +18091,15 @@ extern "C" {
     );
 }
 extern "C" {
-    #[link_name = "\u{1}_bundle_finalize"]
     pub fn bundle_finalize(bundle: *mut bundle_transactions_t, kerl: *mut Kerl);
 }
 extern "C" {
-    #[link_name = "\u{1}_bundle_validator"]
     pub fn bundle_validator(
         bundle: *mut bundle_transactions_t,
         status: *mut bundle_status_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_bundle_reset_indexes"]
     pub fn bundle_reset_indexes(bundle: *mut bundle_transactions_t);
 }
 #[repr(C)]
@@ -18967,20 +18222,17 @@ fn bindgen_test_layout_trit_t_to_mam_msg_read_context_t_map_s() {
 }
 pub type trit_t_to_mam_msg_read_context_t_map_t = trit_t_to_mam_msg_read_context_t_map_s;
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_init"]
     pub fn trit_t_to_mam_msg_read_context_t_map_init(
         map: *mut trit_t_to_mam_msg_read_context_t_map_t,
         key_size: usize,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_size"]
     pub fn trit_t_to_mam_msg_read_context_t_map_size(
         map: *const trit_t_to_mam_msg_read_context_t_map_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_add"]
     pub fn trit_t_to_mam_msg_read_context_t_map_add(
         map: *mut trit_t_to_mam_msg_read_context_t_map_t,
         key: *const trit_t,
@@ -18988,14 +18240,12 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_contains"]
     pub fn trit_t_to_mam_msg_read_context_t_map_contains(
         map: *const trit_t_to_mam_msg_read_context_t_map_t,
         key: *const trit_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_find"]
     pub fn trit_t_to_mam_msg_read_context_t_map_find(
         map: *const trit_t_to_mam_msg_read_context_t_map_t,
         key: *const trit_t,
@@ -19003,20 +18253,17 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_free"]
     pub fn trit_t_to_mam_msg_read_context_t_map_free(
         map: *mut trit_t_to_mam_msg_read_context_t_map_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_cmp"]
     pub fn trit_t_to_mam_msg_read_context_t_map_cmp(
         lhs: *const trit_t_to_mam_msg_read_context_t_map_t,
         rhs: *const trit_t_to_mam_msg_read_context_t_map_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_read_context_t_map_remove"]
     pub fn trit_t_to_mam_msg_read_context_t_map_remove(
         map: *mut trit_t_to_mam_msg_read_context_t_map_t,
         key: *const trit_t,
@@ -19142,20 +18389,17 @@ fn bindgen_test_layout_trit_t_to_mam_msg_write_context_t_map_s() {
 }
 pub type trit_t_to_mam_msg_write_context_t_map_t = trit_t_to_mam_msg_write_context_t_map_s;
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_init"]
     pub fn trit_t_to_mam_msg_write_context_t_map_init(
         map: *mut trit_t_to_mam_msg_write_context_t_map_t,
         key_size: usize,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_size"]
     pub fn trit_t_to_mam_msg_write_context_t_map_size(
         map: *const trit_t_to_mam_msg_write_context_t_map_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_add"]
     pub fn trit_t_to_mam_msg_write_context_t_map_add(
         map: *mut trit_t_to_mam_msg_write_context_t_map_t,
         key: *const trit_t,
@@ -19163,14 +18407,12 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_contains"]
     pub fn trit_t_to_mam_msg_write_context_t_map_contains(
         map: *const trit_t_to_mam_msg_write_context_t_map_t,
         key: *const trit_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_find"]
     pub fn trit_t_to_mam_msg_write_context_t_map_find(
         map: *const trit_t_to_mam_msg_write_context_t_map_t,
         key: *const trit_t,
@@ -19178,20 +18420,17 @@ extern "C" {
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_free"]
     pub fn trit_t_to_mam_msg_write_context_t_map_free(
         map: *mut trit_t_to_mam_msg_write_context_t_map_t,
     ) -> retcode_t;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_cmp"]
     pub fn trit_t_to_mam_msg_write_context_t_map_cmp(
         lhs: *const trit_t_to_mam_msg_write_context_t_map_t,
         rhs: *const trit_t_to_mam_msg_write_context_t_map_t,
     ) -> bool;
 }
 extern "C" {
-    #[link_name = "\u{1}_trit_t_to_mam_msg_write_context_t_map_remove"]
     pub fn trit_t_to_mam_msg_write_context_t_map_remove(
         map: *mut trit_t_to_mam_msg_write_context_t_map_t,
         key: *const trit_t,
@@ -19332,7 +18571,6 @@ extern "C" {
     #[doc = " @param mam_seed - The seed for PRNG initialization [in]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_init"]
     pub fn mam_api_init(api: *mut mam_api_t, mam_seed: *const tryte_t) -> retcode_t;
 }
 extern "C" {
@@ -19341,7 +18579,6 @@ extern "C" {
     #[doc = " @param api - The API [in,out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_destroy"]
     pub fn mam_api_destroy(api: *mut mam_api_t) -> retcode_t;
 }
 extern "C" {
@@ -19351,7 +18588,6 @@ extern "C" {
     #[doc = " @param pk - A new public key [in]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_add_trusted_channel_pk"]
     pub fn mam_api_add_trusted_channel_pk(api: *mut mam_api_t, pk: *const tryte_t) -> retcode_t;
 }
 extern "C" {
@@ -19361,7 +18597,6 @@ extern "C" {
     #[doc = " @param pk - A new public key [in]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_add_trusted_endpoint_pk"]
     pub fn mam_api_add_trusted_endpoint_pk(api: *mut mam_api_t, pk: *const tryte_t) -> retcode_t;
 }
 extern "C" {
@@ -19371,7 +18606,6 @@ extern "C" {
     #[doc = " @param ntru_sk - A new ntru public key (allows for both enc/dec) [in]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_add_ntru_sk"]
     pub fn mam_api_add_ntru_sk(api: *mut mam_api_t, ntru_sk: *const mam_ntru_sk_t) -> retcode_t;
 }
 extern "C" {
@@ -19381,7 +18615,6 @@ extern "C" {
     #[doc = " @param ntru_pk - A new ntru public key (allows for encryption only) [in]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_add_ntru_pk"]
     pub fn mam_api_add_ntru_pk(api: *mut mam_api_t, ntru_pk: *const mam_ntru_pk_t) -> retcode_t;
 }
 extern "C" {
@@ -19391,7 +18624,6 @@ extern "C" {
     #[doc = " @param psk - A new psk [in]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_add_psk"]
     pub fn mam_api_add_psk(api: *mut mam_api_t, psk: *const mam_psk_t) -> retcode_t;
 }
 extern "C" {
@@ -19402,7 +18634,6 @@ extern "C" {
     #[doc = " @param channel_id - The channel id [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_create_channel"]
     pub fn mam_api_create_channel(
         api: *mut mam_api_t,
         height: usize,
@@ -19416,7 +18647,6 @@ extern "C" {
     #[doc = " @param channel_id - The channel id [in]"]
     #[doc = ""]
     #[doc = " @return a pointer to the channel or NULL if not found"]
-    #[link_name = "\u{1}_mam_api_get_channel"]
     pub fn mam_api_get_channel(
         api: *const mam_api_t,
         channel_id: *const tryte_t,
@@ -19431,7 +18661,6 @@ extern "C" {
     #[doc = " @param endpoint_id - The endpoint id [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_create_endpoint"]
     pub fn mam_api_create_endpoint(
         api: *mut mam_api_t,
         height: usize,
@@ -19447,7 +18676,6 @@ extern "C" {
     #[doc = " @param endpoint_id - The endpoint id [in]"]
     #[doc = ""]
     #[doc = " @return a pointer to the endpoint or NULL if not found"]
-    #[link_name = "\u{1}_mam_api_get_endpoint"]
     pub fn mam_api_get_endpoint(
         api: *const mam_api_t,
         channel_id: *const tryte_t,
@@ -19460,7 +18688,6 @@ extern "C" {
     #[doc = " @param tag - The tag [out]"]
     #[doc = " @param msg_id - The message ID [in]"]
     #[doc = " @param ord - The packet ord [in]"]
-    #[link_name = "\u{1}_mam_api_write_tag"]
     pub fn mam_api_write_tag(tag: *mut trit_t, msg_id: *const trit_t, ord: trint18_t);
 }
 extern "C" {
@@ -19478,7 +18705,6 @@ extern "C" {
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_bundle_write_header_on_channel"]
     pub fn mam_api_bundle_write_header_on_channel(
         api: *mut mam_api_t,
         ch_id: *const tryte_t,
@@ -19505,7 +18731,6 @@ extern "C" {
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_bundle_write_header_on_endpoint"]
     pub fn mam_api_bundle_write_header_on_endpoint(
         api: *mut mam_api_t,
         ch_id: *const tryte_t,
@@ -19533,7 +18758,6 @@ extern "C" {
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_bundle_announce_new_channel"]
     pub fn mam_api_bundle_announce_new_channel(
         api: *mut mam_api_t,
         ch_id: *const tryte_t,
@@ -19561,7 +18785,6 @@ extern "C" {
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_bundle_announce_new_endpoint"]
     pub fn mam_api_bundle_announce_new_endpoint(
         api: *mut mam_api_t,
         ch_id: *const tryte_t,
@@ -19584,7 +18807,6 @@ extern "C" {
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_bundle_write_packet"]
     pub fn mam_api_bundle_write_packet(
         api: *mut mam_api_t,
         msg_id: *const trit_t,
@@ -19605,7 +18827,6 @@ extern "C" {
     #[doc = " packet is present)"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_bundle_read"]
     pub fn mam_api_bundle_read(
         api: *mut mam_api_t,
         bundle: *const bundle_transactions_t,
@@ -19619,7 +18840,6 @@ extern "C" {
     #[doc = " @param api - The API [in]"]
     #[doc = ""]
     #[doc = " @return return the size"]
-    #[link_name = "\u{1}_mam_api_serialized_size"]
     pub fn mam_api_serialized_size(api: *const mam_api_t) -> usize;
 }
 extern "C" {
@@ -19628,7 +18848,6 @@ extern "C" {
     #[doc = " @param buffer - The buffer to serialize the api into [out]"]
     #[doc = ""]
     #[doc = " @return return void"]
-    #[link_name = "\u{1}_mam_api_serialize"]
     pub fn mam_api_serialize(api: *const mam_api_t, buffer: *mut trits_t);
 }
 extern "C" {
@@ -19638,7 +18857,6 @@ extern "C" {
     #[doc = " @param api - The API [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_deserialize"]
     pub fn mam_api_deserialize(buffer: *mut trits_t, api: *mut mam_api_t) -> retcode_t;
 }
 extern "C" {
@@ -19649,7 +18867,6 @@ extern "C" {
     #[doc = ""]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_save"]
     pub fn mam_api_save(
         api: *const mam_api_t,
         filename: *const ::std::os::raw::c_char,
@@ -19662,7 +18879,6 @@ extern "C" {
     #[doc = " @param api - The API [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    #[link_name = "\u{1}_mam_api_load"]
     pub fn mam_api_load(filename: *const ::std::os::raw::c_char, api: *mut mam_api_t) -> retcode_t;
 }
 pub type __builtin_va_list = [__va_list_tag; 1usize];

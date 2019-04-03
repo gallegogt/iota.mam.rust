@@ -10,7 +10,7 @@ use std::ffi::CStr;
 use ffi;
 
 // Gets the string associated with the error code from the C lib.
-pub fn error_message<'a>(rc: ffi::retcode_t) -> String {
+pub (crate) fn error_message<'a>(rc: ffi::retcode_t) -> String {
     unsafe {
         CStr::from_ptr(
             ffi::error_2_string(rc)
@@ -154,3 +154,16 @@ impl fmt::Debug for MamError {
 
 /// Generic result for the entire public API
 pub type MamResult<T> = Result<T, MamError>;
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn check_error_message_invocation() {
+        let message = error_message(ffi::retcode_t_RC_ERROR);
+        assert_eq!(message.len(), 5);
+    }
+}

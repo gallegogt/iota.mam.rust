@@ -11,6 +11,16 @@ description = """
 Rust wrapper for the IOTA MAM Library.
 """
 
+[lib]
+# could be `staticlib`  "dylib",  as well
+crate-type = ["rlib", "staticlib"]
+# crate-type = ["rlib", "dylib"]
+# A flag for enabling documentation tests for this target. This is only relevant
+# for libraries, it has no effect on other sections. This is used by
+# `cargo test`.
+# doctest = true
+# # A flag for enabling documentation of this target. This is used by `cargo doc`.
+# doc = true
 
 [dependencies]
 iota-mam-sys = { version = "0.1", path = "iota-mam-sys", default-features = false }

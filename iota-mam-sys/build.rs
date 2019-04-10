@@ -101,7 +101,7 @@ mod build {
     use std::process::Command;
     use semver::Version;
 
-    const TARGETS: &'static str = "-- common/errors mam/mam:all mam/api:all";
+    const TARGETS: &'static str = "-- common/errors mam/trits:all mam/mam:all mam/api:all";
 
     const ENTANGLED_COMMON: &'static str =
         "errors";
@@ -109,7 +109,11 @@ mod build {
         "channel:endpoint:message:mam_channel_t_set:mam_endpoint_t_set:mam_pk_t_set";
     const MAM_API_LIBRARIES: &'static str =
         "api:trit_t_to_mam_msg_read_context_t_map:trit_t_to_mam_msg_write_context_t_map";
-    const LIB_OUTPUT: &'static str = "entangled";
+
+    const MAM_TRITS_LIBRARIES: &'static str =
+        "trits:buffers";
+
+    // const LIB_OUTPUT: &'static str = "entangled";
     const MIN_BAZEL: &'static str = "0.5.4";
 
 
@@ -187,41 +191,11 @@ mod build {
 
         println!("cargo:root={}", lib_dir.display());
 
-        for name in MAM_LIBRARIES.split(":") {
-            let libname =  format!("lib{}.a", name);
-            let target_bazel_bin = entangled_target_bazel_bin.join("mam").join(&libname);
-            let target_path = lib_dir.join(&libname);
-
-            if !target_path.exists() {
-                log!("Copying {:?} to {:?}", target_bazel_bin, target_path);
-                fs::copy(target_bazel_bin, target_path).unwrap();
-                println!("cargo:rustc-link-lib=static={}", &name);
-            }
-        }
-
-        for name in MAM_API_LIBRARIES.split(":") {
-            let libname =  format!("lib{}.a", name);
-            let target_bazel_bin = entangled_target_bazel_bin.join("api").join(&libname);
-            let library_path = lib_dir.join(&libname);
-
-            if !library_path.exists() {
-                log!("Copying {:?} to {:?}", target_bazel_bin, library_path);
-                fs::copy(target_bazel_bin, library_path).unwrap();
-                println!("cargo:rustc-link-lib=static={}", &name);
-            }
-        }
+        copy_libs(MAM_LIBRARIES, "mam", &entangled_target_bazel_bin, &lib_dir);
+        copy_libs(MAM_API_LIBRARIES, "api", &entangled_target_bazel_bin, &lib_dir);
+        copy_libs(MAM_TRITS_LIBRARIES, "trits", &entangled_target_bazel_bin, &lib_dir);
         let source_entangled = source.join("bazel-bin");
-        for name in ENTANGLED_COMMON.split(":") {
-            let libname =  format!("lib{}.a", name);
-            let target_bazel_bin = source_entangled.join("common").join(&libname);
-            let library_path = lib_dir.join(&libname);
-
-            if !library_path.exists() {
-                log!("Copying {:?} to {:?}", target_bazel_bin, library_path);
-                fs::copy(target_bazel_bin, library_path).unwrap();
-                println!("cargo:rustc-link-lib=static={}", &name);
-            }
-        }
+        copy_libs(ENTANGLED_COMMON, "common", &source_entangled, &lib_dir);
 
         println!("cargo:rustc-link-search=native={}", lib_dir.display());
 
@@ -229,6 +203,20 @@ mod build {
         // println!("cargo:rustc-link-lib=dylib={}", LIBRARY);
         // println!("cargo:rustc-link-search={}", lib_dir.display());
         // println!("cargo:libdir={}", lib_dir.display());
+    }
+
+    fn copy_libs<'a>(lib_str: &'a str, dirname: &'a str, path_bazel_bin: &PathBuf, lib_dir: &PathBuf) {
+        for name in lib_str.split(":") {
+            let libname =  format!("lib{}.a", name);
+            let target_bazel_bin = path_bazel_bin.join(dirname).join(&libname);
+            let library_path = lib_dir.join(&libname);
+
+            if !library_path.exists() {
+                log!("Copying {:?} to {:?}", target_bazel_bin, library_path);
+                fs::copy(target_bazel_bin, library_path).unwrap();
+                println!("cargo:rustc-link-lib=static={}", &name);
+            }
+        }
     }
 
     ///

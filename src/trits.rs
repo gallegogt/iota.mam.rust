@@ -1,11 +1,11 @@
+use crate::errors::{MamError, MamResult};
 use ::std::os::raw::c_char;
 use ffi;
 use std::convert::From;
 use std::ffi::CStr;
+use std::ffi::CString;
 use std::mem;
-
-
-use crate::errors::{MamError, MamResult};
+use std::str::FromStr;
 
 /// An MAM Trits
 #[derive(Debug)]
@@ -53,6 +53,28 @@ impl Trits {
     }
 
     ///
+    /// Set zero trits
+    ///
+    pub fn set_zero(&mut self) {
+        unsafe {
+            libc::memset(
+                self.c_trits.p.offset(self.c_trits.d as isize) as *mut libc::c_void,
+                0,
+                self.size(),
+            );
+        }
+    }
+
+    ///
+    /// Fill the current Trits with the str
+    ///
+    pub fn from_str<'a>(&mut self, s: &'a str) {
+        unsafe {
+            ffi::trits_from_str(self.c_trits, CString::new(s).unwrap().as_ptr());
+        }
+    }
+
+    ///
     ///Take at most `n` first trits from `x`
     ///
     pub fn take_min(&self, n: usize) -> Self {
@@ -72,6 +94,13 @@ impl Trits {
                 c_trits: ffi::trits_drop(self.c_trits, n),
             }
         }
+    }
+
+    ///
+    /// Return the C raw info
+    ///
+    pub fn into_raw(&self) -> ffi::trits_t {
+        self.c_trits
     }
 
     ///
@@ -112,19 +141,24 @@ impl Trits {
     /// \note `trits_size(x)` must be multiple of 3.
     /// Size of `s` must be equal `trits_size(x)/3`
     ///
-    pub fn to_str<'a>(&self) -> MamResult<&'a str> {
+    pub fn to_str<'a>(&self) -> MamResult<String> {
         unsafe {
             let size = (self.size() / 3) as usize;
-            let out: *mut c_char =
-                libc::malloc(size * mem::size_of::<c_char>()) as *mut c_char;
 
+            // Alloc C memory
+            let out: *mut c_char = libc::malloc(size * mem::size_of::<c_char>()) as *mut c_char;
             ffi::trits_to_str(self.c_trits, out);
             let result = CStr::from_ptr(out).to_str();
 
-            libc::free(out as *mut libc::c_void);
-
             match result {
-                Ok(value) => Ok(value),
+                Ok(value) => {
+                    let v = String::from_str(value).unwrap();
+
+                    // Release memory created by libc::malloc
+                    libc::free(out as *mut libc::c_void);
+
+                    Ok(v)
+                },
                 Err(err) => Err(MamError::from(err)),
             }
         }
@@ -140,7 +174,7 @@ impl<'a> From<&'a str> for Trits {
     fn from(s: &'a str) -> Trits {
         let trits = Trits::new(3 * s.len());
         unsafe {
-            ffi::trits_from_str(trits.c_trits, s.as_ptr() as *const i8);
+            ffi::trits_from_str(trits.c_trits, CString::new(s).unwrap().as_ptr());
         }
         trits
     }
@@ -148,14 +182,9 @@ impl<'a> From<&'a str> for Trits {
 
 impl Drop for Trits {
     fn drop(&mut self) {
-        unsafe {
-            ffi::trits_free(self.c_trits)
-        }
+        unsafe { ffi::trits_free(self.c_trits) }
     }
 }
-
-/*
-*/
 
 #[cfg(test)]
 mod tests {
@@ -177,6 +206,5 @@ mod tests {
     fn convert_trits_to_str() {
         let trits = Trits::from("NONCE9PK99");
         assert_eq!("NONCE9PK99", trits.to_str().unwrap());
-
     }
 }

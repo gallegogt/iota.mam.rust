@@ -3,7 +3,7 @@
 #include "common/errors.h"
 #include "common/trinary/trit_tryte.h"
 #include "common/trinary/tryte_ascii.h"
-#include "mam/mam/channel.h"
 #include "mam/mam/endpoint.h"
+#include "mam/mam/channel.h"
 #include "mam/mam/message.h"
 #include "mam/api/api.h"

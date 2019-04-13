@@ -1,5 +1,4 @@
 // iota-mam-sys/build.rs
-
 use std::process::Command;
 
 macro_rules! get(($name:expr) => (ok!(env::var($name))));
@@ -91,6 +90,8 @@ mod bindings {
 #[cfg(feature = "bundled")]
 mod build {
     extern crate semver;
+    extern crate glob;
+
     use crate::run;
     use crate::bindings;
 
@@ -100,22 +101,35 @@ mod build {
     use std::{env, fs};
     use std::process::Command;
     use semver::Version;
+    use glob::glob;
 
-    const TARGETS: &'static str = "-- common/errors mam/trits:all mam/mam:all mam/api:all";
-
-    const ENTANGLED_COMMON: &'static str =
-        "errors";
-    const MAM_LIBRARIES: &'static str =
-        "channel:endpoint:message:mam_channel_t_set:mam_endpoint_t_set:mam_pk_t_set";
-    const MAM_API_LIBRARIES: &'static str =
-        "api:trit_t_to_mam_msg_read_context_t_map:trit_t_to_mam_msg_write_context_t_map";
-
-    const MAM_TRITS_LIBRARIES: &'static str =
-        "trits:buffers";
-
-    // const LIB_OUTPUT: &'static str = "entangled";
     const MIN_BAZEL: &'static str = "0.5.4";
 
+    fn format_target<'a>() -> Vec<&'a str> {
+        vec![
+            "--",
+            "common/errors",
+            // "common/crypto/curl-p:all",
+            "common/crypto/ftroika:all",
+            // "common/crypto/iss:all",
+            // "common/crypto/kerl:all",
+            // "common/model:all",
+            // "common/helpers:all",
+            // "common/trinary:all",
+            "mam/mam:all",
+            "mam/api:all",
+            // "mam/mss:all",
+            // "mam/ntru:all",
+            // "mam/pb3:all",
+            "mam/prng:all",
+            // "mam/psk:all",
+            "mam/sponge:all",
+            "mam/trits:all",
+            "mam/troika:all",
+            // "mam/wots:all",
+
+        ]
+    }
 
     pub fn main () {
         // we rerun the build if the `build.rs` file is changed.
@@ -134,7 +148,6 @@ mod build {
 
         let output = PathBuf::from(&get!("OUT_DIR"));
         log_var!(output);
-
         let source = PathBuf::from("entangled/");
         log_var!(source);
 
@@ -169,7 +182,7 @@ mod build {
                 .arg("--compilation_mode=opt")
                 .arg("--copt=-march=native")
                 .args(bazel_args_string.split_whitespace())
-                .args(TARGETS.to_string().split_whitespace())
+                .args(format_target())
         });
 
         bindings::place_bindings(
@@ -184,41 +197,38 @@ mod build {
                 "-I./entangled/bazel-bin/external/keccak/_virtual_includes/snp_1600_reference",
             ]);
 
-
-        let entangled_target_bazel_bin = source
-            .join("bazel-bin")
-            .join("mam");
-
         println!("cargo:root={}", lib_dir.display());
-
-        copy_libs(MAM_LIBRARIES, "mam", &entangled_target_bazel_bin, &lib_dir);
-        copy_libs(MAM_API_LIBRARIES, "api", &entangled_target_bazel_bin, &lib_dir);
-        copy_libs(MAM_TRITS_LIBRARIES, "trits", &entangled_target_bazel_bin, &lib_dir);
-        let source_entangled = source.join("bazel-bin");
-        copy_libs(ENTANGLED_COMMON, "common", &source_entangled, &lib_dir);
+        copy_libs_glob("entangled/bazel-bin/**/*.a", &lib_dir);
 
         println!("cargo:rustc-link-search=native={}", lib_dir.display());
-
-        // println!("cargo:rustc-link-lib=dylib={}", FRAMEWORK_LIBRARY);
-        // println!("cargo:rustc-link-lib=dylib={}", LIBRARY);
-        // println!("cargo:rustc-link-search={}", lib_dir.display());
-        // println!("cargo:libdir={}", lib_dir.display());
     }
 
-    fn copy_libs<'a>(lib_str: &'a str, dirname: &'a str, path_bazel_bin: &PathBuf, lib_dir: &PathBuf) {
-        for name in lib_str.split(":") {
-            let libname =  format!("lib{}.a", name);
-            let target_bazel_bin = path_bazel_bin.join(dirname).join(&libname);
-            let library_path = lib_dir.join(&libname);
+    fn copy_libs_glob<'a>(glob_pattern: &'a str, lib_dir: &PathBuf) {
+        for entry in glob(glob_pattern).expect("Failed to read glob pattern") {
+            match entry {
+                Ok(ref path) => {
+                    if let Some(file_name) = &path.file_name() {
+                        println!("FILE NAME: {}", file_name.to_str().unwrap());
+                        let libname = file_name.to_str().unwrap();
 
-            if !library_path.exists() {
-                log!("Copying {:?} to {:?}", target_bazel_bin, library_path);
-                fs::copy(target_bazel_bin, library_path).unwrap();
-                println!("cargo:rustc-link-lib=static={}", &name);
+                        let library_path = lib_dir.join(&libname);
+                        log!("Copying {:?} to {:?}", path, library_path);
+                        match fs::copy(path, library_path) {
+                            Ok(_) => {
+                                println!("File Copied");
+                            }
+                            Err(e) => {
+                                log!("{:?}", e);
+                            }
+                        }
+
+                        println!("cargo:rustc-link-lib=static={}", &libname.replace("lib", "").replace(".a", ""));
+                    }
+                },
+                Err(e) => println!("{:?}", e),
             }
         }
     }
-
     ///
     /// Check bazel
     ///

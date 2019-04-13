@@ -2,7 +2,7 @@
 **/*.rs.bk
 Cargo.lock
 iota-mam-sys/target
-
+graph.png
 
 # Created by https://www.gitignore.io/api/c,c++,rust,macos,linux,bazel,windows,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=c,c++,rust,macos,linux,bazel,windows,visualstudiocode

@@ -111,20 +111,21 @@ mod build {
             "common/errors",
             // "common/crypto/curl-p:all",
             "common/crypto/ftroika:all",
+            "utils:memset_safe",
             // "common/crypto/iss:all",
             // "common/crypto/kerl:all",
             // "common/model:all",
             // "common/helpers:all",
             // "common/trinary:all",
+            "mam/sponge:all",
+            "mam/trits:all",
+            "mam/prng:all",
             "mam/mam:all",
             "mam/api:all",
             // "mam/mss:all",
             // "mam/ntru:all",
-            // "mam/pb3:all",
-            "mam/prng:all",
+            "mam/pb3:all",
             // "mam/psk:all",
-            "mam/sponge:all",
-            "mam/trits:all",
             "mam/troika:all",
             // "mam/wots:all",
 
@@ -198,37 +199,51 @@ mod build {
             ]);
 
         println!("cargo:root={}", lib_dir.display());
-        copy_libs_glob("entangled/bazel-bin/**/*.a", &lib_dir);
+        copy_libs_glob(
+            vec![
+                "entangled/bazel-bin/mam/**/*.a",
+                "entangled/bazel-bin/common/crypto/ftroika/**/*.a",
+                "entangled/bazel-bin/common/*.a",
+                "entangled/bazel-bin/utils/*.a",
+            ]
+        , &lib_dir);
 
         println!("cargo:rustc-link-search=native={}", lib_dir.display());
     }
+    ///
+    /// glob_patterns:  Vector of String
+    /// lib_dir: Path of the libs
+    ///
+    fn copy_libs_glob<'a>(glob_patterns: Vec<&'a str>, lib_dir: &PathBuf) {
+        glob_patterns.iter().for_each(|glob_pattern| {
+            for entry in glob(glob_pattern).expect("Failed to read glob pattern") {
+                match entry {
+                    Ok(ref path) => {
+                        if let Some(file_name) = &path.file_name() {
+                            println!("FILE NAME: {}", file_name.to_str().unwrap());
+                            let libname = file_name.to_str().unwrap();
+                            let library_path = lib_dir.join(&libname);
+                            log!("Copying {:?} to {:?}", path, library_path);
 
-    fn copy_libs_glob<'a>(glob_pattern: &'a str, lib_dir: &PathBuf) {
-        for entry in glob(glob_pattern).expect("Failed to read glob pattern") {
-            match entry {
-                Ok(ref path) => {
-                    if let Some(file_name) = &path.file_name() {
-                        println!("FILE NAME: {}", file_name.to_str().unwrap());
-                        let libname = file_name.to_str().unwrap();
+                            match fs::copy(path, library_path) {
+                                Ok(_) => {
+                                    println!("File Copied");
+                                }
+                                Err(e) => {
+                                    log!("{:?}", e);
+                                }
+                            }
 
-                        let library_path = lib_dir.join(&libname);
-                        log!("Copying {:?} to {:?}", path, library_path);
-                        match fs::copy(path, library_path) {
-                            Ok(_) => {
-                                println!("File Copied");
-                            }
-                            Err(e) => {
-                                log!("{:?}", e);
-                            }
+                            println!("cargo:rustc-link-lib=static={}", &libname.replace("lib", "").replace(".a", ""));
+                            println!("cargo:rustc-link-search=native={}", lib_dir.display());
                         }
-
-                        println!("cargo:rustc-link-lib=static={}", &libname.replace("lib", "").replace(".a", ""));
-                    }
-                },
-                Err(e) => println!("{:?}", e),
+                    },
+                    Err(e) => println!("{:?}", e),
+                }
             }
-        }
+        })
     }
+
     ///
     /// Check bazel
     ///

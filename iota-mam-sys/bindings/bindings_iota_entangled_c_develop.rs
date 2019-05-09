@@ -102,6 +102,43 @@ pub const NORMALIZED_FRAGMENT_LENGTH: u32 = 27;
 pub const ISS_FRAGMENTS: u32 = 27;
 pub const ISS_KEY_LENGTH: u32 = 6561;
 pub const ISS_CHUNK_LENGTH: u32 = 81;
+pub const STR_OK: &'static [u8; 3usize] = b"OK\0";
+pub const STR_ERROR: &'static [u8; 6usize] = b"ERROR\0";
+pub const STR_NULL_PARAM: &'static [u8; 36usize] = b"Attempting to access a null pointer\0";
+pub const STR_CCLIENT_JSON_CREATE: &'static [u8; 26usize] = b"Create JSON object error!\0";
+pub const STR_CCLIENT_JSON_PARSE: &'static [u8; 20usize] = b"JSON parsing failed\0";
+pub const STR_CCLIENT_OOM: &'static [u8; 15usize] = b"Out of Memory!\0";
+pub const STR_CCLIENT_HTTP: &'static [u8; 19usize] = b"HTTP service error\0";
+pub const STR_CCLIENT_HTTP_REQ: &'static [u8; 19usize] = b"HTTP request error\0";
+pub const STR_CCLIENT_HTTP_RES: &'static [u8; 20usize] = b"HTTP response error\0";
+pub const STR_CCLIENT_RES_ERROR: &'static [u8; 14usize] = b"IRI response:\0";
+pub const STR_CCLIENT_JSON_KEY: &'static [u8; 19usize] = b"JSON key not found\0";
+pub const STR_CCLIENT_FLEX_TRITS: &'static [u8; 24usize] = b"trits converting failed\0";
+pub const STR_CCLIENT_NULL_PTR: &'static [u8; 13usize] = b"NULL pointer\0";
+pub const STR_CCLIENT_UNIMPLEMENTED: &'static [u8; 23usize] = b"Function unimplemented\0";
+pub const STR_CCLIENT_INVALID_SECURITY: &'static [u8; 23usize] = b"Invalid security level\0";
+pub const STR_CCLIENT_TX_DESERIALIZE_FAILED: &'static [u8; 40usize] =
+    b"deserializing transaction object failed\0";
+pub const STR_CCLIENT_INSUFFICIENT_BALANCE: &'static [u8; 21usize] = b"Insufficient balance\0";
+pub const STR_CCLIENT_POW_FAILED: &'static [u8; 17usize] = b"Local PoW failed\0";
+pub const SRT_CCLIENT_INVALID_TRANSFER: &'static [u8; 18usize] = b"Invalid transfers\0";
+pub const STR_CCLIENT_INVALID_TAIL_HASH: &'static [u8; 18usize] = b"Invalid tail hash\0";
+pub const SRT_CCLIENT_INVALID_BUNDLE: &'static [u8; 15usize] = b"Invalid bundle\0";
+pub const STR_UTILS_SOCKET_TLS_RNG: &'static [u8; 28usize] = b"TLS random number generator\0";
+pub const STR_UTILS_SOCKET_TLS_CA: &'static [u8; 25usize] = b"TLS parsing CA PEM error\0";
+pub const STR_UTILS_SOCKET_TLS_CLIENT_PEM: &'static [u8; 47usize] =
+    b"TLS parsing client Certificate Authority error\0";
+pub const STR_UTILS_SOCKET_TLS_CLIENT_PK: &'static [u8; 37usize] =
+    b"TLS parsing client private key error\0";
+pub const STR_UTILS_SOCKET_TLS_CONF: &'static [u8; 16usize] = b"TLS setup error\0";
+pub const STR_UTILS_SOCKET_TLS_AUTHMODE: &'static [u8; 30usize] =
+    b"TLS configure auth mode error\0";
+pub const STR_UTILS_SOCKET_CLIENT_AUTH: &'static [u8; 52usize] =
+    b"TLS set own certificate chain and private key error\0";
+pub const STR_UTILS_SOCKET_TLS_HANDSHAKE: &'static [u8; 20usize] = b"TLS handshake error\0";
+pub const STR_UTILS_SOCKET_CONNECT: &'static [u8; 21usize] = b"Socket connect error\0";
+pub const STR_UTILS_SOCKET_RECV: &'static [u8; 21usize] = b"Socket receive error\0";
+pub const STR_UTILS_SOCKET_SEND: &'static [u8; 18usize] = b"Socket send error\0";
 pub const __DARWIN_ONLY_64_BIT_INO_T: u32 = 0;
 pub const __DARWIN_ONLY_VERS_1050: u32 = 0;
 pub const __DARWIN_ONLY_UNIX_CONFORMANCE: u32 = 1;
@@ -120,76 +157,6 @@ pub const __DARWIN_NO_LONG_LONG: u32 = 0;
 pub const _DARWIN_FEATURE_64_BIT_INODE: u32 = 1;
 pub const _DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE: u32 = 1;
 pub const _DARWIN_FEATURE_UNIX_CONFORMANCE: u32 = 3;
-pub const __PTHREAD_SIZE__: u32 = 8176;
-pub const __PTHREAD_ATTR_SIZE__: u32 = 56;
-pub const __PTHREAD_MUTEXATTR_SIZE__: u32 = 8;
-pub const __PTHREAD_MUTEX_SIZE__: u32 = 56;
-pub const __PTHREAD_CONDATTR_SIZE__: u32 = 8;
-pub const __PTHREAD_COND_SIZE__: u32 = 40;
-pub const __PTHREAD_ONCE_SIZE__: u32 = 8;
-pub const __PTHREAD_RWLOCK_SIZE__: u32 = 192;
-pub const __PTHREAD_RWLOCKATTR_SIZE__: u32 = 16;
-pub const __DARWIN_WCHAR_MIN: i32 = -2147483648;
-pub const _FORTIFY_SOURCE: u32 = 2;
-pub const _POSIX_VERSION: u32 = 200112;
-pub const _POSIX2_VERSION: u32 = 200112;
-pub const _POSIX_THREAD_KEYS_MAX: u32 = 128;
-pub const F_OK: u32 = 0;
-pub const X_OK: u32 = 1;
-pub const W_OK: u32 = 2;
-pub const R_OK: u32 = 4;
-pub const _READ_OK: u32 = 512;
-pub const _WRITE_OK: u32 = 1024;
-pub const _EXECUTE_OK: u32 = 2048;
-pub const _DELETE_OK: u32 = 4096;
-pub const _APPEND_OK: u32 = 8192;
-pub const _RMFILE_OK: u32 = 16384;
-pub const _RATTR_OK: u32 = 32768;
-pub const _WATTR_OK: u32 = 65536;
-pub const _REXT_OK: u32 = 131072;
-pub const _WEXT_OK: u32 = 262144;
-pub const _RPERM_OK: u32 = 524288;
-pub const _WPERM_OK: u32 = 1048576;
-pub const _CHOWN_OK: u32 = 2097152;
-pub const _ACCESS_EXTENDED_MASK: u32 = 4193792;
-pub const SEEK_SET: u32 = 0;
-pub const SEEK_CUR: u32 = 1;
-pub const SEEK_END: u32 = 2;
-pub const SEEK_HOLE: u32 = 3;
-pub const SEEK_DATA: u32 = 4;
-pub const L_SET: u32 = 0;
-pub const L_INCR: u32 = 1;
-pub const L_XTND: u32 = 2;
-pub const ACCESSX_MAX_DESCRIPTORS: u32 = 100;
-pub const ACCESSX_MAX_TABLESIZE: u32 = 16384;
-pub const _PC_LINK_MAX: u32 = 1;
-pub const _PC_MAX_CANON: u32 = 2;
-pub const _PC_MAX_INPUT: u32 = 3;
-pub const _PC_NAME_MAX: u32 = 4;
-pub const _PC_PATH_MAX: u32 = 5;
-pub const _PC_PIPE_BUF: u32 = 6;
-pub const _PC_CHOWN_RESTRICTED: u32 = 7;
-pub const _PC_NO_TRUNC: u32 = 8;
-pub const _PC_VDISABLE: u32 = 9;
-pub const _PC_NAME_CHARS_MAX: u32 = 10;
-pub const _PC_CASE_SENSITIVE: u32 = 11;
-pub const _PC_CASE_PRESERVING: u32 = 12;
-pub const _PC_EXTENDED_SECURITY_NP: u32 = 13;
-pub const _PC_AUTH_OPAQUE_NP: u32 = 14;
-pub const _PC_2_SYMLINKS: u32 = 15;
-pub const _PC_ALLOC_SIZE_MIN: u32 = 16;
-pub const _PC_ASYNC_IO: u32 = 17;
-pub const _PC_FILESIZEBITS: u32 = 18;
-pub const _PC_PRIO_IO: u32 = 19;
-pub const _PC_REC_INCR_XFER_SIZE: u32 = 20;
-pub const _PC_REC_MAX_XFER_SIZE: u32 = 21;
-pub const _PC_REC_MIN_XFER_SIZE: u32 = 22;
-pub const _PC_REC_XFER_ALIGN: u32 = 23;
-pub const _PC_SYMLINK_MAX: u32 = 24;
-pub const _PC_SYNC_IO: u32 = 25;
-pub const _PC_XATTR_SIZE_BITS: u32 = 26;
-pub const _PC_MIN_HOLE_SIZE: u32 = 27;
-pub const _CS_PATH: u32 = 1;
 pub const __API_TO_BE_DEPRECATED: u32 = 100000;
 pub const __MAC_10_0: u32 = 1000;
 pub const __MAC_10_1: u32 = 1010;
@@ -287,6 +254,146 @@ pub const __WATCHOS_5_0: u32 = 50000;
 pub const __WATCHOS_5_1: u32 = 50100;
 pub const __WATCHOS_5_2: u32 = 50200;
 pub const __MAC_OS_X_VERSION_MAX_ALLOWED: u32 = 101404;
+pub const __PTHREAD_SIZE__: u32 = 8176;
+pub const __PTHREAD_ATTR_SIZE__: u32 = 56;
+pub const __PTHREAD_MUTEXATTR_SIZE__: u32 = 8;
+pub const __PTHREAD_MUTEX_SIZE__: u32 = 56;
+pub const __PTHREAD_CONDATTR_SIZE__: u32 = 8;
+pub const __PTHREAD_COND_SIZE__: u32 = 40;
+pub const __PTHREAD_ONCE_SIZE__: u32 = 8;
+pub const __PTHREAD_RWLOCK_SIZE__: u32 = 192;
+pub const __PTHREAD_RWLOCKATTR_SIZE__: u32 = 16;
+pub const __DARWIN_WCHAR_MIN: i32 = -2147483648;
+pub const _FORTIFY_SOURCE: u32 = 2;
+pub const RENAME_SECLUDE: u32 = 1;
+pub const RENAME_SWAP: u32 = 2;
+pub const RENAME_EXCL: u32 = 4;
+pub const __SLBF: u32 = 1;
+pub const __SNBF: u32 = 2;
+pub const __SRD: u32 = 4;
+pub const __SWR: u32 = 8;
+pub const __SRW: u32 = 16;
+pub const __SEOF: u32 = 32;
+pub const __SERR: u32 = 64;
+pub const __SMBF: u32 = 128;
+pub const __SAPP: u32 = 256;
+pub const __SSTR: u32 = 512;
+pub const __SOPT: u32 = 1024;
+pub const __SNPT: u32 = 2048;
+pub const __SOFF: u32 = 4096;
+pub const __SMOD: u32 = 8192;
+pub const __SALC: u32 = 16384;
+pub const __SIGN: u32 = 32768;
+pub const _IOFBF: u32 = 0;
+pub const _IOLBF: u32 = 1;
+pub const _IONBF: u32 = 2;
+pub const BUFSIZ: u32 = 1024;
+pub const EOF: i32 = -1;
+pub const FOPEN_MAX: u32 = 20;
+pub const FILENAME_MAX: u32 = 1024;
+pub const P_tmpdir: &'static [u8; 10usize] = b"/var/tmp/\0";
+pub const L_tmpnam: u32 = 1024;
+pub const TMP_MAX: u32 = 308915776;
+pub const SEEK_SET: u32 = 0;
+pub const SEEK_CUR: u32 = 1;
+pub const SEEK_END: u32 = 2;
+pub const L_ctermid: u32 = 1024;
+pub const __CTERMID_DEFINED: u32 = 1;
+pub const _USE_FORTIFY_LEVEL: u32 = 2;
+pub const RC_SEVERITY_MASK: u32 = 192;
+pub const RC_SHIFT_SEVERITY: u32 = 6;
+pub const RC_SEVERITY_FATAL: u32 = 192;
+pub const RC_SEVERITY_MAJOR: u32 = 128;
+pub const RC_SEVERITY_MODERATE: u32 = 64;
+pub const RC_SEVERITY_MINOR: u32 = 0;
+pub const RC_MODULE_MASK: u32 = 65280;
+pub const RC_SHIFT_MODULE: u32 = 8;
+pub const RC_MODULE_GENERAL: u32 = 256;
+pub const RC_MODULE_STORAGE: u32 = 512;
+pub const RC_MODULE_STORAGE_SQL: u32 = 768;
+pub const RC_MODULE_STORAGE_SQLITE3: u32 = 1024;
+pub const RC_MODULE_CORE: u32 = 1280;
+pub const RC_MODULE_NODE: u32 = 1536;
+pub const RC_MODULE_NEIGHBOR: u32 = 1792;
+pub const RC_MODULE_CCLIENT: u32 = 2048;
+pub const RC_MODULE_CONSENSUS: u32 = 2304;
+pub const RC_MODULE_CONSENSUS_CW: u32 = 2560;
+pub const RC_MODULE_CONSENSUS_EXIT_PROBABILITIES: u32 = 2816;
+pub const RC_MODULE_CONSENSUS_MT: u32 = 3072;
+pub const RC_MODULE_CONSENSUS_SNAPSHOT: u32 = 3328;
+pub const RC_MODULE_LEDGER_VALIDATOR: u32 = 3584;
+pub const RC_MODULE_CONSENSUS_TIP_SELECTOR: u32 = 3840;
+pub const RC_MODULE_CONSENSUS_TANGLE: u32 = 4096;
+pub const RC_MODULE_UTILS: u32 = 41216;
+pub const RC_MODULE_BROADCASTER: u32 = 41472;
+pub const RC_MODULE_PROCESSOR: u32 = 41728;
+pub const RC_MODULE_RECEIVER_COMPONENT: u32 = 41984;
+pub const RC_MODULE_REQUESTER_COMPONENT: u32 = 42240;
+pub const RC_MODULE_RESPONDER_COMPONENT: u32 = 42496;
+pub const RC_MODULE_CIRI_CONF: u32 = 42752;
+pub const RC_MODULE_API: u32 = 43008;
+pub const RC_MODULE_GOSSIP: u32 = 43264;
+pub const RC_MODULE_MAM: u32 = 45056;
+pub const RC_MODULE_HELPERS: u32 = 45312;
+pub const RC_MODULE_CRYPTO: u32 = 45568;
+pub const RC_ERRORCODE_MASK: u32 = 63;
+pub const RC_RESOLVE_FORMAT_STR: &'static [u8; 36usize] = b"M=0x%02X, E=0x%02X, S=0x%X (0x%04X)\0";
+pub const _POSIX_VERSION: u32 = 200112;
+pub const _POSIX2_VERSION: u32 = 200112;
+pub const _POSIX_THREAD_KEYS_MAX: u32 = 128;
+pub const F_OK: u32 = 0;
+pub const X_OK: u32 = 1;
+pub const W_OK: u32 = 2;
+pub const R_OK: u32 = 4;
+pub const _READ_OK: u32 = 512;
+pub const _WRITE_OK: u32 = 1024;
+pub const _EXECUTE_OK: u32 = 2048;
+pub const _DELETE_OK: u32 = 4096;
+pub const _APPEND_OK: u32 = 8192;
+pub const _RMFILE_OK: u32 = 16384;
+pub const _RATTR_OK: u32 = 32768;
+pub const _WATTR_OK: u32 = 65536;
+pub const _REXT_OK: u32 = 131072;
+pub const _WEXT_OK: u32 = 262144;
+pub const _RPERM_OK: u32 = 524288;
+pub const _WPERM_OK: u32 = 1048576;
+pub const _CHOWN_OK: u32 = 2097152;
+pub const _ACCESS_EXTENDED_MASK: u32 = 4193792;
+pub const SEEK_HOLE: u32 = 3;
+pub const SEEK_DATA: u32 = 4;
+pub const L_SET: u32 = 0;
+pub const L_INCR: u32 = 1;
+pub const L_XTND: u32 = 2;
+pub const ACCESSX_MAX_DESCRIPTORS: u32 = 100;
+pub const ACCESSX_MAX_TABLESIZE: u32 = 16384;
+pub const _PC_LINK_MAX: u32 = 1;
+pub const _PC_MAX_CANON: u32 = 2;
+pub const _PC_MAX_INPUT: u32 = 3;
+pub const _PC_NAME_MAX: u32 = 4;
+pub const _PC_PATH_MAX: u32 = 5;
+pub const _PC_PIPE_BUF: u32 = 6;
+pub const _PC_CHOWN_RESTRICTED: u32 = 7;
+pub const _PC_NO_TRUNC: u32 = 8;
+pub const _PC_VDISABLE: u32 = 9;
+pub const _PC_NAME_CHARS_MAX: u32 = 10;
+pub const _PC_CASE_SENSITIVE: u32 = 11;
+pub const _PC_CASE_PRESERVING: u32 = 12;
+pub const _PC_EXTENDED_SECURITY_NP: u32 = 13;
+pub const _PC_AUTH_OPAQUE_NP: u32 = 14;
+pub const _PC_2_SYMLINKS: u32 = 15;
+pub const _PC_ALLOC_SIZE_MIN: u32 = 16;
+pub const _PC_ASYNC_IO: u32 = 17;
+pub const _PC_FILESIZEBITS: u32 = 18;
+pub const _PC_PRIO_IO: u32 = 19;
+pub const _PC_REC_INCR_XFER_SIZE: u32 = 20;
+pub const _PC_REC_MAX_XFER_SIZE: u32 = 21;
+pub const _PC_REC_MIN_XFER_SIZE: u32 = 22;
+pub const _PC_REC_XFER_ALIGN: u32 = 23;
+pub const _PC_SYMLINK_MAX: u32 = 24;
+pub const _PC_SYNC_IO: u32 = 25;
+pub const _PC_XATTR_SIZE_BITS: u32 = 26;
+pub const _PC_MIN_HOLE_SIZE: u32 = 27;
+pub const _CS_PATH: u32 = 1;
 pub const STDIN_FILENO: u32 = 0;
 pub const STDOUT_FILENO: u32 = 1;
 pub const STDERR_FILENO: u32 = 2;
@@ -546,7 +653,6 @@ pub const F_ULOCK: u32 = 0;
 pub const F_LOCK: u32 = 1;
 pub const F_TLOCK: u32 = 2;
 pub const F_TEST: u32 = 3;
-pub const __CTERMID_DEFINED: u32 = 1;
 pub const __DARWIN_FD_SETSIZE: u32 = 1024;
 pub const __DARWIN_NBBY: u32 = 8;
 pub const FD_SETSIZE: u32 = 1024;
@@ -606,8 +712,37 @@ pub const SIG_ATOMIC_MAX: u32 = 2147483647;
 pub const true_: u32 = 1;
 pub const false_: u32 = 0;
 pub const __bool_true_false_are_defined: u32 = 1;
-pub const _USE_FORTIFY_LEVEL: u32 = 2;
 pub const __HAS_FIXED_CHK_PROTOTYPES: u32 = 1;
+pub const MAM_SPONGE_RATE: u32 = 486;
+pub const MAM_SPONGE_CONTROL: u32 = 6;
+pub const MAM_SPONGE_CAPACITY: u32 = 237;
+pub const MAM_SPONGE_WIDTH: u32 = 729;
+pub const MAM_SPONGE_KEY_SIZE: u32 = 243;
+pub const MAM_SPONGE_HASH_SIZE: u32 = 243;
+pub const MAM_SPONGE_MAC_SIZE: u32 = 243;
+pub const MAM_SPONGE_CTL_DATA: u32 = 0;
+pub const MAM_SPONGE_CTL_HASH: u32 = 0;
+pub const MAM_SPONGE_CTL_KEY: u32 = 1;
+pub const MAM_SPONGE_CTL_PRN: u32 = 1;
+pub const MAM_SPONGE_CTL_TEXT: i32 = -1;
+pub const MAM_SPONGE_CTL_MAC: i32 = -1;
+pub const MAM_PB3_SIZE_MAX: u64 = 2026277576509488133;
+pub const MAM_PRNG_SECRET_KEY_SIZE: u32 = 243;
+pub const MAM_WOTS_PUBLIC_KEY_SIZE: u32 = 243;
+pub const MAM_WOTS_PRIVATE_KEY_PART_SIZE: u32 = 162;
+pub const MAM_WOTS_PRIVATE_KEY_PART_COUNT: u32 = 81;
+pub const MAM_WOTS_PRIVATE_KEY_SIZE: u32 = 13122;
+pub const MAM_WOTS_HASH_SIZE: u32 = 234;
+pub const MAM_WOTS_SIGNATURE_SIZE: u32 = 13122;
+pub const MAM_MSS_PK_SIZE: u32 = 243;
+pub const MAM_MSS_SKN_TREE_DEPTH_SIZE: u32 = 4;
+pub const MAM_MSS_SKN_KEY_NUMBER_SIZE: u32 = 14;
+pub const MAM_MSS_SKN_SIZE: u32 = 18;
+pub const MAM_MSS_HASH_SIZE: u32 = 234;
+pub const MAM_MSS_MAX_D: u32 = 20;
+pub const MAM_MSS_MT_HASH_SIZE: u32 = 243;
+pub const MAM_ENDPOINT_ID_SIZE: u32 = 243;
+pub const MAM_ENDPOINT_NAME_SIZE: u32 = 18;
 pub const __DARWIN_NSIG: u32 = 32;
 pub const NSIG: u32 = 32;
 pub const _I386_SIGNAL_H_: u32 = 1;
@@ -966,139 +1101,6 @@ pub const SCNiMAX: &'static [u8; 3usize] = b"ji\0";
 pub const SCNoMAX: &'static [u8; 3usize] = b"jo\0";
 pub const SCNuMAX: &'static [u8; 3usize] = b"ju\0";
 pub const SCNxMAX: &'static [u8; 3usize] = b"jx\0";
-pub const RENAME_SECLUDE: u32 = 1;
-pub const RENAME_SWAP: u32 = 2;
-pub const RENAME_EXCL: u32 = 4;
-pub const __SLBF: u32 = 1;
-pub const __SNBF: u32 = 2;
-pub const __SRD: u32 = 4;
-pub const __SWR: u32 = 8;
-pub const __SRW: u32 = 16;
-pub const __SEOF: u32 = 32;
-pub const __SERR: u32 = 64;
-pub const __SMBF: u32 = 128;
-pub const __SAPP: u32 = 256;
-pub const __SSTR: u32 = 512;
-pub const __SOPT: u32 = 1024;
-pub const __SNPT: u32 = 2048;
-pub const __SOFF: u32 = 4096;
-pub const __SMOD: u32 = 8192;
-pub const __SALC: u32 = 16384;
-pub const __SIGN: u32 = 32768;
-pub const _IOFBF: u32 = 0;
-pub const _IOLBF: u32 = 1;
-pub const _IONBF: u32 = 2;
-pub const BUFSIZ: u32 = 1024;
-pub const EOF: i32 = -1;
-pub const FOPEN_MAX: u32 = 20;
-pub const FILENAME_MAX: u32 = 1024;
-pub const P_tmpdir: &'static [u8; 10usize] = b"/var/tmp/\0";
-pub const L_tmpnam: u32 = 1024;
-pub const TMP_MAX: u32 = 308915776;
-pub const L_ctermid: u32 = 1024;
-pub const STR_OK: &'static [u8; 3usize] = b"OK\0";
-pub const STR_ERROR: &'static [u8; 6usize] = b"ERROR\0";
-pub const STR_NULL_PARAM: &'static [u8; 36usize] = b"Attempting to access a null pointer\0";
-pub const STR_CCLIENT_JSON_CREATE: &'static [u8; 26usize] = b"Create JSON object error!\0";
-pub const STR_CCLIENT_JSON_PARSE: &'static [u8; 20usize] = b"JSON parsing failed\0";
-pub const STR_CCLIENT_OOM: &'static [u8; 15usize] = b"Out of Memory!\0";
-pub const STR_CCLIENT_HTTP: &'static [u8; 19usize] = b"HTTP service error\0";
-pub const STR_CCLIENT_HTTP_REQ: &'static [u8; 19usize] = b"HTTP request error\0";
-pub const STR_CCLIENT_HTTP_RES: &'static [u8; 20usize] = b"HTTP response error\0";
-pub const STR_CCLIENT_RES_ERROR: &'static [u8; 14usize] = b"IRI response:\0";
-pub const STR_CCLIENT_JSON_KEY: &'static [u8; 19usize] = b"JSON key not found\0";
-pub const STR_CCLIENT_FLEX_TRITS: &'static [u8; 24usize] = b"trits converting failed\0";
-pub const STR_CCLIENT_NULL_PTR: &'static [u8; 13usize] = b"NULL pointer\0";
-pub const STR_CCLIENT_UNIMPLEMENTED: &'static [u8; 23usize] = b"Function unimplemented\0";
-pub const STR_CCLIENT_INVALID_SECURITY: &'static [u8; 23usize] = b"Invalid security level\0";
-pub const STR_CCLIENT_TX_DESERIALIZE_FAILED: &'static [u8; 40usize] =
-    b"deserializing transaction object failed\0";
-pub const STR_CCLIENT_INSUFFICIENT_BALANCE: &'static [u8; 21usize] = b"Insufficient balance\0";
-pub const STR_CCLIENT_POW_FAILED: &'static [u8; 17usize] = b"Local PoW failed\0";
-pub const SRT_CCLIENT_INVALID_TRANSFER: &'static [u8; 18usize] = b"Invalid transfers\0";
-pub const STR_CCLIENT_INVALID_TAIL_HASH: &'static [u8; 18usize] = b"Invalid tail hash\0";
-pub const SRT_CCLIENT_INVALID_BUNDLE: &'static [u8; 15usize] = b"Invalid bundle\0";
-pub const STR_UTILS_SOCKET_TLS_RNG: &'static [u8; 28usize] = b"TLS random number generator\0";
-pub const STR_UTILS_SOCKET_TLS_CA: &'static [u8; 25usize] = b"TLS parsing CA PEM error\0";
-pub const STR_UTILS_SOCKET_TLS_CLIENT_PEM: &'static [u8; 47usize] =
-    b"TLS parsing client Certificate Authority error\0";
-pub const STR_UTILS_SOCKET_TLS_CLIENT_PK: &'static [u8; 37usize] =
-    b"TLS parsing client private key error\0";
-pub const STR_UTILS_SOCKET_TLS_CONF: &'static [u8; 16usize] = b"TLS setup error\0";
-pub const STR_UTILS_SOCKET_TLS_AUTHMODE: &'static [u8; 30usize] =
-    b"TLS configure auth mode error\0";
-pub const STR_UTILS_SOCKET_CLIENT_AUTH: &'static [u8; 52usize] =
-    b"TLS set own certificate chain and private key error\0";
-pub const STR_UTILS_SOCKET_TLS_HANDSHAKE: &'static [u8; 20usize] = b"TLS handshake error\0";
-pub const STR_UTILS_SOCKET_CONNECT: &'static [u8; 21usize] = b"Socket connect error\0";
-pub const STR_UTILS_SOCKET_RECV: &'static [u8; 21usize] = b"Socket receive error\0";
-pub const STR_UTILS_SOCKET_SEND: &'static [u8; 18usize] = b"Socket send error\0";
-pub const RC_SEVERITY_MASK: u32 = 192;
-pub const RC_SHIFT_SEVERITY: u32 = 6;
-pub const RC_SEVERITY_FATAL: u32 = 192;
-pub const RC_SEVERITY_MAJOR: u32 = 128;
-pub const RC_SEVERITY_MODERATE: u32 = 64;
-pub const RC_SEVERITY_MINOR: u32 = 0;
-pub const RC_MODULE_MASK: u32 = 65280;
-pub const RC_SHIFT_MODULE: u32 = 8;
-pub const RC_MODULE_GENERAL: u32 = 256;
-pub const RC_MODULE_STORAGE: u32 = 512;
-pub const RC_MODULE_STORAGE_SQL: u32 = 768;
-pub const RC_MODULE_STORAGE_SQLITE3: u32 = 1024;
-pub const RC_MODULE_CORE: u32 = 1280;
-pub const RC_MODULE_NODE: u32 = 1536;
-pub const RC_MODULE_NEIGHBOR: u32 = 1792;
-pub const RC_MODULE_CCLIENT: u32 = 2048;
-pub const RC_MODULE_CONSENSUS: u32 = 2304;
-pub const RC_MODULE_CONSENSUS_CW: u32 = 2560;
-pub const RC_MODULE_CONSENSUS_EXIT_PROBABILITIES: u32 = 2816;
-pub const RC_MODULE_CONSENSUS_MT: u32 = 3072;
-pub const RC_MODULE_CONSENSUS_SNAPSHOT: u32 = 3328;
-pub const RC_MODULE_LEDGER_VALIDATOR: u32 = 3584;
-pub const RC_MODULE_CONSENSUS_TIP_SELECTOR: u32 = 3840;
-pub const RC_MODULE_UTILS: u32 = 41216;
-pub const RC_MODULE_BROADCASTER: u32 = 41472;
-pub const RC_MODULE_PROCESSOR: u32 = 41728;
-pub const RC_MODULE_RECEIVER_COMPONENT: u32 = 41984;
-pub const RC_MODULE_REQUESTER_COMPONENT: u32 = 42240;
-pub const RC_MODULE_RESPONDER_COMPONENT: u32 = 42496;
-pub const RC_MODULE_CIRI_CONF: u32 = 42752;
-pub const RC_MODULE_API: u32 = 43008;
-pub const RC_MODULE_GOSSIP: u32 = 43264;
-pub const RC_MODULE_MAM: u32 = 45056;
-pub const RC_MODULE_HELPERS: u32 = 45312;
-pub const RC_MODULE_CRYPTO: u32 = 45568;
-pub const RC_ERRORCODE_MASK: u32 = 63;
-pub const RC_RESOLVE_FORMAT_STR: &'static [u8; 36usize] = b"M=0x%02X, E=0x%02X, S=0x%X (0x%04X)\0";
-pub const MAM_PRNG_KEY_SIZE: u32 = 243;
-pub const MAM_SPONGE_RATE: u32 = 486;
-pub const MAM_SPONGE_CONTROL: u32 = 6;
-pub const MAM_SPONGE_CAPACITY: u32 = 237;
-pub const MAM_SPONGE_WIDTH: u32 = 729;
-pub const MAM_SPONGE_KEY_SIZE: u32 = 243;
-pub const MAM_SPONGE_HASH_SIZE: u32 = 243;
-pub const MAM_SPONGE_MAC_SIZE: u32 = 243;
-pub const MAM_SPONGE_CTL_DATA: u32 = 0;
-pub const MAM_SPONGE_CTL_HASH: u32 = 0;
-pub const MAM_SPONGE_CTL_KEY: u32 = 1;
-pub const MAM_SPONGE_CTL_PRN: u32 = 1;
-pub const MAM_SPONGE_CTL_TEXT: i32 = -1;
-pub const MAM_SPONGE_CTL_MAC: i32 = -1;
-pub const MAM_WOTS_PK_SIZE: u32 = 243;
-pub const MAM_WOTS_SK_PART_SIZE: u32 = 162;
-pub const MAM_WOTS_SK_PART_COUNT: u32 = 81;
-pub const MAM_WOTS_SK_SIZE: u32 = 13122;
-pub const MAM_WOTS_HASH_SIZE: u32 = 234;
-pub const MAM_WOTS_SIG_SIZE: u32 = 13122;
-pub const MAM_MSS_PK_SIZE: u32 = 243;
-pub const MAM_MSS_SKN_TREE_DEPTH_SIZE: u32 = 4;
-pub const MAM_MSS_SKN_KEY_NUMBER_SIZE: u32 = 14;
-pub const MAM_MSS_SKN_SIZE: u32 = 18;
-pub const MAM_MSS_HASH_SIZE: u32 = 234;
-pub const MAM_MSS_MAX_D: u32 = 20;
-pub const MAM_MSS_MT_HASH_SIZE: u32 = 243;
-pub const MAM_ENDPOINT_ID_SIZE: u32 = 243;
-pub const MAM_ENDPOINT_NAME_SIZE: u32 = 18;
 pub const MAM_CHANNEL_ID_SIZE: u32 = 243;
 pub const MAM_CHANNEL_NAME_SIZE: u32 = 18;
 pub const MAM_CHANNEL_MSG_ORD_SIZE: u32 = 81;
@@ -1711,6 +1713,1055 @@ pub type __darwin_pthread_t = *mut _opaque_pthread_t;
 pub type __darwin_nl_item = ::std::os::raw::c_int;
 pub type __darwin_wctrans_t = ::std::os::raw::c_int;
 pub type __darwin_wctype_t = __uint32_t;
+pub type u_int8_t = ::std::os::raw::c_uchar;
+pub type u_int16_t = ::std::os::raw::c_ushort;
+pub type u_int32_t = ::std::os::raw::c_uint;
+pub type u_int64_t = ::std::os::raw::c_ulonglong;
+pub type register_t = i64;
+pub type user_addr_t = u_int64_t;
+pub type user_size_t = u_int64_t;
+pub type user_ssize_t = i64;
+pub type user_long_t = i64;
+pub type user_ulong_t = u_int64_t;
+pub type user_time_t = i64;
+pub type user_off_t = i64;
+pub type syscall_arg_t = u_int64_t;
+pub type va_list = __darwin_va_list;
+extern "C" {
+    pub fn renameat(
+        arg1: ::std::os::raw::c_int,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+        arg4: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn renamex_np(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_uint,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn renameatx_np(
+        arg1: ::std::os::raw::c_int,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+        arg4: *const ::std::os::raw::c_char,
+        arg5: ::std::os::raw::c_uint,
+    ) -> ::std::os::raw::c_int;
+}
+pub type fpos_t = __darwin_off_t;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct __sbuf {
+    pub _base: *mut ::std::os::raw::c_uchar,
+    pub _size: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout___sbuf() {
+    assert_eq!(
+        ::std::mem::size_of::<__sbuf>(),
+        16usize,
+        concat!("Size of: ", stringify!(__sbuf))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<__sbuf>(),
+        8usize,
+        concat!("Alignment of ", stringify!(__sbuf))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sbuf>()))._base as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sbuf),
+            "::",
+            stringify!(_base)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sbuf>()))._size as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sbuf),
+            "::",
+            stringify!(_size)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct __sFILEX {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct __sFILE {
+    pub _p: *mut ::std::os::raw::c_uchar,
+    pub _r: ::std::os::raw::c_int,
+    pub _w: ::std::os::raw::c_int,
+    pub _flags: ::std::os::raw::c_short,
+    pub _file: ::std::os::raw::c_short,
+    pub _bf: __sbuf,
+    pub _lbfsize: ::std::os::raw::c_int,
+    pub _cookie: *mut ::std::os::raw::c_void,
+    pub _close: ::std::option::Option<
+        unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int,
+    >,
+    pub _read: ::std::option::Option<
+        unsafe extern "C" fn(
+            arg1: *mut ::std::os::raw::c_void,
+            arg2: *mut ::std::os::raw::c_char,
+            arg3: ::std::os::raw::c_int,
+        ) -> ::std::os::raw::c_int,
+    >,
+    pub _seek: ::std::option::Option<
+        unsafe extern "C" fn(
+            arg1: *mut ::std::os::raw::c_void,
+            arg2: fpos_t,
+            arg3: ::std::os::raw::c_int,
+        ) -> fpos_t,
+    >,
+    pub _write: ::std::option::Option<
+        unsafe extern "C" fn(
+            arg1: *mut ::std::os::raw::c_void,
+            arg2: *const ::std::os::raw::c_char,
+            arg3: ::std::os::raw::c_int,
+        ) -> ::std::os::raw::c_int,
+    >,
+    pub _ub: __sbuf,
+    pub _extra: *mut __sFILEX,
+    pub _ur: ::std::os::raw::c_int,
+    pub _ubuf: [::std::os::raw::c_uchar; 3usize],
+    pub _nbuf: [::std::os::raw::c_uchar; 1usize],
+    pub _lb: __sbuf,
+    pub _blksize: ::std::os::raw::c_int,
+    pub _offset: fpos_t,
+}
+#[test]
+fn bindgen_test_layout___sFILE() {
+    assert_eq!(
+        ::std::mem::size_of::<__sFILE>(),
+        152usize,
+        concat!("Size of: ", stringify!(__sFILE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<__sFILE>(),
+        8usize,
+        concat!("Alignment of ", stringify!(__sFILE))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._p as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_p)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._r as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_r)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._w as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_w)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._flags as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._file as *const _ as usize },
+        18usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_file)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._bf as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_bf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._lbfsize as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_lbfsize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._cookie as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_cookie)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._close as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_close)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._read as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_read)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._seek as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_seek)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._write as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_write)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._ub as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_ub)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._extra as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_extra)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._ur as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_ur)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._ubuf as *const _ as usize },
+        116usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_ubuf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._nbuf as *const _ as usize },
+        119usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_nbuf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._lb as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_lb)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._blksize as *const _ as usize },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_blksize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sFILE>()))._offset as *const _ as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sFILE),
+            "::",
+            stringify!(_offset)
+        )
+    );
+}
+pub type FILE = __sFILE;
+extern "C" {
+    pub static mut __stdinp: *mut FILE;
+}
+extern "C" {
+    pub static mut __stdoutp: *mut FILE;
+}
+extern "C" {
+    pub static mut __stderrp: *mut FILE;
+}
+extern "C" {
+    pub fn clearerr(arg1: *mut FILE);
+}
+extern "C" {
+    pub fn fclose(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn feof(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn ferror(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fflush(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fgetc(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fgetpos(arg1: *mut FILE, arg2: *mut fpos_t) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fgets(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut FILE,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn fopen(
+        __filename: *const ::std::os::raw::c_char,
+        __mode: *const ::std::os::raw::c_char,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub fn fprintf(
+        arg1: *mut FILE,
+        arg2: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fputc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fputs(arg1: *const ::std::os::raw::c_char, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fread(
+        __ptr: *mut ::std::os::raw::c_void,
+        __size: ::std::os::raw::c_ulong,
+        __nitems: ::std::os::raw::c_ulong,
+        __stream: *mut FILE,
+    ) -> ::std::os::raw::c_ulong;
+}
+extern "C" {
+    pub fn freopen(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut FILE,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub fn fscanf(
+        arg1: *mut FILE,
+        arg2: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fseek(
+        arg1: *mut FILE,
+        arg2: ::std::os::raw::c_long,
+        arg3: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn fsetpos(arg1: *mut FILE, arg2: *const fpos_t) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn ftell(arg1: *mut FILE) -> ::std::os::raw::c_long;
+}
+extern "C" {
+    pub fn fwrite(
+        __ptr: *const ::std::os::raw::c_void,
+        __size: ::std::os::raw::c_ulong,
+        __nitems: ::std::os::raw::c_ulong,
+        __stream: *mut FILE,
+    ) -> ::std::os::raw::c_ulong;
+}
+extern "C" {
+    pub fn getc(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn getchar() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn gets(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn perror(arg1: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn printf(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn putc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn putchar(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn puts(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn remove(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn rename(
+        __old: *const ::std::os::raw::c_char,
+        __new: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn rewind(arg1: *mut FILE);
+}
+extern "C" {
+    pub fn scanf(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn setbuf(arg1: *mut FILE, arg2: *mut ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn setvbuf(
+        arg1: *mut FILE,
+        arg2: *mut ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+        arg4: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn sprintf(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn sscanf(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn tmpfile() -> *mut FILE;
+}
+extern "C" {
+    pub fn tmpnam(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn ungetc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vfprintf(
+        arg1: *mut FILE,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vprintf(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vsprintf(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn ctermid(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn fdopen(arg1: ::std::os::raw::c_int, arg2: *const ::std::os::raw::c_char) -> *mut FILE;
+}
+extern "C" {
+    pub fn fileno(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn pclose(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn popen(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub fn __srget(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn __svfscanf(
+        arg1: *mut FILE,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn __swbuf(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn flockfile(arg1: *mut FILE);
+}
+extern "C" {
+    pub fn ftrylockfile(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn funlockfile(arg1: *mut FILE);
+}
+extern "C" {
+    pub fn getc_unlocked(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn getchar_unlocked() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn putc_unlocked(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn putchar_unlocked(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn getw(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn putw(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn tempnam(
+        __dir: *const ::std::os::raw::c_char,
+        __prefix: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::os::raw::c_char;
+}
+pub type off_t = __darwin_off_t;
+extern "C" {
+    pub fn fseeko(
+        __stream: *mut FILE,
+        __offset: off_t,
+        __whence: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn ftello(__stream: *mut FILE) -> off_t;
+}
+extern "C" {
+    pub fn snprintf(
+        __str: *mut ::std::os::raw::c_char,
+        __size: ::std::os::raw::c_ulong,
+        __format: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vfscanf(
+        __stream: *mut FILE,
+        __format: *const ::std::os::raw::c_char,
+        arg1: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vscanf(
+        __format: *const ::std::os::raw::c_char,
+        arg1: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vsnprintf(
+        __str: *mut ::std::os::raw::c_char,
+        __size: ::std::os::raw::c_ulong,
+        __format: *const ::std::os::raw::c_char,
+        arg1: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vsscanf(
+        __str: *const ::std::os::raw::c_char,
+        __format: *const ::std::os::raw::c_char,
+        arg1: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn dprintf(
+        arg1: ::std::os::raw::c_int,
+        arg2: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vdprintf(
+        arg1: ::std::os::raw::c_int,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn getdelim(
+        __linep: *mut *mut ::std::os::raw::c_char,
+        __linecapp: *mut usize,
+        __delimiter: ::std::os::raw::c_int,
+        __stream: *mut FILE,
+    ) -> isize;
+}
+extern "C" {
+    pub fn getline(
+        __linep: *mut *mut ::std::os::raw::c_char,
+        __linecapp: *mut usize,
+        __stream: *mut FILE,
+    ) -> isize;
+}
+extern "C" {
+    pub fn fmemopen(
+        __buf: *mut ::std::os::raw::c_void,
+        __size: usize,
+        __mode: *const ::std::os::raw::c_char,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub fn open_memstream(
+        __bufp: *mut *mut ::std::os::raw::c_char,
+        __sizep: *mut usize,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub static sys_nerr: ::std::os::raw::c_int;
+}
+extern "C" {
+    pub static mut sys_errlist: [*const ::std::os::raw::c_char; 0usize];
+}
+extern "C" {
+    pub fn asprintf(
+        arg1: *mut *mut ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn ctermid_r(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn fgetln(arg1: *mut FILE, arg2: *mut usize) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn fmtcheck(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn fpurge(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn setbuffer(
+        arg1: *mut FILE,
+        arg2: *mut ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn setlinebuf(arg1: *mut FILE) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vasprintf(
+        arg1: *mut *mut ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn zopen(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub fn funopen(
+        arg1: *const ::std::os::raw::c_void,
+        arg2: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut ::std::os::raw::c_void,
+                arg2: *mut ::std::os::raw::c_char,
+                arg3: ::std::os::raw::c_int,
+            ) -> ::std::os::raw::c_int,
+        >,
+        arg3: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut ::std::os::raw::c_void,
+                arg2: *const ::std::os::raw::c_char,
+                arg3: ::std::os::raw::c_int,
+            ) -> ::std::os::raw::c_int,
+        >,
+        arg4: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut ::std::os::raw::c_void,
+                arg2: fpos_t,
+                arg3: ::std::os::raw::c_int,
+            ) -> fpos_t,
+        >,
+        arg5: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int,
+        >,
+    ) -> *mut FILE;
+}
+extern "C" {
+    pub fn __sprintf_chk(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: ::std::os::raw::c_int,
+        arg3: usize,
+        arg4: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn __snprintf_chk(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: usize,
+        arg3: ::std::os::raw::c_int,
+        arg4: usize,
+        arg5: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn __vsprintf_chk(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: ::std::os::raw::c_int,
+        arg3: usize,
+        arg4: *const ::std::os::raw::c_char,
+        arg5: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn __vsnprintf_chk(
+        arg1: *mut ::std::os::raw::c_char,
+        arg2: usize,
+        arg3: ::std::os::raw::c_int,
+        arg4: usize,
+        arg5: *const ::std::os::raw::c_char,
+        arg6: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+#[doc = "< Sucess"]
+pub const retcode_t_RC_OK: retcode_t = 0;
+#[doc = "< uninitialized or unknown error"]
+pub const retcode_t_RC_ERROR: retcode_t = 65535;
+pub const retcode_t_RC_NULL_PARAM: retcode_t = 385;
+pub const retcode_t_RC_INVALID_PARAM: retcode_t = 386;
+pub const retcode_t_RC_OOM: retcode_t = 387;
+pub const retcode_t_RC_FAILED_THREAD_SPAWN: retcode_t = 452;
+pub const retcode_t_RC_FAILED_THREAD_JOIN: retcode_t = 325;
+pub const retcode_t_RC_STILL_RUNNING: retcode_t = 326;
+pub const retcode_t_RC_SQLITE3_FAILED_OPEN_DB: retcode_t = 1217;
+pub const retcode_t_RC_SQLITE3_FAILED_INSERT_DB: retcode_t = 1154;
+pub const retcode_t_RC_SQLITE3_FAILED_CREATE_INDEX_DB: retcode_t = 1155;
+pub const retcode_t_RC_SQLITE3_FAILED_WRITE_STATEMENT: retcode_t = 1156;
+pub const retcode_t_RC_SQLITE3_FAILED_SELECT_DB: retcode_t = 1157;
+pub const retcode_t_RC_SQLITE3_NO_PATH_FOR_DB_SPECIFIED: retcode_t = 1222;
+pub const retcode_t_RC_SQLITE3_FAILED_NOT_IMPLEMENTED: retcode_t = 1159;
+pub const retcode_t_RC_SQLITE3_FAILED_START_TRANSACTION: retcode_t = 1160;
+pub const retcode_t_RC_SQLITE3_FAILED_END_TRANSACTION: retcode_t = 1161;
+pub const retcode_t_RC_SQLITE3_FAILED_BINDING: retcode_t = 1162;
+pub const retcode_t_RC_SQLITE3_FAILED_PREPARED_STATEMENT: retcode_t = 1163;
+pub const retcode_t_RC_SQLITE3_FAILED_FINALIZE: retcode_t = 1164;
+pub const retcode_t_RC_SQLITE3_FAILED_STEP: retcode_t = 1165;
+pub const retcode_t_RC_SQLITE3_FAILED_BEGIN: retcode_t = 1166;
+pub const retcode_t_RC_SQLITE3_FAILED_END: retcode_t = 1167;
+pub const retcode_t_RC_SQLITE3_FAILED_ROLLBACK: retcode_t = 1232;
+pub const retcode_t_RC_SQLITE3_FAILED_CONFIG: retcode_t = 1233;
+pub const retcode_t_RC_SQLITE3_FAILED_INITIALIZE: retcode_t = 1234;
+pub const retcode_t_RC_SQLITE3_FAILED_SHUTDOWN: retcode_t = 1235;
+pub const retcode_t_RC_SQL_FAILED_WRITE_STATEMENT: retcode_t = 897;
+pub const retcode_t_RC_CORE_FAILED_DATABASE_INIT: retcode_t = 1474;
+pub const retcode_t_RC_CORE_FAILED_DATABASE_DESTROY: retcode_t = 1347;
+pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_INIT: retcode_t = 1476;
+pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_START: retcode_t = 1477;
+pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_STOP: retcode_t = 1350;
+pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_DESTROY: retcode_t = 1351;
+pub const retcode_t_RC_CORE_FAILED_NODE_INIT: retcode_t = 1480;
+pub const retcode_t_RC_CORE_FAILED_NODE_START: retcode_t = 1481;
+pub const retcode_t_RC_CORE_FAILED_NODE_STOP: retcode_t = 1354;
+pub const retcode_t_RC_CORE_FAILED_NODE_DESTROY: retcode_t = 1355;
+pub const retcode_t_RC_CORE_FAILED_API_INIT: retcode_t = 1484;
+pub const retcode_t_RC_CORE_FAILED_API_START: retcode_t = 1485;
+pub const retcode_t_RC_CORE_FAILED_API_STOP: retcode_t = 1358;
+pub const retcode_t_RC_CORE_FAILED_API_DESTROY: retcode_t = 1359;
+pub const retcode_t_RC_CORE_FAILED_SNAPSHOT_INIT: retcode_t = 1488;
+pub const retcode_t_RC_CORE_FAILED_SNAPSHOT_DESTROY: retcode_t = 1361;
+pub const retcode_t_RC_CORE_FAILED_LEDGER_VALIDATOR_INIT: retcode_t = 1490;
+pub const retcode_t_RC_CORE_FAILED_LEDGER_VALIDATOR_DESTROY: retcode_t = 1363;
+pub const retcode_t_RC_CORE_FAILED_CONSENSUS_INIT: retcode_t = 1493;
+pub const retcode_t_RC_CORE_FAILED_CONSENSUS_START: retcode_t = 1494;
+pub const retcode_t_RC_CORE_FAILED_CONSENSUS_STOP: retcode_t = 1495;
+pub const retcode_t_RC_CORE_FAILED_CONSENSUS_DESTROY: retcode_t = 1496;
+pub const retcode_t_RC_CORE_FAILED_API_HTTP_INIT: retcode_t = 1497;
+pub const retcode_t_RC_CORE_FAILED_API_HTTP_START: retcode_t = 1498;
+pub const retcode_t_RC_CORE_FAILED_API_HTTP_STOP: retcode_t = 1499;
+pub const retcode_t_RC_CORE_FAILED_API_HTTP_DESTROY: retcode_t = 1500;
+pub const retcode_t_RC_NODE_FAILED_NEIGHBORS_INIT: retcode_t = 1731;
+pub const retcode_t_RC_NODE_FAILED_NEIGHBORS_DESTROY: retcode_t = 1732;
+pub const retcode_t_RC_NODE_FAILED_BROADCASTER_INIT: retcode_t = 1733;
+pub const retcode_t_RC_NODE_FAILED_BROADCASTER_START: retcode_t = 1734;
+pub const retcode_t_RC_NODE_FAILED_BROADCASTER_STOP: retcode_t = 1607;
+pub const retcode_t_RC_NODE_FAILED_BROADCASTER_DESTROY: retcode_t = 1608;
+pub const retcode_t_RC_NODE_FAILED_PROCESSOR_INIT: retcode_t = 1737;
+pub const retcode_t_RC_NODE_FAILED_PROCESSOR_START: retcode_t = 1738;
+pub const retcode_t_RC_NODE_FAILED_PROCESSOR_STOP: retcode_t = 1611;
+pub const retcode_t_RC_NODE_FAILED_PROCESSOR_DESTROY: retcode_t = 1612;
+pub const retcode_t_RC_NODE_FAILED_RECEIVER_INIT: retcode_t = 1741;
+pub const retcode_t_RC_NODE_FAILED_RECEIVER_START: retcode_t = 1742;
+pub const retcode_t_RC_NODE_FAILED_RECEIVER_STOP: retcode_t = 1615;
+pub const retcode_t_RC_NODE_FAILED_RECEIVER_DESTROY: retcode_t = 1616;
+pub const retcode_t_RC_NODE_FAILED_RESPONDER_INIT: retcode_t = 1747;
+pub const retcode_t_RC_NODE_FAILED_RESPONDER_START: retcode_t = 1748;
+pub const retcode_t_RC_NODE_FAILED_RESPONDER_STOP: retcode_t = 1621;
+pub const retcode_t_RC_NODE_FAILED_RESPONDER_DESTROY: retcode_t = 1622;
+pub const retcode_t_RC_NODE_FAILED_REQUESTER_INIT: retcode_t = 1751;
+pub const retcode_t_RC_NODE_FAILED_REQUESTER_DESTROY: retcode_t = 1624;
+pub const retcode_t_RC_NEIGHBOR_NULL_NEIGHBOR: retcode_t = 1985;
+pub const retcode_t_RC_NEIGHBOR_NULL_URI: retcode_t = 1986;
+pub const retcode_t_RC_NEIGHBOR_NULL_HASH: retcode_t = 1987;
+pub const retcode_t_RC_NEIGHBOR_NULL_PACKET: retcode_t = 1988;
+pub const retcode_t_RC_NEIGHBOR_NULL_NODE: retcode_t = 1989;
+pub const retcode_t_RC_NEIGHBOR_FAILED_URI_PARSING: retcode_t = 1926;
+pub const retcode_t_RC_NEIGHBOR_INVALID_PROTOCOL: retcode_t = 1927;
+pub const retcode_t_RC_NEIGHBOR_INVALID_HOST: retcode_t = 1928;
+pub const retcode_t_RC_NEIGHBOR_FAILED_SEND: retcode_t = 1865;
+pub const retcode_t_RC_NEIGHBOR_FAILED_REQUESTER: retcode_t = 1994;
+pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_INIT: retcode_t = 1995;
+pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_DESTROY: retcode_t = 1996;
+pub const retcode_t_RC_NEIGHBOR_ALREADY_PAIRED: retcode_t = 1869;
+pub const retcode_t_RC_NEIGHBOR_NOT_PAIRED: retcode_t = 1870;
+#[doc = "< json create object error, might OOM."]
+pub const retcode_t_RC_CCLIENT_JSON_CREATE: retcode_t = 2241;
+pub const retcode_t_RC_CCLIENT_JSON_PARSE: retcode_t = 2178;
+#[doc = "< Out of memory"]
+pub const retcode_t_RC_CCLIENT_OOM: retcode_t = 2243;
+#[doc = "< HTTP service error"]
+pub const retcode_t_RC_CCLIENT_HTTP: retcode_t = 2180;
+#[doc = "< HTTP post error"]
+pub const retcode_t_RC_CCLIENT_HTTP_REQ: retcode_t = 2181;
+#[doc = "< HTTP response error"]
+pub const retcode_t_RC_CCLIENT_HTTP_RES: retcode_t = 2182;
+#[doc = "< IRI response error string"]
+pub const retcode_t_RC_CCLIENT_RES_ERROR: retcode_t = 2119;
+#[doc = "< JSON key not found"]
+pub const retcode_t_RC_CCLIENT_JSON_KEY: retcode_t = 2056;
+#[doc = "< Flex trits converting error"]
+pub const retcode_t_RC_CCLIENT_FLEX_TRITS: retcode_t = 2121;
+#[doc = "< Null pointer"]
+pub const retcode_t_RC_CCLIENT_NULL_PTR: retcode_t = 2186;
+#[doc = "< Method unimplemented"]
+pub const retcode_t_RC_CCLIENT_UNIMPLEMENTED: retcode_t = 2187;
+#[doc = "< invalid security level"]
+pub const retcode_t_RC_CCLIENT_INVALID_SECURITY: retcode_t = 2060;
+#[doc = "< Host not found"]
+pub const retcode_t_RC_CCLIENT_HOST_NOT_FOUND: retcode_t = 2189;
+pub const retcode_t_RC_CCLIENT_TX_DESERIALIZE_FAILED: retcode_t = 2126;
+#[doc = "< Insufficient balance"]
+pub const retcode_t_RC_CCLIENT_INSUFFICIENT_BALANCE: retcode_t = 2063;
+#[doc = "< PoW failed"]
+pub const retcode_t_RC_CCLIENT_POW_FAILED: retcode_t = 2064;
+#[doc = "< Invalid transfer object"]
+pub const retcode_t_RC_CCLIENT_INVALID_TRANSFER: retcode_t = 2129;
+#[doc = "< Invalid tail hash"]
+pub const retcode_t_RC_CCLIENT_INVALID_TAIL_HASH: retcode_t = 2194;
+#[doc = "< Invalid bundle object"]
+pub const retcode_t_RC_CCLIENT_INVALID_BUNDLE: retcode_t = 2067;
+pub const retcode_t_RC_CONSENSUS_NOT_IMPLEMENTED: retcode_t = 2433;
+pub const retcode_t_RC_CONSENSUS_CW_FAILED_IN_DFS_FROM_DB: retcode_t = 2690;
+pub const retcode_t_RC_CONSENSUS_CW_FAILED_IN_LIGHT_DFS: retcode_t = 2691;
+pub const retcode_t_RC_CONSENSUS_NULL_PTR: retcode_t = 2501;
+pub const retcode_t_RC_CONSENSUS_EXIT_PROBABILITIES_INVALID_ENTRYPOINT: retcode_t = 2950;
+pub const retcode_t_RC_CONSENSUS_EXIT_PROBABILITIES_MISSING_RATING: retcode_t = 2887;
+pub const retcode_t_RC_CONSENSUS_NULL_BUNDLE_PTR: retcode_t = 2696;
+pub const retcode_t_RC_UTILS_FAILED_REMOVE_FILE: retcode_t = 41345;
+pub const retcode_t_RC_UTILS_FAILED_TO_COPY_FILE: retcode_t = 41346;
+pub const retcode_t_RC_UTILS_FAILED_TO_OPEN_FILE: retcode_t = 41347;
+pub const retcode_t_RC_UTILS_FAILED_TO_DIGEST_FILE: retcode_t = 41348;
+pub const retcode_t_RC_UTILS_INVALID_SIG_FILE: retcode_t = 41350;
+pub const retcode_t_RC_UTILS_INVALID_LOGGER_VERSION: retcode_t = 41351;
+pub const retcode_t_RC_UTILS_FAILED_WRITE_FILE: retcode_t = 41352;
+pub const retcode_t_RC_UTILS_FAILED_READ_FILE: retcode_t = 41353;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_RNG: retcode_t = 41354;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CA: retcode_t = 41355;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PEM: retcode_t = 41356;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PK: retcode_t = 41357;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CONF: retcode_t = 41358;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_AUTHMODE: retcode_t = 41359;
+pub const retcode_t_RC_UTILS_SOCKET_CLIENT_AUTH: retcode_t = 41360;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_HANDSHAKE: retcode_t = 41361;
+pub const retcode_t_RC_UTILS_SOCKET_CONNECT: retcode_t = 41362;
+pub const retcode_t_RC_UTILS_SOCKET_RECV: retcode_t = 41235;
+pub const retcode_t_RC_UTILS_SOCKET_SEND: retcode_t = 41236;
+pub const retcode_t_RC_BROADCASTER_FAILED_PUSH_QUEUE: retcode_t = 41473;
+pub const retcode_t_RC_BROADCASTER_STILL_RUNNING: retcode_t = 41666;
+pub const retcode_t_RC_PROCESSOR_INVALID_TRANSACTION: retcode_t = 41793;
+pub const retcode_t_RC_PROCESSOR_INVALID_REQUEST: retcode_t = 41794;
+pub const retcode_t_RC_RECEIVER_COMPONENT_INVALID_PROCESSOR: retcode_t = 42177;
+pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_INIT_LIST: retcode_t = 42433;
+pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_DESTROY_LIST: retcode_t = 42306;
+pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_ADD_LIST: retcode_t = 42243;
+pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_REMOVE_LIST: retcode_t = 42244;
+pub const retcode_t_RC_RESPONDER_COMPONENT_FAILED_TX_PROCESSING: retcode_t = 42509;
+pub const retcode_t_RC_RESPONDER_COMPONENT_FAILED_REQ_PROCESSING: retcode_t = 42510;
+pub const retcode_t_RC_RESPONDER_COMPONENT_INVALID_TX: retcode_t = 42575;
+pub const retcode_t_RC_GOSSIP_SET_PACKET_TRANSACTION_FAILED: retcode_t = 43329;
+pub const retcode_t_RC_GOSSIP_SET_PACKET_REQUEST_FAILED: retcode_t = 43330;
+pub const retcode_t_RC_CIRI_CONF_INVALID_ARGUMENT: retcode_t = 42945;
+pub const retcode_t_RC_CIRI_CONF_MISSING_ARGUMENT: retcode_t = 42946;
+pub const retcode_t_RC_CIRI_CONF_UNKNOWN_OPTION: retcode_t = 42947;
+pub const retcode_t_RC_CIRI_CONF_FILE_NOT_FOUND: retcode_t = 42948;
+pub const retcode_t_RC_CIRI_CONF_PARSER_ERROR: retcode_t = 42949;
+pub const retcode_t_RC_API_SERIALIZER_NOT_IMPLEMENTED: retcode_t = 43201;
+pub const retcode_t_RC_API_MAX_GET_TRYTES: retcode_t = 43074;
+pub const retcode_t_RC_API_FIND_TRANSACTIONS_NO_INPUT: retcode_t = 43075;
+pub const retcode_t_RC_API_MAX_FIND_TRANSACTIONS: retcode_t = 43076;
+pub const retcode_t_RC_API_INVALID_DEPTH_INPUT: retcode_t = 43077;
+pub const retcode_t_RC_API_INVALID_SUBTANGLE_STATUS: retcode_t = 43078;
+pub const retcode_t_RC_API_TAIL_MISSING: retcode_t = 43079;
+pub const retcode_t_RC_API_NOT_TAIL: retcode_t = 43080;
+pub const retcode_t_RC_API_INVALID_COMMAND: retcode_t = 43017;
+pub const retcode_t_RC_API_GET_BALANCES_INVALID_THRESHOLD: retcode_t = 43018;
+pub const retcode_t_RC_API_GET_BALANCES_UNKNOWN_TIP: retcode_t = 43019;
+pub const retcode_t_RC_API_GET_BALANCES_INCONSISTENT_TIP: retcode_t = 43019;
+pub const retcode_t_RC_SNAPSHOT_FILE_NOT_FOUND: retcode_t = 3521;
+pub const retcode_t_RC_SNAPSHOT_INVALID_FILE: retcode_t = 3522;
+pub const retcode_t_RC_SNAPSHOT_INVALID_SUPPLY: retcode_t = 3523;
+pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_SNAPSHOT: retcode_t = 3524;
+pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_PATCH: retcode_t = 3461;
+pub const retcode_t_RC_SNAPSHOT_BALANCE_NOT_FOUND: retcode_t = 3398;
+pub const retcode_t_RC_SNAPSHOT_INVALID_SIGNATURE: retcode_t = 3527;
+pub const retcode_t_RC_SNAPSHOT_FAILED_JSON_PARSING: retcode_t = 3528;
+pub const retcode_t_RC_LEDGER_VALIDATOR_INVALID_TRANSACTION: retcode_t = 3713;
+pub const retcode_t_RC_LEDGER_VALIDATOR_COULD_NOT_LOAD_MILESTONE: retcode_t = 3714;
+pub const retcode_t_RC_LEDGER_VALIDATOR_INCONSISTENT_DELTA: retcode_t = 3779;
+pub const retcode_t_RC_LEDGER_VALIDATOR_TRANSACTION_NOT_SOLID: retcode_t = 3780;
+pub const retcode_t_RC_TIP_SELECTOR_TIPS_NOT_CONSISTENT: retcode_t = 3905;
+pub const retcode_t_RC_TIP_SELECTOR_REFERENCE_TOO_OLD: retcode_t = 3906;
+pub const retcode_t_RC_TANGLE_TAIL_NOT_FOUND: retcode_t = 4161;
+pub const retcode_t_RC_TANGLE_NOT_A_TAIL: retcode_t = 4162;
+pub const retcode_t_RC_MAM_BUFFER_TOO_SMALL: retcode_t = 45121;
+pub const retcode_t_RC_MAM_INVALID_ARGUMENT: retcode_t = 45122;
+pub const retcode_t_RC_MAM_INVALID_VALUE: retcode_t = 45123;
+pub const retcode_t_RC_MAM_NEGATIVE_VALUE: retcode_t = 45124;
+pub const retcode_t_RC_MAM_INTERNAL_ERROR: retcode_t = 45125;
+pub const retcode_t_RC_MAM_NOT_IMPLEMENTED: retcode_t = 45126;
+pub const retcode_t_RC_MAM_PB3_EOF: retcode_t = 45127;
+pub const retcode_t_RC_MAM_PB3_BAD_ONEOF: retcode_t = 45128;
+pub const retcode_t_RC_MAM_PB3_BAD_OPTIONAL: retcode_t = 45129;
+pub const retcode_t_RC_MAM_PB3_BAD_REPEATED: retcode_t = 45130;
+pub const retcode_t_RC_MAM_PB3_BAD_MAC: retcode_t = 45131;
+pub const retcode_t_RC_MAM_PB3_BAD_SIG: retcode_t = 45132;
+pub const retcode_t_RC_MAM_PB3_BAD_EKEY: retcode_t = 45133;
+pub const retcode_t_RC_MAM_PB3_SIZE_T_NOT_SUPPORTED: retcode_t = 45134;
+pub const retcode_t_RC_MAM_CHANNEL_NOT_FOUND: retcode_t = 45135;
+pub const retcode_t_RC_MAM_ENDPOINT_NOT_FOUND: retcode_t = 45136;
+pub const retcode_t_RC_MAM_VERSION_NOT_SUPPORTED: retcode_t = 45137;
+pub const retcode_t_RC_MAM_CHANNEL_NOT_TRUSTED: retcode_t = 45138;
+pub const retcode_t_RC_MAM_ENDPOINT_NOT_TRUSTED: retcode_t = 45139;
+pub const retcode_t_RC_MAM_KEYLOAD_IRRELEVANT: retcode_t = 45140;
+pub const retcode_t_RC_MAM_KEYLOAD_OVERLOADED: retcode_t = 45141;
+pub const retcode_t_RC_MAM_BUNDLE_NOT_EMPTY: retcode_t = 45142;
+pub const retcode_t_RC_MAM_BUNDLE_DOES_NOT_CONTAIN_HEADER: retcode_t = 45143;
+pub const retcode_t_RC_MAM_RECV_CTX_NOT_FOUND: retcode_t = 45144;
+pub const retcode_t_RC_MAM_SEND_CTX_NOT_FOUND: retcode_t = 45145;
+pub const retcode_t_RC_MAM_MESSAGE_NOT_FOUND: retcode_t = 45146;
+pub const retcode_t_RC_MAM_BAD_PACKET_ORD: retcode_t = 45147;
+pub const retcode_t_RC_MAM_MSS_EXHAUSTED: retcode_t = 45148;
+pub const retcode_t_RC_MAM_NTRU_POLY_FAILED: retcode_t = 45149;
+pub const retcode_t_RC_MAM_API_FAILED_CREATE_ENDPOINT: retcode_t = 45150;
+pub const retcode_t_RC_MAM_API_FAILED_CREATE_CHANNEL: retcode_t = 45151;
+pub const retcode_t_RC_MAM_PK_IS_NOT_TRUSTED: retcode_t = 45152;
+pub const retcode_t_RC_MAM_MSS_NOT_FOUND: retcode_t = 45153;
+pub const retcode_t_RC_HELPERS_POW_INVALID_TX: retcode_t = 45377;
+pub const retcode_t_RC_CRYPTO_UNSUPPORTED_SPONGE_TYPE: retcode_t = 45441;
+#[doc = " @brief Error codes"]
+#[doc = ""]
+pub type retcode_t = u32;
+extern "C" {
+    #[doc = " @brief error code to string"]
+    #[doc = ""]
+    #[doc = " @param err error code"]
+    #[doc = " @return string"]
+    pub fn error_2_string(err: retcode_t) -> *const ::std::os::raw::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct accessx_descriptor {
@@ -1792,19 +2843,6 @@ extern "C" {
         arg6: u32,
     ) -> ::std::os::raw::c_int;
 }
-pub type u_int8_t = ::std::os::raw::c_uchar;
-pub type u_int16_t = ::std::os::raw::c_ushort;
-pub type u_int32_t = ::std::os::raw::c_uint;
-pub type u_int64_t = ::std::os::raw::c_ulonglong;
-pub type register_t = i64;
-pub type user_addr_t = u_int64_t;
-pub type user_size_t = u_int64_t;
-pub type user_ssize_t = i64;
-pub type user_long_t = i64;
-pub type user_ulong_t = u_int64_t;
-pub type user_time_t = i64;
-pub type user_off_t = i64;
-pub type syscall_arg_t = u_int64_t;
 pub type uid_t = __darwin_uid_t;
 pub type gid_t = __darwin_gid_t;
 extern "C" {
@@ -1855,7 +2893,6 @@ extern "C" {
         arg3: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
-pub type off_t = __darwin_off_t;
 pub type pid_t = __darwin_pid_t;
 pub type useconds_t = __darwin_useconds_t;
 extern "C" {
@@ -2083,9 +3120,6 @@ extern "C" {
         arg1: *const ::std::os::raw::c_char,
         arg2: *const ::std::os::raw::c_char,
     ) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn ctermid(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn encrypt(arg1: *mut ::std::os::raw::c_char, arg2: ::std::os::raw::c_int);
@@ -2820,15 +3854,51 @@ extern "C" {
         ouput: *mut ::std::os::raw::c_char,
     );
 }
+pub type rsize_t = ::std::os::raw::c_ulong;
+pub type wchar_t = ::std::os::raw::c_int;
+pub type max_align_t = u128;
 extern "C" {
-    pub fn trit_sum(a: trit_t, b: trit_t) -> trit_t;
+    pub fn __assert_rtn(
+        arg1: *const ::std::os::raw::c_char,
+        arg2: *const ::std::os::raw::c_char,
+        arg3: ::std::os::raw::c_int,
+        arg4: *const ::std::os::raw::c_char,
+    );
+}
+#[doc = " \\brief Signed integer type capable of storing single trit"]
+#[doc = "with values in range [-1,0,1]."]
+pub type trint1_t = i8;
+extern "C" {
+    #[doc = " \\brief Return `x + s (mods 3)`."]
+    pub fn trit_add(x: trit_t, s: trit_t) -> trit_t;
 }
 extern "C" {
-    pub fn add_assign(t: *mut trit_t, s: usize, v: i64) -> ::std::os::raw::c_int;
+    #[doc = " \\brief Return `y - s (mods 3)`."]
+    pub fn trit_sub(y: trit_t, s: trit_t) -> trit_t;
+}
+#[doc = " \\brief Signed integer type capable of storing 3 trits"]
+#[doc = "with values in range [-13,..,-1,0,1,..,13]."]
+pub type trint3_t = i8;
+extern "C" {
+    pub fn tryte_from_trits(t0: trit_t, t1: trit_t, t2: trit_t) -> tryte_t;
 }
 extern "C" {
-    pub fn add_trits(lh: *const trit_t, rh: *mut trit_t, len: usize);
+    pub fn tryte_to_char(t: tryte_t) -> ::std::os::raw::c_char;
 }
+extern "C" {
+    pub fn tryte_from_char(t: *mut tryte_t, c: ::std::os::raw::c_char) -> bool;
+}
+#[doc = " \\brief Signed integer type capable of storing 6 trits"]
+#[doc = "with values in range [-(3^6-1)/2=-364,..,-1,0,1,..,364=(3^6-1)/2]."]
+pub type trint6_t = i16;
+#[doc = " \\brief Signed integer type capable of storing 9 trits"]
+#[doc = "with values in range [-(3^9-1)/2=-9841,..,-1,0,1,..,9841=(3^9-1)/2]."]
+pub type trint9_t = i16;
+#[doc = " \\brief Signed integer type capable of storing 18 trits"]
+#[doc = "with values in range [-(3^18-1)/2,..,-1,0,1,..,(3^18-1)/2]."]
+pub type trint18_t = i32;
+#[doc = " Unsigned 8-bit type."]
+pub type byte = u8;
 extern "C" {
     pub fn memchr(
         __s: *const ::std::os::raw::c_void,
@@ -3014,7 +4084,6 @@ extern "C" {
 extern "C" {
     pub fn strsignal(__sig: ::std::os::raw::c_int) -> *mut ::std::os::raw::c_char;
 }
-pub type rsize_t = __darwin_size_t;
 pub type errno_t = ::std::os::raw::c_int;
 extern "C" {
     pub fn memset_s(
@@ -3156,8 +4225,1221 @@ extern "C" {
 extern "C" {
     pub fn flsll(arg1: ::std::os::raw::c_longlong) -> ::std::os::raw::c_int;
 }
-pub type wchar_t = ::std::os::raw::c_int;
-pub type max_align_t = u128;
+#[doc = " \\brief Array of trits."]
+#[doc = "`p -> |...d...|......|`"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct trits_s {
+    #[doc = "< total number of trits pointed to by `p`"]
+    pub n: usize,
+    #[doc = "< offset of the first trit; number of available trits is `n-d`"]
+    pub d: usize,
+    #[doc = "< pointer to the trits"]
+    pub p: *mut trit_t,
+}
+#[test]
+fn bindgen_test_layout_trits_s() {
+    assert_eq!(
+        ::std::mem::size_of::<trits_s>(),
+        24usize,
+        concat!("Size of: ", stringify!(trits_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<trits_s>(),
+        8usize,
+        concat!("Alignment of ", stringify!(trits_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<trits_s>())).n as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(trits_s),
+            "::",
+            stringify!(n)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<trits_s>())).d as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(trits_s),
+            "::",
+            stringify!(d)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<trits_s>())).p as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(trits_s),
+            "::",
+            stringify!(p)
+        )
+    );
+}
+pub type trits_t = trits_s;
+extern "C" {
+    #[doc = " \\brief Check `x.n` against zero."]
+    pub fn trits_is_empty(x: trits_t) -> bool;
+}
+extern "C" {
+    #[doc = " \\brief Size of `x`."]
+    pub fn trits_size(x: trits_t) -> usize;
+}
+extern "C" {
+    #[doc = " \\brief Minimum of the size of `x` and `s`."]
+    pub fn trits_size_min(x: trits_t, s: usize) -> usize;
+}
+extern "C" {
+    #[doc = " \\brief Construct `n` trits from representation `w`."]
+    pub fn trits_from_rep(n: usize, t: *const trit_t) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Take the first `n` trits from `x`."]
+    pub fn trits_take(x: trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Take at most `n` first trits from `x`."]
+    pub fn trits_take_min(x: trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Drop the first `n` trits from `x`."]
+    pub fn trits_drop(x: trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Drop at most `n` first trits from `x`."]
+    pub fn trits_drop_min(x: trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Pickup `n` trits previously dropped from `x`."]
+    pub fn trits_pickup(x: trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    pub fn trits_pickup_all(x: trits_t) -> trits_t;
+}
+extern "C" {
+    pub fn trits_advance(b: *mut trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Get the first trit."]
+    pub fn trits_get1(x: trits_t) -> trint1_t;
+}
+extern "C" {
+    #[doc = " \\brief Put the first trit."]
+    pub fn trits_put1(x: trits_t, t: trint1_t);
+}
+extern "C" {
+    #[doc = " \\brief Get the first tryte."]
+    pub fn trits_get3(x: trits_t) -> trint3_t;
+}
+extern "C" {
+    #[doc = " \\brief Put the first tryte."]
+    pub fn trits_put3(x: trits_t, t: trint3_t);
+}
+extern "C" {
+    pub fn trits_get6(x: trits_t) -> trint6_t;
+}
+extern "C" {
+    pub fn trits_put6(x: trits_t, t: trint6_t);
+}
+extern "C" {
+    pub fn trits_get9(x: trits_t) -> trint9_t;
+}
+extern "C" {
+    pub fn trits_put9(x: trits_t, t: trint9_t);
+}
+extern "C" {
+    pub fn trits_get18(x: trits_t) -> trint18_t;
+}
+extern "C" {
+    pub fn trits_put18(x: trits_t, t: trint18_t);
+}
+extern "C" {
+    pub fn trits_get_char(x: trits_t) -> ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn trits_put_char(x: trits_t, c: ::std::os::raw::c_char) -> bool;
+}
+extern "C" {
+    pub fn trits_get_byte(x: trits_t) -> byte;
+}
+extern "C" {
+    pub fn trits_put_byte(x: trits_t, b: byte) -> bool;
+}
+extern "C" {
+    #[doc = " \\brief Convert trytes to string."]
+    #[doc = "\\note `trits_size(x)` must be multiple of 3."]
+    #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
+    pub fn trits_to_str(x: trits_t, s: *mut ::std::os::raw::c_char);
+}
+extern "C" {
+    #[doc = " \\brief Convert trytes from string."]
+    #[doc = "\\note `trits_size(x)` must be multiple of 3."]
+    #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
+    pub fn trits_from_str(x: trits_t, s: *const ::std::os::raw::c_char) -> bool;
+}
+extern "C" {
+    #[doc = " \\brief Copy minimal number of trits contained in `x` and `y`."]
+    #[doc = "Return number of trits copied."]
+    pub fn trits_copy_min(x: trits_t, y: trits_t) -> usize;
+}
+extern "C" {
+    #[doc = " \\brief Pad trits: `y := c0 || 0^{|y|-1}`."]
+    pub fn trits_padc0(c0: trit_t, y: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Copy and pad trits: `y := x || c0 || 0^{|y|-|x|-1}`."]
+    pub fn trits_copy_padc0(c0: trit_t, x: trits_t, y: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Pad non-empty trits: `y := c0 || 0^{|y|-1}` if `|y|>0`."]
+    pub fn trits_padc(c0: trit_t, y: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Copy and pad non-empty trits: `y := x || c0 || 0^{|y|-|x|-1}` if `|y|"]
+    #[doc = " > |x|` else `y := x`."]
+    pub fn trits_copy_padc(c0: trit_t, x: trits_t, y: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Add trits: `y` := `x` + `s`."]
+    pub fn trits_add(x: trits_t, s: trits_t, y: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Sub trits: `x` := `y` - `s`."]
+    pub fn trits_sub(y: trits_t, s: trits_t, x: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Copy and add trits: `y` := `x` + `s`, `s` := `x`."]
+    pub fn trits_copy_add(x: trits_t, s: trits_t, y: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Copy and sub trits: `x` := `y` - `s`, `s` := `x`."]
+    pub fn trits_copy_sub(y: trits_t, s: trits_t, x: trits_t);
+}
+extern "C" {
+    pub fn trits_swap_add(x: trits_t, s: trits_t);
+}
+extern "C" {
+    pub fn trits_swap_sub(y: trits_t, s: trits_t);
+}
+extern "C" {
+    pub fn trit_swap_add(x: *mut trit_t, s: *mut trit_t);
+}
+extern "C" {
+    pub fn trit_swap_sub(y: *mut trit_t, s: *mut trit_t);
+}
+extern "C" {
+    pub fn trits_copy_add_min(x: trits_t, s: trits_t, y: trits_t) -> usize;
+}
+extern "C" {
+    pub fn trits_copy_sub_min(x: trits_t, s: trits_t, y: trits_t) -> usize;
+}
+extern "C" {
+    pub fn trits_swap_add_min(x: trits_t, s: trits_t) -> usize;
+}
+extern "C" {
+    pub fn trits_swap_sub_min(x: trits_t, s: trits_t) -> usize;
+}
+extern "C" {
+    #[doc = " \\brief Compare trits: `x` <=> `y`."]
+    pub fn trits_cmp_grlex(x: trits_t, y: trits_t) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[doc = " \\brief Compare trits: `x` =? `y`."]
+    pub fn trits_cmp_eq(x: trits_t, y: trits_t) -> bool;
+}
+extern "C" {
+    pub fn trits_cmp_eq_str(x: trits_t, y: *const ::std::os::raw::c_char) -> bool;
+}
+extern "C" {
+    #[doc = " \\brief Return `x` such that:"]
+    #[doc = "`trits_is_same(trits_drop(begin, trits_size(x)), end)` and"]
+    #[doc = "`trits_is_same(trits_take(begin, trits_size(x)), x)`."]
+    pub fn trits_diff(begin: trits_t, end: trits_t) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Null trits."]
+    pub fn trits_null() -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Check `x.p` against null."]
+    #[doc = "\\note Usually trits_t can't be null. All basic layers including"]
+    #[doc = "`trits`, `sponge`, `prng`, `wots`, and `mss` rely on caller"]
+    #[doc = "to allocate memory for trits. But in certain cases where the size of memory"]
+    #[doc = "is difficult to trac memory can be allocated within a callee."]
+    #[doc = "In such case trits should be passed by pointer: `trits_t *x`."]
+    pub fn trits_is_null(x: trits_t) -> bool;
+}
+extern "C" {
+    #[doc = " \\brief Increment trits with carry. Return false if overflow would occur."]
+    pub fn trits_inc(x: trits_t) -> bool;
+}
+extern "C" {
+    #[doc = " \\brief Alloc `n` trits."]
+    pub fn trits_alloc(n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " \\brief Free trits `x`."]
+    pub fn trits_free(x: trits_t);
+}
+extern "C" {
+    #[doc = " \\brief Print string rep of `x` into stdout."]
+    pub fn trits_print(x: trits_t);
+}
+extern "C" {
+    pub fn trits_print2(
+        pfx: *const ::std::os::raw::c_char,
+        x: trits_t,
+        sfx: *const ::std::os::raw::c_char,
+    );
+}
+#[doc = " Sponge interface"]
+#[doc = ""]
+#[doc = " @field stack Additional memory used by the transformation function"]
+#[doc = " @field state sponge state"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct sponge_s {
+    pub state: [trit_t; 729usize],
+}
+#[test]
+fn bindgen_test_layout_sponge_s() {
+    assert_eq!(
+        ::std::mem::size_of::<sponge_s>(),
+        729usize,
+        concat!("Size of: ", stringify!(sponge_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<sponge_s>(),
+        1usize,
+        concat!("Alignment of ", stringify!(sponge_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<sponge_s>())).state as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(sponge_s),
+            "::",
+            stringify!(state)
+        )
+    );
+}
+pub type mam_sponge_t = sponge_s;
+extern "C" {
+    #[doc = " Gets part (the first `rate` trits) of the sponge outer state"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = ""]
+    #[doc = " @return the trits"]
+    pub fn mam_sponge_outer_trits(sponge: *const mam_sponge_t) -> trits_t;
+}
+extern "C" {
+    #[doc = " Sponge state initialization"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    pub fn mam_sponge_init(sponge: *mut mam_sponge_t);
+}
+extern "C" {
+    #[doc = " Internal state transformation"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    pub fn mam_sponge_transform(sponge: *mut mam_sponge_t);
+}
+extern "C" {
+    #[doc = " Fork (copy) sponge state. `fork` must be initialized"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param fork Sponge interface"]
+    pub fn mam_sponge_fork(sponge: *const mam_sponge_t, fork: *mut mam_sponge_t);
+}
+extern "C" {
+    #[doc = " Sponge absorption"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param c2 Control trit encoding output data type"]
+    #[doc = " @param data Input data blocks"]
+    pub fn mam_sponge_absorb(sponge: *mut mam_sponge_t, c2: trit_t, data: trits_t);
+}
+extern "C" {
+    #[doc = " Absorb concatenation of `Xs[0]`..`Xs[n-1]`"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param c2 Control trit encoding output data type"]
+    #[doc = " @param n Input data blocks count"]
+    #[doc = " @param data_blocks Input data blocks"]
+    pub fn mam_sponge_absorbn(
+        sponge: *mut mam_sponge_t,
+        c2: trit_t,
+        n: usize,
+        data_blocks: *const trits_t,
+    );
+}
+extern "C" {
+    #[doc = " Sponge squeezing"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param c2 Control trit encoding output data type"]
+    #[doc = " @param squeezed Output data"]
+    pub fn mam_sponge_squeeze(sponge: *mut mam_sponge_t, c2: trit_t, squeezed: trits_t);
+}
+extern "C" {
+    #[doc = " Sponge AE encryption"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param plaintext Input data"]
+    #[doc = " @param ciphertext Hash value"]
+    pub fn mam_sponge_encr(sponge: *mut mam_sponge_t, plaintext: trits_t, ciphertext: trits_t);
+}
+extern "C" {
+    #[doc = " Sponge AE decryption"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param ciphertext Hash value"]
+    #[doc = " @param plaintext Input data"]
+    pub fn mam_sponge_decr(sponge: *mut mam_sponge_t, ciphertext: trits_t, plaintext: trits_t);
+}
+extern "C" {
+    #[doc = " Sponge hashing"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param plaintext Input data"]
+    #[doc = " @param digest Hash value"]
+    pub fn mam_sponge_hash(sponge: *mut mam_sponge_t, plaintext: trits_t, digest: trits_t);
+}
+extern "C" {
+    #[doc = " Sponge hashing"]
+    #[doc = ""]
+    #[doc = " @param sponge Sponge interface"]
+    #[doc = " @param n Input data blocks count"]
+    #[doc = " @param plaintext_blocks Input data blocks"]
+    #[doc = " @param digest Hash value"]
+    pub fn mam_sponge_hashn(
+        sponge: *mut mam_sponge_t,
+        n: usize,
+        plaintext_blocks: *const trits_t,
+        digest: trits_t,
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct mam_spongos_s {
+    pub sponge: mam_sponge_t,
+    pub pos: usize,
+}
+#[test]
+fn bindgen_test_layout_mam_spongos_s() {
+    assert_eq!(
+        ::std::mem::size_of::<mam_spongos_s>(),
+        744usize,
+        concat!("Size of: ", stringify!(mam_spongos_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<mam_spongos_s>(),
+        8usize,
+        concat!("Alignment of ", stringify!(mam_spongos_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_spongos_s>())).sponge as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_spongos_s),
+            "::",
+            stringify!(sponge)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_spongos_s>())).pos as *const _ as usize },
+        736usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_spongos_s),
+            "::",
+            stringify!(pos)
+        )
+    );
+}
+pub type mam_spongos_t = mam_spongos_s;
+extern "C" {
+    pub fn mam_spongos_serialized_size(spongos: *const mam_spongos_t) -> usize;
+}
+extern "C" {
+    pub fn mam_spongos_serialize(spongos: *const mam_spongos_t, trits: *mut trits_t);
+}
+extern "C" {
+    pub fn mam_spongos_deserialize(trits: *mut trits_t, spongos: *mut mam_spongos_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " Initializes a spongos state"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    pub fn mam_spongos_init(spongos: *mut mam_spongos_t);
+}
+extern "C" {
+    #[doc = " Creates an equivalent spongos instance"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param fork The fork"]
+    pub fn mam_mam_spongos_fork(spongos: *const mam_spongos_t, fork: *mut mam_spongos_t);
+}
+extern "C" {
+    #[doc = " Commits changes in the rate part"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    pub fn mam_spongos_commit(spongos: *mut mam_spongos_t);
+}
+extern "C" {
+    #[doc = " Processes input data"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param input Input data"]
+    pub fn mam_spongos_absorb(spongos: *mut mam_spongos_t, input: trits_t);
+}
+extern "C" {
+    #[doc = " Processes n inputs data"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param n Number of input data"]
+    #[doc = " @param inputs Inputs data"]
+    pub fn mam_spongos_absorbn(spongos: *mut mam_spongos_t, n: usize, inputs: *mut trits_t);
+}
+extern "C" {
+    #[doc = " Generates output data"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param output Output data"]
+    pub fn mam_spongos_squeeze(spongos: *mut mam_spongos_t, output: trits_t);
+}
+extern "C" {
+    #[doc = " Generates output data and check for equality with given output"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param expected_output Expected output data"]
+    pub fn mam_spongos_squeeze_eq(spongos: *mut mam_spongos_t, expected_output: trits_t) -> bool;
+}
+extern "C" {
+    #[doc = " Hashes input data"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param input Input data"]
+    #[doc = " @param output Output data"]
+    pub fn mam_spongos_hash(spongos: *mut mam_spongos_t, input: trits_t, output: trits_t);
+}
+extern "C" {
+    #[doc = " Hashes n input data"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param n Number of input data"]
+    #[doc = " @param inputs Inputs data"]
+    #[doc = " @param output Output data"]
+    pub fn mam_spongos_hashn(
+        spongos: *mut mam_spongos_t,
+        n: usize,
+        inputs: *mut trits_t,
+        output: trits_t,
+    );
+}
+extern "C" {
+    #[doc = " Encrypts plaintext"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param plaintext Plaintext input"]
+    #[doc = " @param ciphertext Ciphertext output"]
+    pub fn mam_spongos_encr(spongos: *mut mam_spongos_t, plaintext: trits_t, ciphertext: trits_t);
+}
+extern "C" {
+    #[doc = " Decrypts ciphertext"]
+    #[doc = ""]
+    #[doc = " @param spongos A spongos interface"]
+    #[doc = " @param ciphertext Ciphertext input"]
+    #[doc = " @param plaintext Plaintext output"]
+    pub fn mam_spongos_decr(spongos: *mut mam_spongos_t, ciphertext: trits_t, plaintext: trits_t);
+}
+extern "C" {
+    #[doc = " Copy spongos from src to dst"]
+    #[doc = ""]
+    #[doc = " @param src The source"]
+    #[doc = " @param dst The destination"]
+    pub fn mam_spongos_copy(src: *const mam_spongos_t, dst: *mut mam_spongos_t);
+}
+extern "C" {
+    pub fn pb3_trits_take(b: *mut trits_t, n: usize) -> trits_t;
+}
+extern "C" {
+    #[doc = " Protobuf3 primitive types"]
+    #[doc = " null, tryte, size_t, trytes, tryte [n]"]
+    pub fn pb3_sizeof_tryte() -> usize;
+}
+extern "C" {
+    pub fn pb3_encode_tryte(tryte: tryte_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn pb3_decode_tryte(tryte: *mut tryte_t, buffer: *mut trits_t) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_sizeof_trint() -> usize;
+}
+extern "C" {
+    pub fn pb3_encode_trint(trint: trint9_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn pb3_decode_trint(trint: *mut trint9_t, buffer: *mut trits_t) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_sizeof_longtrint() -> usize;
+}
+extern "C" {
+    pub fn pb3_encode_longtrint(trint: trint18_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn pb3_decode_longtrint(trint: *mut trint18_t, buffer: *mut trits_t) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_sizeof_size_t(n: usize) -> usize;
+}
+extern "C" {
+    pub fn pb3_encode_size_t(n: usize, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn pb3_decode_size_t(n: *mut usize, buffer: *mut trits_t) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_sizeof_ntrytes(n: usize) -> usize;
+}
+extern "C" {
+    pub fn pb3_encode_ntrytes(ntrytes: trits_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn pb3_decode_ntrytes(ntrytes: trits_t, buffer: *mut trits_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " Protobuf3 spongos modifier handling"]
+    pub fn pb3_wrap_absorb_tryte(spongos: *mut mam_spongos_t, buffer: *mut trits_t, tryte: tryte_t);
+}
+extern "C" {
+    pub fn pb3_unwrap_absorb_tryte(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        tryte: *mut tryte_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_wrap_absorb_trint(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trint: trint9_t,
+    );
+}
+extern "C" {
+    pub fn pb3_unwrap_absorb_trint(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trint: *mut trint9_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_wrap_absorb_longtrint(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trint: trint18_t,
+    );
+}
+extern "C" {
+    pub fn pb3_unwrap_absorb_longtrint(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trint: *mut trint18_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_wrap_absorb_size_t(spongos: *mut mam_spongos_t, buffer: *mut trits_t, t: usize);
+}
+extern "C" {
+    pub fn pb3_unwrap_absorb_size_t(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        t: *mut usize,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_wrap_absorb_ntrytes(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trits: trits_t,
+    );
+}
+extern "C" {
+    pub fn pb3_unwrap_absorb_ntrytes(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trits: trits_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_wrap_crypt_ntrytes(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trits: trits_t,
+    );
+}
+extern "C" {
+    pub fn pb3_unwrap_crypt_ntrytes(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        trits: trits_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_wrap_squeeze_ntrytes(spongos: *mut mam_spongos_t, buffer: *mut trits_t, n: usize);
+}
+extern "C" {
+    pub fn pb3_unwrap_squeeze_ntrytes(
+        spongos: *mut mam_spongos_t,
+        buffer: *mut trits_t,
+        n: usize,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn pb3_absorb_external_ntrytes(spongos: *mut mam_spongos_t, trits: trits_t);
+}
+extern "C" {
+    pub fn pb3_squeeze_external_ntrytes(spongos: *mut mam_spongos_t, trits: trits_t);
+}
+extern "C" {
+    pub fn memset_safe(
+        dest: *mut ::std::os::raw::c_void,
+        destsz: usize,
+        ch: ::std::os::raw::c_int,
+        count: usize,
+    ) -> ::std::os::raw::c_int;
+}
+#[doc = " @brief PRNG AE destination tryte"]
+pub const mam_prng_destination_tryte_e_MAM_PRNG_DST_SEC_KEY: mam_prng_destination_tryte_e = 0;
+#[doc = " @brief PRNG WOTS destination tryte"]
+pub const mam_prng_destination_tryte_e_MAM_PRNG_DST_WOTS_KEY: mam_prng_destination_tryte_e = 1;
+#[doc = " @brief PRNG NTRU destination tryte"]
+pub const mam_prng_destination_tryte_e_MAM_PRNG_DST_NTRU_KEY: mam_prng_destination_tryte_e = 2;
+#[doc = " @brief Destination context encoded in one tryte"]
+pub type mam_prng_destination_tryte_e = u32;
+pub use self::mam_prng_destination_tryte_e as mam_prng_destination_tryte_t;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct mam_prng_s {
+    pub secret_key: [trit_t; 243usize],
+}
+#[test]
+fn bindgen_test_layout_mam_prng_s() {
+    assert_eq!(
+        ::std::mem::size_of::<mam_prng_s>(),
+        243usize,
+        concat!("Size of: ", stringify!(mam_prng_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<mam_prng_s>(),
+        1usize,
+        concat!("Alignment of ", stringify!(mam_prng_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_prng_s>())).secret_key as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_prng_s),
+            "::",
+            stringify!(secret_key)
+        )
+    );
+}
+pub type mam_prng_t = mam_prng_s;
+extern "C" {
+    #[doc = " @brief Initializes a PRNG with a secret key"]
+    #[doc = ""]
+    #[doc = " @param[out] prng The PRNG"]
+    #[doc = " @param[in] secret_key The secret key"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_prng_init(prng: *mut mam_prng_t, secret_key: trits_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " @brief Generates pseudo random trits with three nonces"]
+    #[doc = ""]
+    #[doc = " @param[in] prng A PRNG"]
+    #[doc = " @param[in] destination A destination tryte"]
+    #[doc = " @param[in] nonce1 The first nonce"]
+    #[doc = " @param[in] nonce2 The second nonce"]
+    #[doc = " @param[in] nonce3 The third nonce"]
+    #[doc = " @param[out] output The pseudo random trits"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_prng_gen3(
+        prng: *const mam_prng_t,
+        destination: mam_prng_destination_tryte_t,
+        nonce1: trits_t,
+        nonce2: trits_t,
+        nonce3: trits_t,
+        output: trits_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    #[doc = " @brief Serializes a PRNG into a trits buffer"]
+    #[doc = ""]
+    #[doc = " @param[in] prng The PRNG"]
+    #[doc = " @param[out] buffer The trits buffer"]
+    pub fn mam_prng_serialize_2(prng: *const mam_prng_t, buffer: *mut trits_t);
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct mam_wots_s {
+    pub private_key: [trit_t; 13122usize],
+}
+#[test]
+fn bindgen_test_layout_mam_wots_s() {
+    assert_eq!(
+        ::std::mem::size_of::<mam_wots_s>(),
+        13122usize,
+        concat!("Size of: ", stringify!(mam_wots_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<mam_wots_s>(),
+        1usize,
+        concat!("Alignment of ", stringify!(mam_wots_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_wots_s>())).private_key as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_wots_s),
+            "::",
+            stringify!(private_key)
+        )
+    );
+}
+pub type mam_wots_t = mam_wots_s;
+extern "C" {
+    #[doc = " @brief Generates a WOTS public key associated with a WOTS private key"]
+    #[doc = ""]
+    #[doc = " The private key must have already been generated"]
+    #[doc = ""]
+    #[doc = " @param[in] wots The WOTS private key"]
+    #[doc = " @param[out] public_key The WOTS public key"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_wots_gen_pk(wots: *const mam_wots_t, public_key: trits_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " @brief Generates a WOTS signature associated with a WOTS private key"]
+    #[doc = ""]
+    #[doc = " @param[in] wots The WOTS private key"]
+    #[doc = " @param[in] hash A hash to be signed"]
+    #[doc = " @param[out] signature The WOTS signature"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_wots_sign(wots: *const mam_wots_t, hash: trits_t, signature: trits_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " @brief Recovers a WOTS public key from a WOTS signature"]
+    #[doc = ""]
+    #[doc = " @param[in] hash A signed hash"]
+    #[doc = " @param[in] signature The WOTS signature"]
+    #[doc = " @param[out] public_key The WOTS public key"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_wots_recover(hash: trits_t, signature: trits_t, public_key: trits_t) -> retcode_t;
+}
+#[doc = " \\brief Leaves have height `0`, root has height `D`; `0 <= d < D`; `D <="]
+#[doc = " 20`."]
+pub type mss_mt_height_t = trint6_t;
+#[doc = " \\brief Index (skn) of leaf/node on the level of height `d`; 0 <= i <"]
+#[doc = " 2^(D-d)."]
+pub type mss_mt_idx_t = trint18_t;
+#[doc = " \\brief MSS interface used to generate public key and sign."]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct mss_s {
+    #[doc = "< Merkle tree height."]
+    pub height: mss_mt_height_t,
+    #[doc = "< Current WOTS private key number."]
+    pub skn: mss_mt_idx_t,
+    #[doc = "< PRNG interface used to generate WOTS private keys."]
+    pub prng: *mut mam_prng_t,
+    #[doc = "< Buffer storing complete Merkle-tree."]
+    pub mt: *mut trit_t,
+    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
+    pub nonce1: trits_t,
+    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
+    pub nonce2: trits_t,
+    pub root: [trit_t; 243usize],
+}
+#[test]
+fn bindgen_test_layout_mss_s() {
+    assert_eq!(
+        ::std::mem::size_of::<mss_s>(),
+        320usize,
+        concat!("Size of: ", stringify!(mss_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<mss_s>(),
+        8usize,
+        concat!("Alignment of ", stringify!(mss_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).height as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mss_s),
+            "::",
+            stringify!(height)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).skn as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mss_s),
+            "::",
+            stringify!(skn)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).prng as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mss_s),
+            "::",
+            stringify!(prng)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).mt as *const _ as usize },
+        16usize,
+        concat!("Offset of field: ", stringify!(mss_s), "::", stringify!(mt))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).nonce1 as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mss_s),
+            "::",
+            stringify!(nonce1)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).nonce2 as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mss_s),
+            "::",
+            stringify!(nonce2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mss_s>())).root as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mss_s),
+            "::",
+            stringify!(root)
+        )
+    );
+}
+pub type mam_mss_t = mss_s;
+extern "C" {
+    #[doc = " MSS interface initialization"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @param prng [in] PRNG interface"]
+    #[doc = " @param sponge [in] Sponge interface"]
+    #[doc = " @param height [in] Merkle-tree height"]
+    #[doc = " @param nonce1 [in] first nonce"]
+    #[doc = " @param nonce2 [in] second nonce"]
+    #[doc = ""]
+    #[doc = " @return void"]
+    pub fn mam_mss_init(
+        mss: *mut mam_mss_t,
+        prng: *mut mam_prng_t,
+        height: mss_mt_height_t,
+        nonce1: trits_t,
+        nonce2: trits_t,
+    );
+}
+extern "C" {
+    #[doc = " Generate MSS keys, stores current and next auth_path"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @return void"]
+    pub fn mam_mss_gen(mss: *mut mam_mss_t);
+}
+extern "C" {
+    #[doc = " Encodes mss height and current sk index"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @param skn [out] encoded height and current private key number"]
+    #[doc = " @return void"]
+    pub fn mam_mss_skn(mss: *const mam_mss_t, skn: trits_t);
+}
+extern "C" {
+    #[doc = " Gets the authentication path"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @param skn [in] number of WOTS instance (current pk index), in traversal mode"]
+    #[doc = " this parameter is not used because current authentication path is always"]
+    #[doc = " updated"]
+    #[doc = " @param path [out] authentication path"]
+    #[doc = ""]
+    #[doc = " @return void"]
+    pub fn mam_mss_auth_path(mss: *mut mam_mss_t, skn: mss_mt_idx_t, path: trits_t);
+}
+extern "C" {
+    #[doc = " Signs a hash"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @param hash [in] the hash to sign on"]
+    #[doc = " @param sig [out] the signature"]
+    #[doc = ""]
+    #[doc = " @return retcode"]
+    pub fn mam_mss_sign(mss: *mut mam_mss_t, hash: trits_t, sig: trits_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " Signs a hash and advances skn"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @param hash [in] the hash to sign on"]
+    #[doc = " @param sig [out] the signature"]
+    #[doc = ""]
+    #[doc = " @return retcode"]
+    pub fn mam_mss_sign_and_next(mss: *mut mam_mss_t, hash: trits_t, sig: trits_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " Advances skn"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = ""]
+    #[doc = " @return True if can produce next signature"]
+    pub fn mam_mss_next(mss: *mut mam_mss_t) -> bool;
+}
+extern "C" {
+    #[doc = " Returns the number of remaining secret keys (unused leaves on merkle tree)"]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = ""]
+    #[doc = " @return The number of remaining signatures"]
+    pub fn mam_mss_num_remaining_sks(mss: *const mam_mss_t) -> usize;
+}
+extern "C" {
+    #[doc = " Verifies MSS signature."]
+    #[doc = ""]
+    #[doc = " @param mt_spongos [in] Spongos interface to hash Merkle Tree"]
+    #[doc = " @param hash [in] signed hash value"]
+    #[doc = " @param sig [in] signature"]
+    #[doc = " @param [in] public key (Merkle-tree root)"]
+    #[doc = ""]
+    #[doc = " @return bool True is the signature is correct, False otherwise"]
+    pub fn mam_mss_verify(
+        mt_spongos: *mut mam_spongos_t,
+        hash: trits_t,
+        sig: trits_t,
+        pk: trits_t,
+    ) -> bool;
+}
+extern "C" {
+    #[doc = " Allocate memory for internal Merkle tree structure."]
+    #[doc = ""]
+    #[doc = " \\note `mss_init` must still be called afterwards."]
+    #[doc = " \\note In case of error `mss_destroy` must be called."]
+    #[doc = " \\note Non Merkle tree related objects (WOTS, PRNG, Spongos interfaces)"]
+    #[doc = "     must be allocated separately."]
+    #[doc = ""]
+    #[doc = " @param mss [out] MSS interface"]
+    #[doc = " @param height [in] the tree's height"]
+    #[doc = ""]
+    #[doc = " @return void"]
+    pub fn mam_mss_create(mss: *mut mam_mss_t, height: mss_mt_height_t) -> retcode_t;
+}
+extern "C" {
+    #[doc = " Deallocate memory for internal Merkle tree structure."]
+    #[doc = " \\note Pointer `m` must be freed afterwards."]
+    #[doc = ""]
+    #[doc = " @param mss [out] MSS interface"]
+    #[doc = ""]
+    #[doc = " @return void"]
+    pub fn mam_mss_destroy(mss: *mut mam_mss_t);
+}
+extern "C" {
+    #[doc = " returns The size of a serialized Merkle tree."]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = ""]
+    #[doc = " @return size_t The size for stored MT"]
+    pub fn mam_mss_serialized_size(mss: *const mam_mss_t) -> usize;
+}
+extern "C" {
+    #[doc = " Serialize Merkle tree."]
+    #[doc = ""]
+    #[doc = " @param mss [in] MSS interface"]
+    #[doc = " @param buffer [out] The serialized MT buffer"]
+    #[doc = ""]
+    #[doc = " @return void"]
+    pub fn mam_mss_serialize(mss: *const mam_mss_t, buffer: trits_t);
+}
+extern "C" {
+    #[doc = " Deerialize Merkle tree."]
+    #[doc = ""]
+    #[doc = " @param mss [out] MSS interface"]
+    #[doc = " @param buffer [in] The serialized MT buffer"]
+    #[doc = ""]
+    #[doc = " @return void"]
+    pub fn mam_mss_deserialize(buffer: *mut trits_t, mss: *mut mam_mss_t) -> retcode_t;
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct mam_endpoint_s {
+    pub name: trits_t,
+    pub mss: mam_mss_t,
+}
+#[test]
+fn bindgen_test_layout_mam_endpoint_s() {
+    assert_eq!(
+        ::std::mem::size_of::<mam_endpoint_s>(),
+        344usize,
+        concat!("Size of: ", stringify!(mam_endpoint_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<mam_endpoint_s>(),
+        8usize,
+        concat!("Alignment of ", stringify!(mam_endpoint_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_endpoint_s>())).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_endpoint_s),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_endpoint_s>())).mss as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_endpoint_s),
+            "::",
+            stringify!(mss)
+        )
+    );
+}
+pub type mam_endpoint_t = mam_endpoint_s;
+pub type mam_endpoint_t_set_entry_t = mam_endpoint_t_set_entry_s;
+pub type mam_endpoint_t_set_t = *mut mam_endpoint_t_set_entry_t;
+extern "C" {
+    #[doc = " Gets an endpoint's id"]
+    #[doc = ""]
+    #[doc = " @param endpoint The endpoint"]
+    #[doc = ""]
+    #[doc = " @return the endpoint's id"]
+    pub fn mam_endpoint_id(endpoint: *const mam_endpoint_t) -> trits_t;
+}
+extern "C" {
+    #[doc = " Gets an endpoint channel's name"]
+    #[doc = ""]
+    #[doc = " @param endpoint The endpoint"]
+    #[doc = ""]
+    #[doc = " @return the endpoint channel's name"]
+    pub fn mam_endpoint_channel_name(endpoint: *const mam_endpoint_t) -> trits_t;
+}
+extern "C" {
+    #[doc = " Gets an endpoint's name"]
+    #[doc = ""]
+    #[doc = " @param endpoint The endpoint"]
+    #[doc = ""]
+    #[doc = " @return the endpoint's name"]
+    pub fn mam_endpoint_name(endpoint: *const mam_endpoint_t) -> trits_t;
+}
+extern "C" {
+    #[doc = " Allocates memory for internal objects and generates MSS public key"]
+    #[doc = ""]
+    #[doc = " @param allocator A MAM allocator"]
+    #[doc = " @param prng A shared PRNG interface used to generate WOTS private keys"]
+    #[doc = " @param height MSS MT height"]
+    #[doc = " @param channel_name The channel name"]
+    #[doc = " @param endpoint_name The endpoint name"]
+    #[doc = " @param endpoint The endpoint"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_endpoint_create(
+        prng: *mut mam_prng_t,
+        height: mss_mt_height_t,
+        channel_name: trits_t,
+        endpoint_name: trits_t,
+        endpoint: *mut mam_endpoint_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    #[doc = " Returns the number of remaining secret keys (unused leaves on merkle tree)"]
+    #[doc = " @param endpoint The endpoint"]
+    #[doc = ""]
+    #[doc = " @return number of remaining secret keys"]
+    pub fn mam_endpoint_num_remaining_sks(endpoint: *const mam_endpoint_t) -> usize;
+}
+extern "C" {
+    #[doc = " Deallocates memory for internal objects"]
+    #[doc = ""]
+    #[doc = " @param allocator A MAM allocator"]
+    #[doc = " @param endpoint The endpoint"]
+    pub fn mam_endpoint_destroy(endpoint: *mut mam_endpoint_t);
+}
+extern "C" {
+    pub fn mam_endpoints_destroy(endpoints: *mut mam_endpoint_t_set_t) -> retcode_t;
+}
+extern "C" {
+    pub fn mam_endpoint_serialized_size(endpoint: *const mam_endpoint_t) -> usize;
+}
+extern "C" {
+    pub fn mam_endpoint_serialize(endpoint: *const mam_endpoint_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn mam_endpoint_deserialize(
+        buffer: *mut trits_t,
+        channel_name: trits_t,
+        prng: *mut mam_prng_t,
+        endpoint: *mut mam_endpoint_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn mam_endpoints_serialized_size(endpoints: mam_endpoint_t_set_t) -> usize;
+}
+extern "C" {
+    pub fn mam_endpoints_serialize(endpoints: mam_endpoint_t_set_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn mam_endpoints_deserialize(
+        buffer: *mut trits_t,
+        channel_name: trits_t,
+        prng: *mut mam_prng_t,
+        endpoints: *mut mam_endpoint_t_set_t,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn trit_sum(a: trit_t, b: trit_t) -> trit_t;
+}
+extern "C" {
+    pub fn add_assign(t: *mut trit_t, s: usize, v: i64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn add_trits(lh: *const trit_t, rh: *mut trit_t, len: usize);
+}
 pub const idtype_t_P_ALL: idtype_t = 0;
 pub const idtype_t_P_PID: idtype_t = 1;
 pub const idtype_t_P_PGID: idtype_t = 2;
@@ -13058,2230 +15340,6 @@ extern "C" {
         __base: ::std::os::raw::c_int,
     ) -> uintmax_t;
 }
-pub type va_list = __darwin_va_list;
-extern "C" {
-    pub fn renameat(
-        arg1: ::std::os::raw::c_int,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_int,
-        arg4: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn renamex_np(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_uint,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn renameatx_np(
-        arg1: ::std::os::raw::c_int,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_int,
-        arg4: *const ::std::os::raw::c_char,
-        arg5: ::std::os::raw::c_uint,
-    ) -> ::std::os::raw::c_int;
-}
-pub type fpos_t = __darwin_off_t;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __sbuf {
-    pub _base: *mut ::std::os::raw::c_uchar,
-    pub _size: ::std::os::raw::c_int,
-}
-#[test]
-fn bindgen_test_layout___sbuf() {
-    assert_eq!(
-        ::std::mem::size_of::<__sbuf>(),
-        16usize,
-        concat!("Size of: ", stringify!(__sbuf))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__sbuf>(),
-        8usize,
-        concat!("Alignment of ", stringify!(__sbuf))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sbuf>()))._base as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sbuf),
-            "::",
-            stringify!(_base)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sbuf>()))._size as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sbuf),
-            "::",
-            stringify!(_size)
-        )
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __sFILEX {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __sFILE {
-    pub _p: *mut ::std::os::raw::c_uchar,
-    pub _r: ::std::os::raw::c_int,
-    pub _w: ::std::os::raw::c_int,
-    pub _flags: ::std::os::raw::c_short,
-    pub _file: ::std::os::raw::c_short,
-    pub _bf: __sbuf,
-    pub _lbfsize: ::std::os::raw::c_int,
-    pub _cookie: *mut ::std::os::raw::c_void,
-    pub _close: ::std::option::Option<
-        unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int,
-    >,
-    pub _read: ::std::option::Option<
-        unsafe extern "C" fn(
-            arg1: *mut ::std::os::raw::c_void,
-            arg2: *mut ::std::os::raw::c_char,
-            arg3: ::std::os::raw::c_int,
-        ) -> ::std::os::raw::c_int,
-    >,
-    pub _seek: ::std::option::Option<
-        unsafe extern "C" fn(
-            arg1: *mut ::std::os::raw::c_void,
-            arg2: fpos_t,
-            arg3: ::std::os::raw::c_int,
-        ) -> fpos_t,
-    >,
-    pub _write: ::std::option::Option<
-        unsafe extern "C" fn(
-            arg1: *mut ::std::os::raw::c_void,
-            arg2: *const ::std::os::raw::c_char,
-            arg3: ::std::os::raw::c_int,
-        ) -> ::std::os::raw::c_int,
-    >,
-    pub _ub: __sbuf,
-    pub _extra: *mut __sFILEX,
-    pub _ur: ::std::os::raw::c_int,
-    pub _ubuf: [::std::os::raw::c_uchar; 3usize],
-    pub _nbuf: [::std::os::raw::c_uchar; 1usize],
-    pub _lb: __sbuf,
-    pub _blksize: ::std::os::raw::c_int,
-    pub _offset: fpos_t,
-}
-#[test]
-fn bindgen_test_layout___sFILE() {
-    assert_eq!(
-        ::std::mem::size_of::<__sFILE>(),
-        152usize,
-        concat!("Size of: ", stringify!(__sFILE))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<__sFILE>(),
-        8usize,
-        concat!("Alignment of ", stringify!(__sFILE))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._p as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_p)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._r as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_r)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._w as *const _ as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_w)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._flags as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_flags)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._file as *const _ as usize },
-        18usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_file)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._bf as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_bf)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._lbfsize as *const _ as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_lbfsize)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._cookie as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_cookie)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._close as *const _ as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_close)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._read as *const _ as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_read)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._seek as *const _ as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_seek)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._write as *const _ as usize },
-        80usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_write)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._ub as *const _ as usize },
-        88usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_ub)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._extra as *const _ as usize },
-        104usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_extra)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._ur as *const _ as usize },
-        112usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_ur)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._ubuf as *const _ as usize },
-        116usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_ubuf)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._nbuf as *const _ as usize },
-        119usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_nbuf)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._lb as *const _ as usize },
-        120usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_lb)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._blksize as *const _ as usize },
-        136usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_blksize)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<__sFILE>()))._offset as *const _ as usize },
-        144usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(__sFILE),
-            "::",
-            stringify!(_offset)
-        )
-    );
-}
-pub type FILE = __sFILE;
-extern "C" {
-    pub static mut __stdinp: *mut FILE;
-}
-extern "C" {
-    pub static mut __stdoutp: *mut FILE;
-}
-extern "C" {
-    pub static mut __stderrp: *mut FILE;
-}
-extern "C" {
-    pub fn clearerr(arg1: *mut FILE);
-}
-extern "C" {
-    pub fn fclose(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn feof(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn ferror(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fflush(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fgetc(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fgetpos(arg1: *mut FILE, arg2: *mut fpos_t) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fgets(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: ::std::os::raw::c_int,
-        arg3: *mut FILE,
-    ) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn fopen(
-        __filename: *const ::std::os::raw::c_char,
-        __mode: *const ::std::os::raw::c_char,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub fn fprintf(
-        arg1: *mut FILE,
-        arg2: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fputc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fputs(arg1: *const ::std::os::raw::c_char, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fread(
-        __ptr: *mut ::std::os::raw::c_void,
-        __size: ::std::os::raw::c_ulong,
-        __nitems: ::std::os::raw::c_ulong,
-        __stream: *mut FILE,
-    ) -> ::std::os::raw::c_ulong;
-}
-extern "C" {
-    pub fn freopen(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut FILE,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub fn fscanf(
-        arg1: *mut FILE,
-        arg2: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fseek(
-        arg1: *mut FILE,
-        arg2: ::std::os::raw::c_long,
-        arg3: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fsetpos(arg1: *mut FILE, arg2: *const fpos_t) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn ftell(arg1: *mut FILE) -> ::std::os::raw::c_long;
-}
-extern "C" {
-    pub fn fwrite(
-        __ptr: *const ::std::os::raw::c_void,
-        __size: ::std::os::raw::c_ulong,
-        __nitems: ::std::os::raw::c_ulong,
-        __stream: *mut FILE,
-    ) -> ::std::os::raw::c_ulong;
-}
-extern "C" {
-    pub fn getc(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn getchar() -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn gets(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn perror(arg1: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn printf(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn putc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn putchar(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn puts(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn remove(arg1: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn rename(
-        __old: *const ::std::os::raw::c_char,
-        __new: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn rewind(arg1: *mut FILE);
-}
-extern "C" {
-    pub fn scanf(arg1: *const ::std::os::raw::c_char, ...) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn setbuf(arg1: *mut FILE, arg2: *mut ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn setvbuf(
-        arg1: *mut FILE,
-        arg2: *mut ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_int,
-        arg4: usize,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn sprintf(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn sscanf(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn tmpfile() -> *mut FILE;
-}
-extern "C" {
-    pub fn tmpnam(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn ungetc(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vfprintf(
-        arg1: *mut FILE,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vprintf(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vsprintf(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn fdopen(arg1: ::std::os::raw::c_int, arg2: *const ::std::os::raw::c_char) -> *mut FILE;
-}
-extern "C" {
-    pub fn fileno(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn pclose(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn popen(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub fn __srget(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn __svfscanf(
-        arg1: *mut FILE,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn __swbuf(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn flockfile(arg1: *mut FILE);
-}
-extern "C" {
-    pub fn ftrylockfile(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn funlockfile(arg1: *mut FILE);
-}
-extern "C" {
-    pub fn getc_unlocked(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn getchar_unlocked() -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn putc_unlocked(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn putchar_unlocked(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn getw(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn putw(arg1: ::std::os::raw::c_int, arg2: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn tempnam(
-        __dir: *const ::std::os::raw::c_char,
-        __prefix: *const ::std::os::raw::c_char,
-    ) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn fseeko(
-        __stream: *mut FILE,
-        __offset: off_t,
-        __whence: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn ftello(__stream: *mut FILE) -> off_t;
-}
-extern "C" {
-    pub fn snprintf(
-        __str: *mut ::std::os::raw::c_char,
-        __size: ::std::os::raw::c_ulong,
-        __format: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vfscanf(
-        __stream: *mut FILE,
-        __format: *const ::std::os::raw::c_char,
-        arg1: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vscanf(
-        __format: *const ::std::os::raw::c_char,
-        arg1: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vsnprintf(
-        __str: *mut ::std::os::raw::c_char,
-        __size: ::std::os::raw::c_ulong,
-        __format: *const ::std::os::raw::c_char,
-        arg1: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vsscanf(
-        __str: *const ::std::os::raw::c_char,
-        __format: *const ::std::os::raw::c_char,
-        arg1: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn dprintf(
-        arg1: ::std::os::raw::c_int,
-        arg2: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vdprintf(
-        arg1: ::std::os::raw::c_int,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn getdelim(
-        __linep: *mut *mut ::std::os::raw::c_char,
-        __linecapp: *mut usize,
-        __delimiter: ::std::os::raw::c_int,
-        __stream: *mut FILE,
-    ) -> isize;
-}
-extern "C" {
-    pub fn getline(
-        __linep: *mut *mut ::std::os::raw::c_char,
-        __linecapp: *mut usize,
-        __stream: *mut FILE,
-    ) -> isize;
-}
-extern "C" {
-    pub fn fmemopen(
-        __buf: *mut ::std::os::raw::c_void,
-        __size: usize,
-        __mode: *const ::std::os::raw::c_char,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub fn open_memstream(
-        __bufp: *mut *mut ::std::os::raw::c_char,
-        __sizep: *mut usize,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub static sys_nerr: ::std::os::raw::c_int;
-}
-extern "C" {
-    pub static mut sys_errlist: [*const ::std::os::raw::c_char; 0usize];
-}
-extern "C" {
-    pub fn asprintf(
-        arg1: *mut *mut ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn ctermid_r(arg1: *mut ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn fgetln(arg1: *mut FILE, arg2: *mut usize) -> *mut ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn fmtcheck(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn fpurge(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn setbuffer(
-        arg1: *mut FILE,
-        arg2: *mut ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
-    pub fn setlinebuf(arg1: *mut FILE) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn vasprintf(
-        arg1: *mut *mut ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn zopen(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_int,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub fn funopen(
-        arg1: *const ::std::os::raw::c_void,
-        arg2: ::std::option::Option<
-            unsafe extern "C" fn(
-                arg1: *mut ::std::os::raw::c_void,
-                arg2: *mut ::std::os::raw::c_char,
-                arg3: ::std::os::raw::c_int,
-            ) -> ::std::os::raw::c_int,
-        >,
-        arg3: ::std::option::Option<
-            unsafe extern "C" fn(
-                arg1: *mut ::std::os::raw::c_void,
-                arg2: *const ::std::os::raw::c_char,
-                arg3: ::std::os::raw::c_int,
-            ) -> ::std::os::raw::c_int,
-        >,
-        arg4: ::std::option::Option<
-            unsafe extern "C" fn(
-                arg1: *mut ::std::os::raw::c_void,
-                arg2: fpos_t,
-                arg3: ::std::os::raw::c_int,
-            ) -> fpos_t,
-        >,
-        arg5: ::std::option::Option<
-            unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int,
-        >,
-    ) -> *mut FILE;
-}
-extern "C" {
-    pub fn __sprintf_chk(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: ::std::os::raw::c_int,
-        arg3: usize,
-        arg4: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn __snprintf_chk(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: usize,
-        arg3: ::std::os::raw::c_int,
-        arg4: usize,
-        arg5: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn __vsprintf_chk(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: ::std::os::raw::c_int,
-        arg3: usize,
-        arg4: *const ::std::os::raw::c_char,
-        arg5: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn __vsnprintf_chk(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: usize,
-        arg3: ::std::os::raw::c_int,
-        arg4: usize,
-        arg5: *const ::std::os::raw::c_char,
-        arg6: *mut __va_list_tag,
-    ) -> ::std::os::raw::c_int;
-}
-pub const retcode_t_RC_OK: retcode_t = 0;
-pub const retcode_t_RC_ERROR: retcode_t = 65535;
-pub const retcode_t_RC_STORAGE_OOM: retcode_t = 641;
-pub const retcode_t_RC_NULL_PARAM: retcode_t = 385;
-pub const retcode_t_RC_OOM: retcode_t = 386;
-pub const retcode_t_RC_FAILED_THREAD_SPAWN: retcode_t = 451;
-pub const retcode_t_RC_FAILED_THREAD_JOIN: retcode_t = 324;
-pub const retcode_t_RC_STILL_RUNNING: retcode_t = 325;
-pub const retcode_t_RC_SQLITE3_FAILED_OPEN_DB: retcode_t = 1217;
-pub const retcode_t_RC_SQLITE3_FAILED_INSERT_DB: retcode_t = 1154;
-pub const retcode_t_RC_SQLITE3_FAILED_CREATE_INDEX_DB: retcode_t = 1155;
-pub const retcode_t_RC_SQLITE3_FAILED_WRITE_STATEMENT: retcode_t = 1156;
-pub const retcode_t_RC_SQLITE3_FAILED_SELECT_DB: retcode_t = 1157;
-pub const retcode_t_RC_SQLITE3_NO_PATH_FOR_DB_SPECIFIED: retcode_t = 1222;
-pub const retcode_t_RC_SQLITE3_FAILED_NOT_IMPLEMENTED: retcode_t = 1159;
-pub const retcode_t_RC_SQLITE3_FAILED_START_TRANSACTION: retcode_t = 1160;
-pub const retcode_t_RC_SQLITE3_FAILED_END_TRANSACTION: retcode_t = 1161;
-pub const retcode_t_RC_SQLITE3_FAILED_BINDING: retcode_t = 1162;
-pub const retcode_t_RC_SQLITE3_FAILED_PREPARED_STATEMENT: retcode_t = 1163;
-pub const retcode_t_RC_SQLITE3_FAILED_FINALIZE: retcode_t = 1164;
-pub const retcode_t_RC_SQLITE3_FAILED_STEP: retcode_t = 1165;
-pub const retcode_t_RC_SQLITE3_FAILED_BEGIN: retcode_t = 1166;
-pub const retcode_t_RC_SQLITE3_FAILED_END: retcode_t = 1167;
-pub const retcode_t_RC_SQLITE3_FAILED_ROLLBACK: retcode_t = 1232;
-pub const retcode_t_RC_SQLITE3_FAILED_CONFIG: retcode_t = 1233;
-pub const retcode_t_RC_SQLITE3_FAILED_INITIALIZE: retcode_t = 1234;
-pub const retcode_t_RC_SQLITE3_FAILED_SHUTDOWN: retcode_t = 1235;
-pub const retcode_t_RC_SQL_FAILED_WRITE_STATEMENT: retcode_t = 897;
-pub const retcode_t_RC_CORE_NULL_CORE: retcode_t = 1473;
-pub const retcode_t_RC_CORE_FAILED_DATABASE_INIT: retcode_t = 1474;
-pub const retcode_t_RC_CORE_FAILED_DATABASE_DESTROY: retcode_t = 1347;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_INIT: retcode_t = 1476;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_START: retcode_t = 1477;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_STOP: retcode_t = 1350;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_DESTROY: retcode_t = 1351;
-pub const retcode_t_RC_CORE_FAILED_NODE_INIT: retcode_t = 1480;
-pub const retcode_t_RC_CORE_FAILED_NODE_START: retcode_t = 1481;
-pub const retcode_t_RC_CORE_FAILED_NODE_STOP: retcode_t = 1354;
-pub const retcode_t_RC_CORE_FAILED_NODE_DESTROY: retcode_t = 1355;
-pub const retcode_t_RC_CORE_FAILED_API_INIT: retcode_t = 1484;
-pub const retcode_t_RC_CORE_FAILED_API_START: retcode_t = 1485;
-pub const retcode_t_RC_CORE_FAILED_API_STOP: retcode_t = 1358;
-pub const retcode_t_RC_CORE_FAILED_API_DESTROY: retcode_t = 1359;
-pub const retcode_t_RC_CORE_FAILED_SNAPSHOT_INIT: retcode_t = 1488;
-pub const retcode_t_RC_CORE_FAILED_SNAPSHOT_DESTROY: retcode_t = 1361;
-pub const retcode_t_RC_CORE_FAILED_LEDGER_VALIDATOR_INIT: retcode_t = 1490;
-pub const retcode_t_RC_CORE_FAILED_LEDGER_VALIDATOR_DESTROY: retcode_t = 1363;
-pub const retcode_t_RC_CORE_STILL_RUNNING: retcode_t = 1492;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_INIT: retcode_t = 1493;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_START: retcode_t = 1494;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_STOP: retcode_t = 1495;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_DESTROY: retcode_t = 1496;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_INIT: retcode_t = 1497;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_START: retcode_t = 1498;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_STOP: retcode_t = 1499;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_DESTROY: retcode_t = 1500;
-pub const retcode_t_RC_NODE_NULL_NODE: retcode_t = 1729;
-pub const retcode_t_RC_NODE_NULL_CORE: retcode_t = 1730;
-pub const retcode_t_RC_NODE_FAILED_NEIGHBORS_INIT: retcode_t = 1731;
-pub const retcode_t_RC_NODE_FAILED_NEIGHBORS_DESTROY: retcode_t = 1732;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_INIT: retcode_t = 1733;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_START: retcode_t = 1734;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_STOP: retcode_t = 1607;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_DESTROY: retcode_t = 1608;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_INIT: retcode_t = 1737;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_START: retcode_t = 1738;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_STOP: retcode_t = 1611;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_DESTROY: retcode_t = 1612;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_INIT: retcode_t = 1741;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_START: retcode_t = 1742;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_STOP: retcode_t = 1615;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_DESTROY: retcode_t = 1616;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_INIT: retcode_t = 1747;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_START: retcode_t = 1748;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_STOP: retcode_t = 1621;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_DESTROY: retcode_t = 1622;
-pub const retcode_t_RC_NODE_FAILED_REQUESTER_INIT: retcode_t = 1751;
-pub const retcode_t_RC_NODE_FAILED_REQUESTER_DESTROY: retcode_t = 1624;
-pub const retcode_t_RC_NODE_STILL_RUNNING: retcode_t = 1753;
-pub const retcode_t_RC_NEIGHBOR_NULL_NEIGHBOR: retcode_t = 1985;
-pub const retcode_t_RC_NEIGHBOR_NULL_URI: retcode_t = 1986;
-pub const retcode_t_RC_NEIGHBOR_NULL_HASH: retcode_t = 1987;
-pub const retcode_t_RC_NEIGHBOR_NULL_PACKET: retcode_t = 1988;
-pub const retcode_t_RC_NEIGHBOR_NULL_NODE: retcode_t = 1989;
-pub const retcode_t_RC_NEIGHBOR_FAILED_URI_PARSING: retcode_t = 1926;
-pub const retcode_t_RC_NEIGHBOR_INVALID_PROTOCOL: retcode_t = 1927;
-pub const retcode_t_RC_NEIGHBOR_INVALID_HOST: retcode_t = 1928;
-pub const retcode_t_RC_NEIGHBOR_FAILED_SEND: retcode_t = 1865;
-pub const retcode_t_RC_NEIGHBOR_FAILED_REQUESTER: retcode_t = 1994;
-pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_INIT: retcode_t = 1995;
-pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_DESTROY: retcode_t = 1996;
-pub const retcode_t_RC_NEIGHBOR_ALREADY_PAIRED: retcode_t = 1869;
-pub const retcode_t_RC_NEIGHBOR_NOT_PAIRED: retcode_t = 1870;
-pub const retcode_t_RC_CCLIENT_JSON_CREATE: retcode_t = 2241;
-pub const retcode_t_RC_CCLIENT_JSON_PARSE: retcode_t = 2178;
-pub const retcode_t_RC_CCLIENT_OOM: retcode_t = 2243;
-pub const retcode_t_RC_CCLIENT_HTTP: retcode_t = 2180;
-pub const retcode_t_RC_CCLIENT_HTTP_REQ: retcode_t = 2181;
-pub const retcode_t_RC_CCLIENT_HTTP_RES: retcode_t = 2182;
-pub const retcode_t_RC_CCLIENT_RES_ERROR: retcode_t = 2119;
-pub const retcode_t_RC_CCLIENT_JSON_KEY: retcode_t = 2056;
-pub const retcode_t_RC_CCLIENT_FLEX_TRITS: retcode_t = 2121;
-pub const retcode_t_RC_CCLIENT_NULL_PTR: retcode_t = 2186;
-pub const retcode_t_RC_CCLIENT_UNIMPLEMENTED: retcode_t = 2187;
-pub const retcode_t_RC_CCLIENT_INVALID_SECURITY: retcode_t = 2060;
-pub const retcode_t_RC_CCLIENT_HOST_NOT_FOUND: retcode_t = 2189;
-pub const retcode_t_RC_CCLIENT_TX_DESERIALIZE_FAILED: retcode_t = 2126;
-pub const retcode_t_RC_CCLIENT_INSUFFICIENT_BALANCE: retcode_t = 2063;
-pub const retcode_t_RC_CCLIENT_POW_FAILED: retcode_t = 2064;
-pub const retcode_t_RC_CCLIENT_INVALID_TRANSFER: retcode_t = 2129;
-pub const retcode_t_RC_CCLIENT_INVALID_TAIL_HASH: retcode_t = 2194;
-pub const retcode_t_RC_CCLIENT_INVALID_BUNDLE: retcode_t = 2067;
-pub const retcode_t_RC_CONSENSUS_NOT_IMPLEMENTED: retcode_t = 2433;
-pub const retcode_t_RC_CONSENSUS_CW_FAILED_IN_DFS_FROM_DB: retcode_t = 2690;
-pub const retcode_t_RC_CONSENSUS_CW_FAILED_IN_LIGHT_DFS: retcode_t = 2691;
-pub const retcode_t_RC_CONSENSUS_OOM: retcode_t = 2436;
-pub const retcode_t_RC_CONSENSUS_NULL_PTR: retcode_t = 2501;
-pub const retcode_t_RC_CONSENSUS_EXIT_PROBABILITIES_INVALID_ENTRYPOINT: retcode_t = 2950;
-pub const retcode_t_RC_CONSENSUS_EXIT_PROBABILITIES_MISSING_RATING: retcode_t = 2887;
-pub const retcode_t_RC_CONSENSUS_NULL_BUNDLE_PTR: retcode_t = 2696;
-pub const retcode_t_RC_UTILS_FAILED_REMOVE_FILE: retcode_t = 41345;
-pub const retcode_t_RC_UTILS_FAILED_TO_COPY_FILE: retcode_t = 41346;
-pub const retcode_t_RC_UTILS_FAILED_TO_OPEN_FILE: retcode_t = 41347;
-pub const retcode_t_RC_UTILS_FAILED_TO_DIGEST_FILE: retcode_t = 41348;
-pub const retcode_t_RC_UTILS_OOM: retcode_t = 41349;
-pub const retcode_t_RC_UTILS_INVALID_SIG_FILE: retcode_t = 41350;
-pub const retcode_t_RC_UTILS_INVALID_LOGGER_VERSION: retcode_t = 41351;
-pub const retcode_t_RC_UTILS_FAILED_WRITE_FILE: retcode_t = 41352;
-pub const retcode_t_RC_UTILS_FAILED_READ_FILE: retcode_t = 41353;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_RNG: retcode_t = 41354;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CA: retcode_t = 41355;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PEM: retcode_t = 41356;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PK: retcode_t = 41357;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CONF: retcode_t = 41358;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_AUTHMODE: retcode_t = 41359;
-pub const retcode_t_RC_UTILS_SOCKET_CLIENT_AUTH: retcode_t = 41360;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_HANDSHAKE: retcode_t = 41361;
-pub const retcode_t_RC_UTILS_SOCKET_CONNECT: retcode_t = 41362;
-pub const retcode_t_RC_UTILS_SOCKET_RECV: retcode_t = 41235;
-pub const retcode_t_RC_UTILS_SOCKET_SEND: retcode_t = 41236;
-pub const retcode_t_RC_BROADCASTER_FAILED_PUSH_QUEUE: retcode_t = 41473;
-pub const retcode_t_RC_BROADCASTER_STILL_RUNNING: retcode_t = 41666;
-pub const retcode_t_RC_PROCESSOR_INVALID_TRANSACTION: retcode_t = 41793;
-pub const retcode_t_RC_PROCESSOR_INVALID_REQUEST: retcode_t = 41794;
-pub const retcode_t_RC_RECEIVER_COMPONENT_NULL_STATE: retcode_t = 42177;
-pub const retcode_t_RC_RECEIVER_COMPONENT_NULL_NODE: retcode_t = 42178;
-pub const retcode_t_RC_RECEIVER_COMPONENT_FAILED_THREAD_SPAWN: retcode_t = 42179;
-pub const retcode_t_RC_RECEIVER_COMPONENT_FAILED_THREAD_JOIN: retcode_t = 42052;
-pub const retcode_t_RC_RECEIVER_COMPONENT_STILL_RUNNING: retcode_t = 42181;
-pub const retcode_t_RC_RECEIVER_COMPONENT_INVALID_PROCESSOR: retcode_t = 42182;
-pub const retcode_t_RC_REQUESTER_COMPONENT_NULL_STATE: retcode_t = 42433;
-pub const retcode_t_RC_REQUESTER_COMPONENT_NULL_TANGLE: retcode_t = 42434;
-pub const retcode_t_RC_REQUESTER_COMPONENT_NULL_HASH: retcode_t = 42435;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_INIT_LIST: retcode_t = 42436;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_DESTROY_LIST: retcode_t = 42309;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_ADD_LIST: retcode_t = 42246;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_REMOVE_LIST: retcode_t = 42247;
-pub const retcode_t_RC_RESPONDER_COMPONENT_FAILED_TX_PROCESSING: retcode_t = 42509;
-pub const retcode_t_RC_RESPONDER_COMPONENT_FAILED_REQ_PROCESSING: retcode_t = 42510;
-pub const retcode_t_RC_RESPONDER_COMPONENT_INVALID_TX: retcode_t = 42575;
-pub const retcode_t_RC_GOSSIP_SET_PACKET_TRANSACTION_FAILED: retcode_t = 43329;
-pub const retcode_t_RC_GOSSIP_SET_PACKET_REQUEST_FAILED: retcode_t = 43330;
-pub const retcode_t_RC_CIRI_CONF_NULL_CONF: retcode_t = 42945;
-pub const retcode_t_RC_CIRI_CONF_INVALID_ARGUMENTS: retcode_t = 42946;
-pub const retcode_t_RC_CIRI_CONF_FILE_NOT_FOUND: retcode_t = 42947;
-pub const retcode_t_RC_CIRI_CONF_PARSER_ERROR: retcode_t = 42948;
-pub const retcode_t_RC_CONSENSUS_MT_NULL_SELF: retcode_t = 3265;
-pub const retcode_t_RC_CONSENSUS_MT_NULL_TANGLE: retcode_t = 3266;
-pub const retcode_t_RC_CONSENSUS_MT_FAILED_THREAD_SPAWN: retcode_t = 3267;
-pub const retcode_t_RC_CONSENSUS_MT_FAILED_THREAD_JOIN: retcode_t = 3140;
-pub const retcode_t_RC_CONSENSUS_MT_STILL_RUNNING: retcode_t = 3269;
-pub const retcode_t_RC_CONSENSUS_MT_OOM: retcode_t = 3206;
-pub const retcode_t_RC_API_SERIALIZER_NOT_IMPLEMENTED: retcode_t = 43201;
-pub const retcode_t_RC_API_MAX_GET_TRYTES: retcode_t = 43074;
-pub const retcode_t_RC_API_FIND_TRANSACTIONS_NO_INPUT: retcode_t = 43075;
-pub const retcode_t_RC_API_MAX_FIND_TRANSACTIONS: retcode_t = 43076;
-pub const retcode_t_RC_API_INVALID_DEPTH_INPUT: retcode_t = 43077;
-pub const retcode_t_RC_API_INVALID_SUBTANGLE_STATUS: retcode_t = 43078;
-pub const retcode_t_RC_API_TAIL_MISSING: retcode_t = 43079;
-pub const retcode_t_RC_API_NOT_TAIL: retcode_t = 43080;
-pub const retcode_t_RC_API_INVALID_COMMAND: retcode_t = 43017;
-pub const retcode_t_RC_SNAPSHOT_NULL_SELF: retcode_t = 3521;
-pub const retcode_t_RC_SNAPSHOT_NULL_STATE: retcode_t = 3394;
-pub const retcode_t_RC_SNAPSHOT_NULL_HASH: retcode_t = 3395;
-pub const retcode_t_RC_SNAPSHOT_NULL_BALANCE: retcode_t = 3396;
-pub const retcode_t_RC_SNAPSHOT_FILE_NOT_FOUND: retcode_t = 3525;
-pub const retcode_t_RC_SNAPSHOT_INVALID_FILE: retcode_t = 3526;
-pub const retcode_t_RC_SNAPSHOT_INVALID_SUPPLY: retcode_t = 3527;
-pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_SNAPSHOT: retcode_t = 3528;
-pub const retcode_t_RC_SNAPSHOT_OOM: retcode_t = 3529;
-pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_PATCH: retcode_t = 3466;
-pub const retcode_t_RC_SNAPSHOT_BALANCE_NOT_FOUND: retcode_t = 3403;
-pub const retcode_t_RC_SNAPSHOT_INVALID_SIGNATURE: retcode_t = 3532;
-pub const retcode_t_RC_SNAPSHOT_FAILED_JSON_PARSING: retcode_t = 3533;
-pub const retcode_t_RC_LEDGER_VALIDATOR_NULL_PTR: retcode_t = 3777;
-pub const retcode_t_RC_LEDGER_VALIDATOR_INVALID_TRANSACTION: retcode_t = 3714;
-pub const retcode_t_RC_LEDGER_VALIDATOR_OOM: retcode_t = 3779;
-pub const retcode_t_RC_LEDGER_VALIDATOR_COULD_NOT_LOAD_MILESTONE: retcode_t = 3716;
-pub const retcode_t_RC_LEDGER_VALIDATOR_INCONSISTENT_DELTA: retcode_t = 3781;
-pub const retcode_t_RC_LEDGER_VALIDATOR_TRANSACTION_NOT_SOLID: retcode_t = 3782;
-pub const retcode_t_RC_TIP_SELECTOR_TIPS_NOT_CONSISTENT: retcode_t = 3905;
-pub const retcode_t_RC_TIP_SELECTOR_REFERENCE_TOO_OLD: retcode_t = 3906;
-pub const retcode_t_RC_MAM_BUFFER_TOO_SMALL: retcode_t = 45121;
-pub const retcode_t_RC_MAM_INVALID_ARGUMENT: retcode_t = 45122;
-pub const retcode_t_RC_MAM_INVALID_VALUE: retcode_t = 45123;
-pub const retcode_t_RC_MAM_NEGATIVE_VALUE: retcode_t = 45124;
-pub const retcode_t_RC_MAM_INTERNAL_ERROR: retcode_t = 45125;
-pub const retcode_t_RC_MAM_NOT_IMPLEMENTED: retcode_t = 45126;
-pub const retcode_t_RC_MAM_PB3_EOF: retcode_t = 45127;
-pub const retcode_t_RC_MAM_PB3_BAD_ONEOF: retcode_t = 45128;
-pub const retcode_t_RC_MAM_PB3_BAD_OPTIONAL: retcode_t = 45129;
-pub const retcode_t_RC_MAM_PB3_BAD_REPEATED: retcode_t = 45130;
-pub const retcode_t_RC_MAM_PB3_BAD_MAC: retcode_t = 45131;
-pub const retcode_t_RC_MAM_PB3_BAD_SIG: retcode_t = 45132;
-pub const retcode_t_RC_MAM_PB3_BAD_EKEY: retcode_t = 45133;
-pub const retcode_t_RC_MAM_PB3_SIZE_T_NOT_SUPPORTED: retcode_t = 45134;
-pub const retcode_t_RC_MAM_CHANNEL_NOT_FOUND: retcode_t = 45135;
-pub const retcode_t_RC_MAM_ENDPOINT_NOT_FOUND: retcode_t = 45136;
-pub const retcode_t_RC_MAM_VERSION_NOT_SUPPORTED: retcode_t = 45137;
-pub const retcode_t_RC_MAM_CHANNEL_NOT_TRUSTED: retcode_t = 45138;
-pub const retcode_t_RC_MAM_ENDPOINT_NOT_TRUSTED: retcode_t = 45139;
-pub const retcode_t_RC_MAM_KEYLOAD_IRRELEVANT: retcode_t = 45140;
-pub const retcode_t_RC_MAM_KEYLOAD_OVERLOADED: retcode_t = 45141;
-pub const retcode_t_RC_MAM_BUNDLE_NOT_EMPTY: retcode_t = 45142;
-pub const retcode_t_RC_MAM_BUNDLE_DOES_NOT_CONTAIN_HEADER: retcode_t = 45143;
-pub const retcode_t_RC_MAM_RECV_CTX_NOT_FOUND: retcode_t = 45144;
-pub const retcode_t_RC_MAM_SEND_CTX_NOT_FOUND: retcode_t = 45145;
-pub const retcode_t_RC_MAM_MESSAGE_NOT_FOUND: retcode_t = 45146;
-pub const retcode_t_RC_MAM_BAD_PACKET_ORD: retcode_t = 45147;
-pub const retcode_t_RC_MAM_MSS_EXHAUSTED: retcode_t = 45148;
-pub const retcode_t_RC_MAM_NTRU_POLY_FAILED: retcode_t = 45149;
-pub const retcode_t_RC_MAM_API_FAILED_CREATE_ENDPOINT: retcode_t = 45150;
-pub const retcode_t_RC_MAM_API_FAILED_CREATE_CHANNEL: retcode_t = 45151;
-pub const retcode_t_RC_MAM_PK_IS_NOT_TRUSTED: retcode_t = 45152;
-pub const retcode_t_RC_MAM_MSS_NOT_FOUND: retcode_t = 45153;
-pub const retcode_t_RC_HELPERS_POW_INVALID_TX: retcode_t = 45377;
-pub const retcode_t_RC_CRYPTO_UNSUPPORTED_SPONGE_TYPE: retcode_t = 45441;
-#[doc = " Return Codes"]
-pub type retcode_t = u32;
-extern "C" {
-    pub fn error_2_string(err: retcode_t) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn __assert_rtn(
-        arg1: *const ::std::os::raw::c_char,
-        arg2: *const ::std::os::raw::c_char,
-        arg3: ::std::os::raw::c_int,
-        arg4: *const ::std::os::raw::c_char,
-    );
-}
-#[doc = " \\brief Signed integer type capable of storing single trit"]
-#[doc = "with values in range [-1,0,1]."]
-pub type trint1_t = i8;
-extern "C" {
-    #[doc = " \\brief Return `x + s (mods 3)`."]
-    pub fn trit_add(x: trit_t, s: trit_t) -> trit_t;
-}
-extern "C" {
-    #[doc = " \\brief Return `y - s (mods 3)`."]
-    pub fn trit_sub(y: trit_t, s: trit_t) -> trit_t;
-}
-#[doc = " \\brief Signed integer type capable of storing 3 trits"]
-#[doc = "with values in range [-13,..,-1,0,1,..,13]."]
-pub type trint3_t = i8;
-extern "C" {
-    pub fn tryte_from_trits(t0: trit_t, t1: trit_t, t2: trit_t) -> tryte_t;
-}
-extern "C" {
-    pub fn tryte_to_char(t: tryte_t) -> ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn tryte_from_char(t: *mut tryte_t, c: ::std::os::raw::c_char) -> bool;
-}
-#[doc = " \\brief Signed integer type capable of storing 6 trits"]
-#[doc = "with values in range [-(3^6-1)/2=-364,..,-1,0,1,..,364=(3^6-1)/2]."]
-pub type trint6_t = i16;
-#[doc = " \\brief Signed integer type capable of storing 9 trits"]
-#[doc = "with values in range [-(3^9-1)/2=-9841,..,-1,0,1,..,9841=(3^9-1)/2]."]
-pub type trint9_t = i16;
-#[doc = " \\brief Signed integer type capable of storing 18 trits"]
-#[doc = "with values in range [-(3^18-1)/2,..,-1,0,1,..,(3^18-1)/2]."]
-pub type trint18_t = i32;
-#[doc = " Unsigned 8-bit type."]
-pub type byte = u8;
-#[doc = " \\brief Array of trits."]
-#[doc = "`p -> |...d...|......|`"]
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct trits_s {
-    #[doc = "< total number of trits pointed to by `p`"]
-    pub n: usize,
-    #[doc = "< offset of the first trit; number of available trits is `n-d`"]
-    pub d: usize,
-    #[doc = "< pointer to the trits"]
-    pub p: *mut trit_t,
-}
-#[test]
-fn bindgen_test_layout_trits_s() {
-    assert_eq!(
-        ::std::mem::size_of::<trits_s>(),
-        24usize,
-        concat!("Size of: ", stringify!(trits_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<trits_s>(),
-        8usize,
-        concat!("Alignment of ", stringify!(trits_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<trits_s>())).n as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(trits_s),
-            "::",
-            stringify!(n)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<trits_s>())).d as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(trits_s),
-            "::",
-            stringify!(d)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<trits_s>())).p as *const _ as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(trits_s),
-            "::",
-            stringify!(p)
-        )
-    );
-}
-pub type trits_t = trits_s;
-extern "C" {
-    #[doc = " \\brief Check `x.n` against zero."]
-    pub fn trits_is_empty(x: trits_t) -> bool;
-}
-extern "C" {
-    #[doc = " \\brief Size of `x`."]
-    pub fn trits_size(x: trits_t) -> usize;
-}
-extern "C" {
-    #[doc = " \\brief Minimum of the size of `x` and `s`."]
-    pub fn trits_size_min(x: trits_t, s: usize) -> usize;
-}
-extern "C" {
-    #[doc = " \\brief Construct `n` trits from representation `w`."]
-    pub fn trits_from_rep(n: usize, t: *const trit_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Take the first `n` trits from `x`."]
-    pub fn trits_take(x: trits_t, n: usize) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Take at most `n` first trits from `x`."]
-    pub fn trits_take_min(x: trits_t, n: usize) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Drop the first `n` trits from `x`."]
-    pub fn trits_drop(x: trits_t, n: usize) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Drop at most `n` first trits from `x`."]
-    pub fn trits_drop_min(x: trits_t, n: usize) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Pickup `n` trits previously dropped from `x`."]
-    pub fn trits_pickup(x: trits_t, n: usize) -> trits_t;
-}
-extern "C" {
-    pub fn trits_pickup_all(x: trits_t) -> trits_t;
-}
-extern "C" {
-    pub fn trits_advance(b: *mut trits_t, n: usize) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Get the first trit."]
-    pub fn trits_get1(x: trits_t) -> trint1_t;
-}
-extern "C" {
-    #[doc = " \\brief Put the first trit."]
-    pub fn trits_put1(x: trits_t, t: trint1_t);
-}
-extern "C" {
-    #[doc = " \\brief Get the first tryte."]
-    pub fn trits_get3(x: trits_t) -> trint3_t;
-}
-extern "C" {
-    #[doc = " \\brief Put the first tryte."]
-    pub fn trits_put3(x: trits_t, t: trint3_t);
-}
-extern "C" {
-    pub fn trits_get6(x: trits_t) -> trint6_t;
-}
-extern "C" {
-    pub fn trits_put6(x: trits_t, t: trint6_t);
-}
-extern "C" {
-    pub fn trits_get9(x: trits_t) -> trint9_t;
-}
-extern "C" {
-    pub fn trits_put9(x: trits_t, t: trint9_t);
-}
-extern "C" {
-    pub fn trits_get18(x: trits_t) -> trint18_t;
-}
-extern "C" {
-    pub fn trits_put18(x: trits_t, t: trint18_t);
-}
-extern "C" {
-    pub fn trits_get_char(x: trits_t) -> ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn trits_put_char(x: trits_t, c: ::std::os::raw::c_char) -> bool;
-}
-extern "C" {
-    pub fn trits_get_byte(x: trits_t) -> byte;
-}
-extern "C" {
-    pub fn trits_put_byte(x: trits_t, b: byte) -> bool;
-}
-extern "C" {
-    #[doc = " \\brief Convert trytes to string."]
-    #[doc = "\\note `trits_size(x)` must be multiple of 3."]
-    #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
-    pub fn trits_to_str(x: trits_t, s: *mut ::std::os::raw::c_char);
-}
-extern "C" {
-    #[doc = " \\brief Convert trytes from string."]
-    #[doc = "\\note `trits_size(x)` must be multiple of 3."]
-    #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
-    pub fn trits_from_str(x: trits_t, s: *const ::std::os::raw::c_char) -> bool;
-}
-extern "C" {
-    #[doc = " \\brief Copy minimal number of trits contained in `x` and `y`."]
-    #[doc = "Return number of trits copied."]
-    pub fn trits_copy_min(x: trits_t, y: trits_t) -> usize;
-}
-extern "C" {
-    #[doc = " \\brief Pad trits: `y := c0 || 0^{|y|-1}`."]
-    pub fn trits_padc0(c0: trit_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Copy and pad trits: `y := x || c0 || 0^{|y|-|x|-1}`."]
-    pub fn trits_copy_padc0(c0: trit_t, x: trits_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Pad non-empty trits: `y := c0 || 0^{|y|-1}` if `|y|>0`."]
-    pub fn trits_padc(c0: trit_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Copy and pad non-empty trits: `y := x || c0 || 0^{|y|-|x|-1}` if `|y|"]
-    #[doc = " > |x|` else `y := x`."]
-    pub fn trits_copy_padc(c0: trit_t, x: trits_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Add trits: `y` := `x` + `s`."]
-    pub fn trits_add(x: trits_t, s: trits_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Sub trits: `x` := `y` - `s`."]
-    pub fn trits_sub(y: trits_t, s: trits_t, x: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Copy and add trits: `y` := `x` + `s`, `s` := `x`."]
-    pub fn trits_copy_add(x: trits_t, s: trits_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Copy and sub trits: `x` := `y` - `s`, `s` := `x`."]
-    pub fn trits_copy_sub(y: trits_t, s: trits_t, x: trits_t);
-}
-extern "C" {
-    pub fn trits_swap_add(x: trits_t, s: trits_t);
-}
-extern "C" {
-    pub fn trits_swap_sub(y: trits_t, s: trits_t);
-}
-extern "C" {
-    pub fn trit_swap_add(x: *mut trit_t, s: *mut trit_t);
-}
-extern "C" {
-    pub fn trit_swap_sub(y: *mut trit_t, s: *mut trit_t);
-}
-extern "C" {
-    pub fn trits_copy_add_min(x: trits_t, s: trits_t, y: trits_t) -> usize;
-}
-extern "C" {
-    pub fn trits_copy_sub_min(x: trits_t, s: trits_t, y: trits_t) -> usize;
-}
-extern "C" {
-    pub fn trits_swap_add_min(x: trits_t, s: trits_t) -> usize;
-}
-extern "C" {
-    pub fn trits_swap_sub_min(x: trits_t, s: trits_t) -> usize;
-}
-extern "C" {
-    #[doc = " \\brief Compare trits: `x` <=> `y`."]
-    pub fn trits_cmp_grlex(x: trits_t, y: trits_t) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    #[doc = " \\brief Compare trits: `x` =? `y`."]
-    pub fn trits_cmp_eq(x: trits_t, y: trits_t) -> bool;
-}
-extern "C" {
-    pub fn trits_cmp_eq_str(x: trits_t, y: *const ::std::os::raw::c_char) -> bool;
-}
-extern "C" {
-    #[doc = " \\brief Return `x` such that:"]
-    #[doc = "`trits_is_same(trits_drop(begin, trits_size(x)), end)` and"]
-    #[doc = "`trits_is_same(trits_take(begin, trits_size(x)), x)`."]
-    pub fn trits_diff(begin: trits_t, end: trits_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Null trits."]
-    pub fn trits_null() -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Check `x.p` against null."]
-    #[doc = "\\note Usually trits_t can\'t be null. All basic layers including"]
-    #[doc = "`trits`, `sponge`, `prng`, `wots`, and `mss` rely on caller"]
-    #[doc = "to allocate memory for trits. But in certain cases where the size of memory"]
-    #[doc = "is difficult to trac memory can be allocated within a callee."]
-    #[doc = "In such case trits should be passed by pointer: `trits_t *x`."]
-    pub fn trits_is_null(x: trits_t) -> bool;
-}
-extern "C" {
-    #[doc = " \\brief Increment trits with carry. Return false if overflow would occur."]
-    pub fn trits_inc(x: trits_t) -> bool;
-}
-extern "C" {
-    #[doc = " \\brief Alloc `n` trits."]
-    pub fn trits_alloc(n: usize) -> trits_t;
-}
-extern "C" {
-    #[doc = " \\brief Free trits `x`."]
-    pub fn trits_free(x: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Print string rep of `x` into stdout."]
-    pub fn trits_print(x: trits_t);
-}
-extern "C" {
-    pub fn trits_print2(
-        pfx: *const ::std::os::raw::c_char,
-        x: trits_t,
-        sfx: *const ::std::os::raw::c_char,
-    );
-}
-pub const mam_prng_destination_tryte_e_MAM_PRNG_DST_SEC_KEY: mam_prng_destination_tryte_e = 0;
-pub const mam_prng_destination_tryte_e_MAM_PRNG_DST_WOTS_KEY: mam_prng_destination_tryte_e = 1;
-pub const mam_prng_destination_tryte_e_MAM_PRNG_DST_NTRU_KEY: mam_prng_destination_tryte_e = 2;
-pub type mam_prng_destination_tryte_e = u32;
-pub use self::mam_prng_destination_tryte_e as mam_prng_destination_tryte_t;
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct mam_prng_s {
-    pub secret_key: [trit_t; 243usize],
-}
-#[test]
-fn bindgen_test_layout_mam_prng_s() {
-    assert_eq!(
-        ::std::mem::size_of::<mam_prng_s>(),
-        243usize,
-        concat!("Size of: ", stringify!(mam_prng_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<mam_prng_s>(),
-        1usize,
-        concat!("Alignment of ", stringify!(mam_prng_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mam_prng_s>())).secret_key as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mam_prng_s),
-            "::",
-            stringify!(secret_key)
-        )
-    );
-}
-pub type mam_prng_t = mam_prng_s;
-extern "C" {
-    #[doc = " PRNG initialization"]
-    #[doc = ""]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param secret_key A secret key of size MAM_PRNG_KEY_SIZE"]
-    pub fn mam_prng_init(prng: *mut mam_prng_t, secret_key: trits_t);
-}
-extern "C" {
-    #[doc = " PRNG deinitialization"]
-    #[doc = ""]
-    #[doc = " @param prng A PRNG interface"]
-    pub fn mam_prng_destroy(prng: *mut mam_prng_t);
-}
-extern "C" {
-    #[doc = " PRNG output generation with a nonce"]
-    #[doc = ""]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param destination A destination tryte"]
-    #[doc = " @param nonce The nonce"]
-    #[doc = " @param output Pseudorandom output trits"]
-    pub fn mam_prng_gen(
-        prng: *const mam_prng_t,
-        destination: mam_prng_destination_tryte_t,
-        nonce: trits_t,
-        output: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " PRNG output generation with two nonces"]
-    #[doc = ""]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param destination A destination tryte"]
-    #[doc = " @param nonce1 The first nonce"]
-    #[doc = " @param nonce2 The second nonce"]
-    #[doc = " @param output Pseudorandom output trits"]
-    pub fn mam_prng_gen2(
-        prng: *const mam_prng_t,
-        destination: mam_prng_destination_tryte_t,
-        nonce1: trits_t,
-        nonce2: trits_t,
-        output: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " PRNG output generation with three nonces"]
-    #[doc = ""]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param destination A destination tryte"]
-    #[doc = " @param nonce1 The first nonce"]
-    #[doc = " @param nonce2 The second nonce"]
-    #[doc = " @param nonce3 The third nonce"]
-    #[doc = " @param output Pseudorandom output trits"]
-    pub fn mam_prng_gen3(
-        prng: *const mam_prng_t,
-        destination: mam_prng_destination_tryte_t,
-        nonce1: trits_t,
-        nonce2: trits_t,
-        nonce3: trits_t,
-        output: trits_t,
-    );
-}
-extern "C" {
-    pub fn mam_prng_serialized_size() -> usize;
-}
-extern "C" {
-    pub fn mam_prng_serialize(prng: *const mam_prng_t, buffer: *mut trits_t);
-}
-extern "C" {
-    pub fn mam_prng_deserialize(buffer: *mut trits_t, prng: *mut mam_prng_t) -> retcode_t;
-}
-#[doc = " Sponge interface"]
-#[doc = ""]
-#[doc = " @field stack Additional memory used by the transformation function"]
-#[doc = " @field state sponge state"]
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct sponge_s {
-    pub state: [trit_t; 729usize],
-}
-#[test]
-fn bindgen_test_layout_sponge_s() {
-    assert_eq!(
-        ::std::mem::size_of::<sponge_s>(),
-        729usize,
-        concat!("Size of: ", stringify!(sponge_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<sponge_s>(),
-        1usize,
-        concat!("Alignment of ", stringify!(sponge_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<sponge_s>())).state as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(sponge_s),
-            "::",
-            stringify!(state)
-        )
-    );
-}
-pub type mam_sponge_t = sponge_s;
-extern "C" {
-    #[doc = " Gets part (the first `rate` trits) of the sponge outer state"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = ""]
-    #[doc = " @return the trits"]
-    pub fn mam_sponge_outer_trits(sponge: *const mam_sponge_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " Sponge state initialization"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    pub fn mam_sponge_init(sponge: *mut mam_sponge_t);
-}
-extern "C" {
-    #[doc = " Internal state transformation"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    pub fn mam_sponge_transform(sponge: *mut mam_sponge_t);
-}
-extern "C" {
-    #[doc = " Fork (copy) sponge state. `fork` must be initialized"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param fork Sponge interface"]
-    pub fn mam_sponge_fork(sponge: *const mam_sponge_t, fork: *mut mam_sponge_t);
-}
-extern "C" {
-    #[doc = " Sponge absorption"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param c2 Control trit encoding output data type"]
-    #[doc = " @param data Input data blocks"]
-    pub fn mam_sponge_absorb(sponge: *mut mam_sponge_t, c2: trit_t, data: trits_t);
-}
-extern "C" {
-    #[doc = " Absorb concatenation of `Xs[0]`..`Xs[n-1]`"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param c2 Control trit encoding output data type"]
-    #[doc = " @param n Input data blocks count"]
-    #[doc = " @param data_blocks Input data blocks"]
-    pub fn mam_sponge_absorbn(
-        sponge: *mut mam_sponge_t,
-        c2: trit_t,
-        n: usize,
-        data_blocks: *const trits_t,
-    );
-}
-extern "C" {
-    #[doc = " Sponge squeezing"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param c2 Control trit encoding output data type"]
-    #[doc = " @param squeezed Output data"]
-    pub fn mam_sponge_squeeze(sponge: *mut mam_sponge_t, c2: trit_t, squeezed: trits_t);
-}
-extern "C" {
-    #[doc = " Sponge AE encryption"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param plaintext Input data"]
-    #[doc = " @param ciphertext Hash value"]
-    pub fn mam_sponge_encr(sponge: *mut mam_sponge_t, plaintext: trits_t, ciphertext: trits_t);
-}
-extern "C" {
-    #[doc = " Sponge AE decryption"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param ciphertext Hash value"]
-    #[doc = " @param plaintext Input data"]
-    pub fn mam_sponge_decr(sponge: *mut mam_sponge_t, ciphertext: trits_t, plaintext: trits_t);
-}
-extern "C" {
-    #[doc = " Sponge hashing"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param plaintext Input data"]
-    #[doc = " @param digest Hash value"]
-    pub fn mam_sponge_hash(sponge: *mut mam_sponge_t, plaintext: trits_t, digest: trits_t);
-}
-extern "C" {
-    #[doc = " Sponge hashing"]
-    #[doc = ""]
-    #[doc = " @param sponge Sponge interface"]
-    #[doc = " @param n Input data blocks count"]
-    #[doc = " @param plaintext_blocks Input data blocks"]
-    #[doc = " @param digest Hash value"]
-    pub fn mam_sponge_hashn(
-        sponge: *mut mam_sponge_t,
-        n: usize,
-        plaintext_blocks: *const trits_t,
-        digest: trits_t,
-    );
-}
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct mam_spongos_s {
-    pub sponge: mam_sponge_t,
-    pub pos: usize,
-}
-#[test]
-fn bindgen_test_layout_mam_spongos_s() {
-    assert_eq!(
-        ::std::mem::size_of::<mam_spongos_s>(),
-        744usize,
-        concat!("Size of: ", stringify!(mam_spongos_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<mam_spongos_s>(),
-        8usize,
-        concat!("Alignment of ", stringify!(mam_spongos_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mam_spongos_s>())).sponge as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mam_spongos_s),
-            "::",
-            stringify!(sponge)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mam_spongos_s>())).pos as *const _ as usize },
-        736usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mam_spongos_s),
-            "::",
-            stringify!(pos)
-        )
-    );
-}
-pub type mam_spongos_t = mam_spongos_s;
-extern "C" {
-    pub fn mam_spongos_serialized_size(spongos: *const mam_spongos_t) -> usize;
-}
-extern "C" {
-    pub fn mam_spongos_serialize(spongos: *const mam_spongos_t, trits: *mut trits_t);
-}
-extern "C" {
-    pub fn mam_spongos_deserialize(trits: *mut trits_t, spongos: *mut mam_spongos_t) -> retcode_t;
-}
-extern "C" {
-    #[doc = " Initializes a spongos state"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    pub fn mam_spongos_init(spongos: *mut mam_spongos_t);
-}
-extern "C" {
-    #[doc = " Creates an equivalent spongos instance"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param fork The fork"]
-    pub fn mam_mam_spongos_fork(spongos: *const mam_spongos_t, fork: *mut mam_spongos_t);
-}
-extern "C" {
-    #[doc = " Commits changes in the rate part"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    pub fn mam_spongos_commit(spongos: *mut mam_spongos_t);
-}
-extern "C" {
-    #[doc = " Processes input data"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param input Input data"]
-    pub fn mam_spongos_absorb(spongos: *mut mam_spongos_t, input: trits_t);
-}
-extern "C" {
-    #[doc = " Processes n inputs data"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param n Number of input data"]
-    #[doc = " @param inputs Inputs data"]
-    pub fn mam_spongos_absorbn(spongos: *mut mam_spongos_t, n: usize, inputs: *mut trits_t);
-}
-extern "C" {
-    #[doc = " Generates output data"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param output Output data"]
-    pub fn mam_spongos_squeeze(spongos: *mut mam_spongos_t, output: trits_t);
-}
-extern "C" {
-    #[doc = " Generates output data and check for equality with given output"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param expected_output Expected output data"]
-    pub fn mam_spongos_squeeze_eq(spongos: *mut mam_spongos_t, expected_output: trits_t) -> bool;
-}
-extern "C" {
-    #[doc = " Hashes input data"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param input Input data"]
-    #[doc = " @param output Output data"]
-    pub fn mam_spongos_hash(spongos: *mut mam_spongos_t, input: trits_t, output: trits_t);
-}
-extern "C" {
-    #[doc = " Hashes n input data"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param n Number of input data"]
-    #[doc = " @param inputs Inputs data"]
-    #[doc = " @param output Output data"]
-    pub fn mam_spongos_hashn(
-        spongos: *mut mam_spongos_t,
-        n: usize,
-        inputs: *mut trits_t,
-        output: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " Encrypts plaintext"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param plaintext Plaintext input"]
-    #[doc = " @param ciphertext Ciphertext output"]
-    pub fn mam_spongos_encr(spongos: *mut mam_spongos_t, plaintext: trits_t, ciphertext: trits_t);
-}
-extern "C" {
-    #[doc = " Decrypts ciphertext"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param ciphertext Ciphertext input"]
-    #[doc = " @param plaintext Plaintext output"]
-    pub fn mam_spongos_decr(spongos: *mut mam_spongos_t, ciphertext: trits_t, plaintext: trits_t);
-}
-extern "C" {
-    #[doc = " Copy spongos from src to dst"]
-    #[doc = ""]
-    #[doc = " @param src The source"]
-    #[doc = " @param dst The destination"]
-    pub fn mam_spongos_copy(src: *const mam_spongos_t, dst: *mut mam_spongos_t);
-}
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct mam_wots_s {
-    pub secret_key: [trit_t; 13122usize],
-}
-#[test]
-fn bindgen_test_layout_mam_wots_s() {
-    assert_eq!(
-        ::std::mem::size_of::<mam_wots_s>(),
-        13122usize,
-        concat!("Size of: ", stringify!(mam_wots_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<mam_wots_s>(),
-        1usize,
-        concat!("Alignment of ", stringify!(mam_wots_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mam_wots_s>())).secret_key as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mam_wots_s),
-            "::",
-            stringify!(secret_key)
-        )
-    );
-}
-pub type mam_wots_t = mam_wots_s;
-extern "C" {
-    #[doc = " Initializes a WOTS interface with a sponge"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    pub fn mam_wots_init(wots: *mut mam_wots_t);
-}
-extern "C" {
-    #[doc = " Deallocates memory for WOTS secret key"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    pub fn mam_wots_destroy(wots: *mut mam_wots_t);
-}
-extern "C" {
-    #[doc = " Generates a WOTS secret key with a nonce"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param nonce The nonce"]
-    pub fn mam_wots_gen_sk(wots: *mut mam_wots_t, prng: *const mam_prng_t, nonce: trits_t);
-}
-extern "C" {
-    #[doc = " Generates a WOTS secret key with two nonces"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param nonce1 The first nonce"]
-    #[doc = " @param nonce2 The second nonce"]
-    pub fn mam_wots_gen_sk2(
-        wots: *mut mam_wots_t,
-        prng: *const mam_prng_t,
-        nonce1: trits_t,
-        nonce2: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " Generate a WOTS secret key with three nonces"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param nonce1 The first nonce"]
-    #[doc = " @param nonce2 The second nonce"]
-    #[doc = " @param nonce3 The third nonce"]
-    pub fn mam_wots_gen_sk3(
-        wots: *mut mam_wots_t,
-        prng: *const mam_prng_t,
-        nonce1: trits_t,
-        nonce2: trits_t,
-        nonce3: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " Calculates a WOTS public key"]
-    #[doc = " Private key must have already been generated"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    #[doc = " @param public_key The public key"]
-    pub fn mam_wots_calc_pk(wots: *mut mam_wots_t, public_key: trits_t);
-}
-extern "C" {
-    #[doc = " Generates a WOTS signature"]
-    #[doc = ""]
-    #[doc = " @param wots A WOTS interface"]
-    #[doc = " @param hash A hash to be signed"]
-    #[doc = " @param signature The signature"]
-    pub fn mam_wots_sign(wots: *mut mam_wots_t, hash: trits_t, signature: trits_t);
-}
-extern "C" {
-    #[doc = " Recovers a WOTS public key from a signature"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param hash A signed hash"]
-    #[doc = " @param signature The signature"]
-    #[doc = " @param public_key The recovered public key"]
-    pub fn mam_wots_recover(
-        spongos: *mut mam_spongos_t,
-        hash: trits_t,
-        signature: trits_t,
-        public_key: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " Verifies a WOTS signature"]
-    #[doc = ""]
-    #[doc = " @param spongos A spongos interface"]
-    #[doc = " @param hash A signed hash"]
-    #[doc = " @param signature The signature"]
-    #[doc = " @param public_key The presumed public key"]
-    #[doc = ""]
-    #[doc = " @return true if valid, false otherwise"]
-    pub fn mam_wots_verify(
-        spongos: *mut mam_spongos_t,
-        hash: trits_t,
-        signature: trits_t,
-        public_key: trits_t,
-    ) -> bool;
-}
-#[doc = " \\brief Leaves have height `0`, root has height `D`; `0 <= d < D`; `D <="]
-#[doc = " 20`."]
-pub type mss_mt_height_t = trint6_t;
-#[doc = " \\brief Index (skn) of leaf/node on the level of height `d`; 0 <= i <"]
-#[doc = " 2^(D-d)."]
-pub type mss_mt_idx_t = trint18_t;
-#[doc = " \\brief MSS interface used to generate public key and sign."]
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct mss_s {
-    #[doc = "< Merkle tree height."]
-    pub height: mss_mt_height_t,
-    #[doc = "< Current WOTS private key number."]
-    pub skn: mss_mt_idx_t,
-    #[doc = "< PRNG interface used to generate WOTS private keys."]
-    pub prng: *mut mam_prng_t,
-    #[doc = "< Buffer storing complete Merkle-tree."]
-    pub mt: *mut trit_t,
-    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
-    pub nonce1: trits_t,
-    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
-    pub nonce2: trits_t,
-    pub root: [trit_t; 243usize],
-}
-#[test]
-fn bindgen_test_layout_mss_s() {
-    assert_eq!(
-        ::std::mem::size_of::<mss_s>(),
-        320usize,
-        concat!("Size of: ", stringify!(mss_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<mss_s>(),
-        8usize,
-        concat!("Alignment of ", stringify!(mss_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).height as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(height)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).skn as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(skn)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).prng as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(prng)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).mt as *const _ as usize },
-        16usize,
-        concat!("Offset of field: ", stringify!(mss_s), "::", stringify!(mt))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).nonce1 as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(nonce1)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).nonce2 as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(nonce2)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).root as *const _ as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(root)
-        )
-    );
-}
-pub type mam_mss_t = mss_s;
-extern "C" {
-    #[doc = " MSS interface initialization"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @param prng [in] PRNG interface"]
-    #[doc = " @param sponge [in] Sponge interface"]
-    #[doc = " @param height [in] Merkle-tree height"]
-    #[doc = " @param nonce1 [in] first nonce"]
-    #[doc = " @param nonce2 [in] second nonce"]
-    #[doc = ""]
-    #[doc = " @return void"]
-    pub fn mam_mss_init(
-        mss: *mut mam_mss_t,
-        prng: *mut mam_prng_t,
-        height: mss_mt_height_t,
-        nonce1: trits_t,
-        nonce2: trits_t,
-    );
-}
-extern "C" {
-    #[doc = " Generate MSS keys, stores current and next auth_path"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @return void"]
-    pub fn mam_mss_gen(mss: *mut mam_mss_t);
-}
-extern "C" {
-    #[doc = " Encodes mss height and current sk index"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @param skn [out] encoded height and current private key number"]
-    #[doc = " @return void"]
-    pub fn mam_mss_skn(mss: *const mam_mss_t, skn: trits_t);
-}
-extern "C" {
-    #[doc = " Gets the authentication path"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @param skn [in] number of WOTS instance (current pk index), in traversal mode"]
-    #[doc = " this parameter is not used because current authentication path is always"]
-    #[doc = " updated"]
-    #[doc = " @param path [out] authentication path"]
-    #[doc = ""]
-    #[doc = " @return void"]
-    pub fn mam_mss_auth_path(mss: *mut mam_mss_t, skn: mss_mt_idx_t, path: trits_t);
-}
-extern "C" {
-    #[doc = " Signs a hash"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @param hash [in] the hash to sign on"]
-    #[doc = " @param sig [out] the signature"]
-    #[doc = ""]
-    #[doc = " @return retcode"]
-    pub fn mam_mss_sign(mss: *mut mam_mss_t, hash: trits_t, sig: trits_t) -> retcode_t;
-}
-extern "C" {
-    #[doc = " Signs a hash and advances skn"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @param hash [in] the hash to sign on"]
-    #[doc = " @param sig [out] the signature"]
-    #[doc = ""]
-    #[doc = " @return retcode"]
-    pub fn mam_mss_sign_and_next(mss: *mut mam_mss_t, hash: trits_t, sig: trits_t) -> retcode_t;
-}
-extern "C" {
-    #[doc = " Advances skn"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = ""]
-    #[doc = " @return True if can produce next signature"]
-    pub fn mam_mss_next(mss: *mut mam_mss_t) -> bool;
-}
-extern "C" {
-    #[doc = " Returns the number of remaining secret keys (unused leaves on merkle tree)"]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = ""]
-    #[doc = " @return The number of remaining signatures"]
-    pub fn mam_mss_num_remaining_sks(mss: *const mam_mss_t) -> usize;
-}
-extern "C" {
-    #[doc = " Verifies MSS signature."]
-    #[doc = ""]
-    #[doc = " @param mt_spongos [in] Spongos interface to hash Merkle Tree"]
-    #[doc = " @param wots_spongos [in] Spongos interface to hash WOTS iterations"]
-    #[doc = " @param hash [in] signed hash value"]
-    #[doc = " @param sig [in] signature"]
-    #[doc = " @param [in] public key (Merkle-tree root)"]
-    #[doc = ""]
-    #[doc = " @return bool True is the signature is correct, False otherwise"]
-    pub fn mam_mss_verify(
-        mt_spongos: *mut mam_spongos_t,
-        wots_spongos: *mut mam_spongos_t,
-        hash: trits_t,
-        sig: trits_t,
-        pk: trits_t,
-    ) -> bool;
-}
-extern "C" {
-    #[doc = " Allocate memory for internal Merkle tree structure."]
-    #[doc = ""]
-    #[doc = " \\note `mss_init` must still be called afterwards."]
-    #[doc = " \\note In case of error `mss_destroy` must be called."]
-    #[doc = " \\note Non Merkle tree related objects (WOTS, PRNG, Spongos interfaces)"]
-    #[doc = "     must be allocated separately."]
-    #[doc = ""]
-    #[doc = " @param mss [out] MSS interface"]
-    #[doc = " @param height [in] the tree\'s height"]
-    #[doc = ""]
-    #[doc = " @return void"]
-    pub fn mam_mss_create(mss: *mut mam_mss_t, height: mss_mt_height_t) -> retcode_t;
-}
-extern "C" {
-    #[doc = " Deallocate memory for internal Merkle tree structure."]
-    #[doc = " \\note Pointer `m` must be freed afterwards."]
-    #[doc = ""]
-    #[doc = " @param mss [out] MSS interface"]
-    #[doc = ""]
-    #[doc = " @return void"]
-    pub fn mam_mss_destroy(mss: *mut mam_mss_t);
-}
-extern "C" {
-    #[doc = " returns The size of a serialized Merkle tree."]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = ""]
-    #[doc = " @return size_t The size for stored MT"]
-    pub fn mam_mss_serialized_size(mss: *const mam_mss_t) -> usize;
-}
-extern "C" {
-    #[doc = " Serialize Merkle tree."]
-    #[doc = ""]
-    #[doc = " @param mss [in] MSS interface"]
-    #[doc = " @param buffer [out] The serialized MT buffer"]
-    #[doc = ""]
-    #[doc = " @return void"]
-    pub fn mam_mss_serialize(mss: *const mam_mss_t, buffer: trits_t);
-}
-extern "C" {
-    #[doc = " Deerialize Merkle tree."]
-    #[doc = ""]
-    #[doc = " @param mss [out] MSS interface"]
-    #[doc = " @param buffer [in] The serialized MT buffer"]
-    #[doc = ""]
-    #[doc = " @return void"]
-    pub fn mam_mss_deserialize(buffer: *mut trits_t, mss: *mut mam_mss_t) -> retcode_t;
-}
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct mam_endpoint_s {
-    pub name: trits_t,
-    pub mss: mam_mss_t,
-}
-#[test]
-fn bindgen_test_layout_mam_endpoint_s() {
-    assert_eq!(
-        ::std::mem::size_of::<mam_endpoint_s>(),
-        344usize,
-        concat!("Size of: ", stringify!(mam_endpoint_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<mam_endpoint_s>(),
-        8usize,
-        concat!("Alignment of ", stringify!(mam_endpoint_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mam_endpoint_s>())).name as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mam_endpoint_s),
-            "::",
-            stringify!(name)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mam_endpoint_s>())).mss as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mam_endpoint_s),
-            "::",
-            stringify!(mss)
-        )
-    );
-}
-pub type mam_endpoint_t = mam_endpoint_s;
-pub type mam_endpoint_t_set_entry_t = mam_endpoint_t_set_entry_s;
-pub type mam_endpoint_t_set_t = *mut mam_endpoint_t_set_entry_t;
-extern "C" {
-    #[doc = " Gets an endpoint\'s id"]
-    #[doc = ""]
-    #[doc = " @param endpoint The endpoint"]
-    #[doc = ""]
-    #[doc = " @return the endpoint\'s id"]
-    pub fn mam_endpoint_id(endpoint: *const mam_endpoint_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " Gets an endpoint channel\'s name"]
-    #[doc = ""]
-    #[doc = " @param endpoint The endpoint"]
-    #[doc = ""]
-    #[doc = " @return the endpoint channel\'s name"]
-    pub fn mam_endpoint_channel_name(endpoint: *const mam_endpoint_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " Gets an endpoint\'s name"]
-    #[doc = ""]
-    #[doc = " @param endpoint The endpoint"]
-    #[doc = ""]
-    #[doc = " @return the endpoint\'s name"]
-    pub fn mam_endpoint_name(endpoint: *const mam_endpoint_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " Allocates memory for internal objects and generates MSS public key"]
-    #[doc = ""]
-    #[doc = " @param allocator A MAM allocator"]
-    #[doc = " @param prng A shared PRNG interface used to generate WOTS private keys"]
-    #[doc = " @param height MSS MT height"]
-    #[doc = " @param channel_name The channel name"]
-    #[doc = " @param endpoint_name The endpoint name"]
-    #[doc = " @param endpoint The endpoint"]
-    #[doc = ""]
-    #[doc = " @return a status code"]
-    pub fn mam_endpoint_create(
-        prng: *mut mam_prng_t,
-        height: mss_mt_height_t,
-        channel_name: trits_t,
-        endpoint_name: trits_t,
-        endpoint: *mut mam_endpoint_t,
-    ) -> retcode_t;
-}
-extern "C" {
-    #[doc = " Returns the number of remaining secret keys (unused leaves on merkle tree)"]
-    #[doc = " @param endpoint The endpoint"]
-    #[doc = ""]
-    #[doc = " @return number of remaining secret keys"]
-    pub fn mam_endpoint_num_remaining_sks(endpoint: *const mam_endpoint_t) -> usize;
-}
-extern "C" {
-    #[doc = " Deallocates memory for internal objects"]
-    #[doc = ""]
-    #[doc = " @param allocator A MAM allocator"]
-    #[doc = " @param endpoint The endpoint"]
-    pub fn mam_endpoint_destroy(endpoint: *mut mam_endpoint_t);
-}
-extern "C" {
-    pub fn mam_endpoints_destroy(endpoints: *mut mam_endpoint_t_set_t) -> retcode_t;
-}
-extern "C" {
-    pub fn mam_endpoint_serialized_size(endpoint: *const mam_endpoint_t) -> usize;
-}
-extern "C" {
-    pub fn mam_endpoint_serialize(endpoint: *const mam_endpoint_t, buffer: *mut trits_t);
-}
-extern "C" {
-    pub fn mam_endpoint_deserialize(
-        buffer: *mut trits_t,
-        channel_name: trits_t,
-        prng: *mut mam_prng_t,
-        endpoint: *mut mam_endpoint_t,
-    ) -> retcode_t;
-}
-extern "C" {
-    pub fn mam_endpoints_serialized_size(endpoints: mam_endpoint_t_set_t) -> usize;
-}
-extern "C" {
-    pub fn mam_endpoints_serialize(endpoints: mam_endpoint_t_set_t, buffer: *mut trits_t);
-}
-extern "C" {
-    pub fn mam_endpoints_deserialize(
-        buffer: *mut trits_t,
-        channel_name: trits_t,
-        prng: *mut mam_prng_t,
-        endpoints: *mut mam_endpoint_t_set_t,
-    ) -> retcode_t;
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct mam_endpoint_t_set_entry_s {
@@ -15495,27 +15553,27 @@ fn bindgen_test_layout_mam_pk_s() {
 }
 pub type mam_pk_t = mam_pk_s;
 extern "C" {
-    #[doc = " Gets a channel\'s id"]
+    #[doc = " Gets a channel's id"]
     #[doc = ""]
     #[doc = " @param channel The channel"]
     #[doc = ""]
-    #[doc = " @return the channel\'s id"]
+    #[doc = " @return the channel's id"]
     pub fn mam_channel_id(channel: *const mam_channel_t) -> trits_t;
 }
 extern "C" {
-    #[doc = " Gets a channel\'s name"]
+    #[doc = " Gets a channel's name"]
     #[doc = ""]
     #[doc = " @param channel The channel"]
     #[doc = ""]
-    #[doc = " @return the channel\'s name"]
+    #[doc = " @return the channel's name"]
     pub fn mam_channel_name(channel: *const mam_channel_t) -> trits_t;
 }
 extern "C" {
-    #[doc = " Gets a channel\'s msg_ord"]
+    #[doc = " Gets a channel's msg_ord"]
     #[doc = ""]
     #[doc = " @param channel The channel"]
     #[doc = ""]
-    #[doc = " @return the channel\'s msg_ord"]
+    #[doc = " @return the channel's msg_ord"]
     pub fn mam_channel_msg_ord(channel: *const mam_channel_t) -> trits_t;
 }
 extern "C" {
@@ -17237,6 +17295,8 @@ extern "C" {
     #[doc = " @param  data        Pointer to the input data."]
     #[doc = "                     When @a databitLen is not a multiple of 8, the last bits of data must be"]
     #[doc = "                     in the least significant bits of the last byte (little-endian convention)."]
+    #[doc = "                     In this case, the (8 - @a databitLen mod 8) most significant bits"]
+    #[doc = "                     of the last byte are ignored."]
     #[doc = " @param  databitLen  The number of input bits provided in the input data."]
     #[doc = " @pre    In the previous call to Keccak_HashUpdate(), databitlen was a multiple of 8."]
     #[doc = " @return SUCCESS if successful, FAIL otherwise."]
@@ -17764,6 +17824,7 @@ pub type iota_transaction_fields_data_t = iota_transaction_fields_data_s;
 pub struct iota_transaction_fields_metadata_s {
     pub snapshot_index: u64,
     pub solid: bool,
+    pub validity: u8,
     pub arrival_timestamp: u64,
 }
 #[test]
@@ -17809,6 +17870,19 @@ fn bindgen_test_layout_iota_transaction_fields_metadata_s() {
     );
     assert_eq!(
         unsafe {
+            &(*(::std::ptr::null::<iota_transaction_fields_metadata_s>())).validity as *const _
+                as usize
+        },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(iota_transaction_fields_metadata_s),
+            "::",
+            stringify!(validity)
+        )
+    );
+    assert_eq!(
+        unsafe {
             &(*(::std::ptr::null::<iota_transaction_fields_metadata_s>())).arrival_timestamp
                 as *const _ as usize
         },
@@ -17825,22 +17899,22 @@ pub type iota_transaction_fields_metadata_t = iota_transaction_fields_metadata_s
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct field_mask_s {
-    pub essence: i16,
-    pub attachment: i16,
-    pub consensus: i16,
-    pub data: i16,
-    pub metadata: i16,
+    pub essence: u8,
+    pub attachment: u8,
+    pub consensus: u8,
+    pub data: u8,
+    pub metadata: u8,
 }
 #[test]
 fn bindgen_test_layout_field_mask_s() {
     assert_eq!(
         ::std::mem::size_of::<field_mask_s>(),
-        10usize,
+        5usize,
         concat!("Size of: ", stringify!(field_mask_s))
     );
     assert_eq!(
         ::std::mem::align_of::<field_mask_s>(),
-        2usize,
+        1usize,
         concat!("Alignment of ", stringify!(field_mask_s))
     );
     assert_eq!(
@@ -17855,7 +17929,7 @@ fn bindgen_test_layout_field_mask_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<field_mask_s>())).attachment as *const _ as usize },
-        2usize,
+        1usize,
         concat!(
             "Offset of field: ",
             stringify!(field_mask_s),
@@ -17865,7 +17939,7 @@ fn bindgen_test_layout_field_mask_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<field_mask_s>())).consensus as *const _ as usize },
-        4usize,
+        2usize,
         concat!(
             "Offset of field: ",
             stringify!(field_mask_s),
@@ -17875,7 +17949,7 @@ fn bindgen_test_layout_field_mask_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<field_mask_s>())).data as *const _ as usize },
-        6usize,
+        3usize,
         concat!(
             "Offset of field: ",
             stringify!(field_mask_s),
@@ -17885,7 +17959,7 @@ fn bindgen_test_layout_field_mask_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<field_mask_s>())).metadata as *const _ as usize },
-        8usize,
+        4usize,
         concat!(
             "Offset of field: ",
             stringify!(field_mask_s),
@@ -17909,7 +17983,7 @@ pub struct iota_transaction_s {
 fn bindgen_test_layout_iota_transaction_s() {
     assert_eq!(
         ::std::mem::size_of::<iota_transaction_s>(),
-        8144usize,
+        8136usize,
         concat!("Size of: ", stringify!(iota_transaction_s))
     );
     assert_eq!(
@@ -17981,40 +18055,41 @@ fn bindgen_test_layout_iota_transaction_s() {
     );
 }
 pub type iota_transaction_t = iota_transaction_s;
-pub const _field_mask_essence_MASK_ESSENCE_ADDRESS: _field_mask_essence = 1;
-pub const _field_mask_essence_MASK_ESSENCE_VALUE: _field_mask_essence = 2;
-pub const _field_mask_essence_MASK_ESSENCE_OBSOLETE_TAG: _field_mask_essence = 4;
-pub const _field_mask_essence_MASK_ESSENCE_TIMESTAMP: _field_mask_essence = 8;
-pub const _field_mask_essence_MASK_ESSENCE_CURRENT_INDEX: _field_mask_essence = 16;
-pub const _field_mask_essence_MASK_ESSENCE_LAST_INDEX: _field_mask_essence = 32;
-pub const _field_mask_essence_MASK_ESSENCE_BUNDLE: _field_mask_essence = 64;
-pub const _field_mask_essence_MASK_ESSENCE_ALL: _field_mask_essence = 127;
-pub type _field_mask_essence = u32;
-pub use self::_field_mask_essence as field_mask_essence_e;
-pub const _field_mask_attachment_MASK_ATTACHMENT_TRUNK: _field_mask_attachment = 1;
-pub const _field_mask_attachment_MASK_ATTACHMENT_BRANCH: _field_mask_attachment = 2;
-pub const _field_mask_attachment_MASK_ATTACHMENT_TIMESTAMP: _field_mask_attachment = 4;
-pub const _field_mask_attachment_MASK_ATTACHMENT_TIMESTAMP_LOWER: _field_mask_attachment = 8;
-pub const _field_mask_attachment_MASK_ATTACHMENT_TIMESTAMP_UPPER: _field_mask_attachment = 16;
-pub const _field_mask_attachment_MASK_ATTACHMENT_NONCE: _field_mask_attachment = 32;
-pub const _field_mask_attachment_MASK_ATTACHMENT_TAG: _field_mask_attachment = 64;
-pub const _field_mask_attachment_MASK_ATTACHMENT_ALL: _field_mask_attachment = 127;
-pub type _field_mask_attachment = u32;
-pub use self::_field_mask_attachment as field_mask_attachment_e;
-pub const _field_mask_consensus_MASK_CONSENSUS_HASH: _field_mask_consensus = 1;
-pub const _field_mask_consensus_MASK_CONSENSUS_ALL: _field_mask_consensus = 1;
-pub type _field_mask_consensus = u32;
-pub use self::_field_mask_consensus as field_mask_consensus_e;
-pub const _field_mask_data_MASK_DATA_SIG_OR_MSG: _field_mask_data = 1;
-pub const _field_mask_data_MASK_DATA_ALL: _field_mask_data = 1;
-pub type _field_mask_data = u32;
-pub use self::_field_mask_data as field_mask_data_e;
-pub const _field_mask_metadata_MASK_METADATA_SNAPSHOT_INDEX: _field_mask_metadata = 1;
-pub const _field_mask_metadata_MASK_METADATA_SOLID: _field_mask_metadata = 2;
-pub const _field_mask_metadata_MASK_METADATA_ARRIVAL_TIMESTAMP: _field_mask_metadata = 4;
-pub const _field_mask_metadata_MASK_METADATA_ALL: _field_mask_metadata = 7;
-pub type _field_mask_metadata = u32;
-pub use self::_field_mask_metadata as field_mask_metadata_e;
+pub const field_mask_essence_e_MASK_ESSENCE_ADDRESS: field_mask_essence_e = 1;
+pub const field_mask_essence_e_MASK_ESSENCE_VALUE: field_mask_essence_e = 2;
+pub const field_mask_essence_e_MASK_ESSENCE_OBSOLETE_TAG: field_mask_essence_e = 4;
+pub const field_mask_essence_e_MASK_ESSENCE_TIMESTAMP: field_mask_essence_e = 8;
+pub const field_mask_essence_e_MASK_ESSENCE_CURRENT_INDEX: field_mask_essence_e = 16;
+pub const field_mask_essence_e_MASK_ESSENCE_LAST_INDEX: field_mask_essence_e = 32;
+pub const field_mask_essence_e_MASK_ESSENCE_BUNDLE: field_mask_essence_e = 64;
+pub const field_mask_essence_e_MASK_ESSENCE_ALL: field_mask_essence_e = 127;
+pub type field_mask_essence_e = u32;
+pub use self::field_mask_essence_e as field_mask_essence_t;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_TRUNK: field_mask_attachment_e = 1;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_BRANCH: field_mask_attachment_e = 2;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_TIMESTAMP: field_mask_attachment_e = 4;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_TIMESTAMP_LOWER: field_mask_attachment_e = 8;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_TIMESTAMP_UPPER: field_mask_attachment_e = 16;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_NONCE: field_mask_attachment_e = 32;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_TAG: field_mask_attachment_e = 64;
+pub const field_mask_attachment_e_MASK_ATTACHMENT_ALL: field_mask_attachment_e = 127;
+pub type field_mask_attachment_e = u32;
+pub use self::field_mask_attachment_e as field_mask_attachment_t;
+pub const field_mask_consensus_e_MASK_CONSENSUS_HASH: field_mask_consensus_e = 1;
+pub const field_mask_consensus_e_MASK_CONSENSUS_ALL: field_mask_consensus_e = 1;
+pub type field_mask_consensus_e = u32;
+pub use self::field_mask_consensus_e as field_mask_consensus_t;
+pub const field_mask_data_e_MASK_DATA_SIG_OR_MSG: field_mask_data_e = 1;
+pub const field_mask_data_e_MASK_DATA_ALL: field_mask_data_e = 1;
+pub type field_mask_data_e = u32;
+pub use self::field_mask_data_e as field_mask_data_t;
+pub const field_mask_metadata_e_MASK_METADATA_SNAPSHOT_INDEX: field_mask_metadata_e = 1;
+pub const field_mask_metadata_e_MASK_METADATA_SOLID: field_mask_metadata_e = 2;
+pub const field_mask_metadata_e_MASK_METADATA_VALIDITY: field_mask_metadata_e = 4;
+pub const field_mask_metadata_e_MASK_METADATA_ARRIVAL_TIMESTAMP: field_mask_metadata_e = 8;
+pub const field_mask_metadata_e_MASK_METADATA_ALL: field_mask_metadata_e = 15;
+pub type field_mask_metadata_e = u32;
+pub use self::field_mask_metadata_e as field_mask_metadata_t;
 extern "C" {
     #[doc = " Utility functions"]
     pub fn transaction_reset(transaction: *mut iota_transaction_t);
@@ -18058,9 +18133,9 @@ pub type transaction_array_t = UT_array;
 extern "C" {
     pub static ut_transactions_icd: UT_icd;
 }
-pub const bundle_status_e_BUNDLE_VALID: bundle_status_e = 0;
-pub const bundle_status_e_BUNDLE_NOT_INITIALIZED: bundle_status_e = 1;
-pub const bundle_status_e_BUNDLE_TAIL_NOT_FOUND: bundle_status_e = 2;
+pub const bundle_status_e_BUNDLE_NOT_INITIALIZED: bundle_status_e = 0;
+pub const bundle_status_e_BUNDLE_VALID: bundle_status_e = 1;
+pub const bundle_status_e_BUNDLE_EMPTY: bundle_status_e = 2;
 pub const bundle_status_e_BUNDLE_INCOMPLETE: bundle_status_e = 3;
 pub const bundle_status_e_BUNDLE_INVALID_TX: bundle_status_e = 4;
 pub const bundle_status_e_BUNDLE_INVALID_INPUT_ADDRESS: bundle_status_e = 5;
@@ -18094,7 +18169,7 @@ extern "C" {
     pub fn bundle_finalize(bundle: *mut bundle_transactions_t, kerl: *mut Kerl);
 }
 extern "C" {
-    pub fn bundle_validator(
+    pub fn bundle_validate(
         bundle: *mut bundle_transactions_t,
         status: *mut bundle_status_t,
     ) -> retcode_t;
@@ -18103,17 +18178,17 @@ extern "C" {
     pub fn bundle_reset_indexes(bundle: *mut bundle_transactions_t);
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Debug, Copy, Clone)]
 pub struct trit_t_to_mam_msg_read_context_t_map_entry_s {
     pub key: *mut trit_t,
-    pub value: mam_msg_read_context_t,
+    pub value: *mut mam_msg_read_context_t,
     pub hh: UT_hash_handle,
 }
 #[test]
 fn bindgen_test_layout_trit_t_to_mam_msg_read_context_t_map_entry_s() {
     assert_eq!(
         ::std::mem::size_of::<trit_t_to_mam_msg_read_context_t_map_entry_s>(),
-        1056usize,
+        72usize,
         concat!(
             "Size of: ",
             stringify!(trit_t_to_mam_msg_read_context_t_map_entry_s)
@@ -18158,7 +18233,7 @@ fn bindgen_test_layout_trit_t_to_mam_msg_read_context_t_map_entry_s() {
             &(*(::std::ptr::null::<trit_t_to_mam_msg_read_context_t_map_entry_s>())).hh as *const _
                 as usize
         },
-        1000usize,
+        16usize,
         concat!(
             "Offset of field: ",
             stringify!(trit_t_to_mam_msg_read_context_t_map_entry_s),
@@ -18173,13 +18248,14 @@ pub type trit_t_to_mam_msg_read_context_t_map_entry_t =
 #[derive(Debug, Copy, Clone)]
 pub struct trit_t_to_mam_msg_read_context_t_map_s {
     pub key_size: usize,
+    pub value_size: usize,
     pub map: *mut trit_t_to_mam_msg_read_context_t_map_entry_t,
 }
 #[test]
 fn bindgen_test_layout_trit_t_to_mam_msg_read_context_t_map_s() {
     assert_eq!(
         ::std::mem::size_of::<trit_t_to_mam_msg_read_context_t_map_s>(),
-        16usize,
+        24usize,
         concat!(
             "Size of: ",
             stringify!(trit_t_to_mam_msg_read_context_t_map_s)
@@ -18208,10 +18284,23 @@ fn bindgen_test_layout_trit_t_to_mam_msg_read_context_t_map_s() {
     );
     assert_eq!(
         unsafe {
+            &(*(::std::ptr::null::<trit_t_to_mam_msg_read_context_t_map_s>())).value_size
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(trit_t_to_mam_msg_read_context_t_map_s),
+            "::",
+            stringify!(value_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
             &(*(::std::ptr::null::<trit_t_to_mam_msg_read_context_t_map_s>())).map as *const _
                 as usize
         },
-        8usize,
+        16usize,
         concat!(
             "Offset of field: ",
             stringify!(trit_t_to_mam_msg_read_context_t_map_s),
@@ -18225,18 +18314,19 @@ extern "C" {
     pub fn trit_t_to_mam_msg_read_context_t_map_init(
         map: *mut trit_t_to_mam_msg_read_context_t_map_t,
         key_size: usize,
+        value_size: usize,
     ) -> retcode_t;
 }
 extern "C" {
     pub fn trit_t_to_mam_msg_read_context_t_map_size(
         map: *const trit_t_to_mam_msg_read_context_t_map_t,
-    ) -> retcode_t;
+    ) -> usize;
 }
 extern "C" {
     pub fn trit_t_to_mam_msg_read_context_t_map_add(
         map: *mut trit_t_to_mam_msg_read_context_t_map_t,
         key: *const trit_t,
-        value: mam_msg_read_context_t,
+        value: *const mam_msg_read_context_t,
     ) -> retcode_t;
 }
 extern "C" {
@@ -18269,18 +18359,24 @@ extern "C" {
         key: *const trit_t,
     ) -> bool;
 }
+extern "C" {
+    pub fn trit_t_to_mam_msg_read_context_t_map_remove_entry(
+        map: *mut trit_t_to_mam_msg_read_context_t_map_t,
+        entry: *mut trit_t_to_mam_msg_read_context_t_map_entry_t,
+    ) -> retcode_t;
+}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Debug, Copy, Clone)]
 pub struct trit_t_to_mam_msg_write_context_t_map_entry_s {
     pub key: *mut trit_t,
-    pub value: mam_msg_write_context_t,
+    pub value: *mut mam_msg_write_context_t,
     pub hh: UT_hash_handle,
 }
 #[test]
 fn bindgen_test_layout_trit_t_to_mam_msg_write_context_t_map_entry_s() {
     assert_eq!(
         ::std::mem::size_of::<trit_t_to_mam_msg_write_context_t_map_entry_s>(),
-        1072usize,
+        72usize,
         concat!(
             "Size of: ",
             stringify!(trit_t_to_mam_msg_write_context_t_map_entry_s)
@@ -18325,7 +18421,7 @@ fn bindgen_test_layout_trit_t_to_mam_msg_write_context_t_map_entry_s() {
             &(*(::std::ptr::null::<trit_t_to_mam_msg_write_context_t_map_entry_s>())).hh as *const _
                 as usize
         },
-        1016usize,
+        16usize,
         concat!(
             "Offset of field: ",
             stringify!(trit_t_to_mam_msg_write_context_t_map_entry_s),
@@ -18340,13 +18436,14 @@ pub type trit_t_to_mam_msg_write_context_t_map_entry_t =
 #[derive(Debug, Copy, Clone)]
 pub struct trit_t_to_mam_msg_write_context_t_map_s {
     pub key_size: usize,
+    pub value_size: usize,
     pub map: *mut trit_t_to_mam_msg_write_context_t_map_entry_t,
 }
 #[test]
 fn bindgen_test_layout_trit_t_to_mam_msg_write_context_t_map_s() {
     assert_eq!(
         ::std::mem::size_of::<trit_t_to_mam_msg_write_context_t_map_s>(),
-        16usize,
+        24usize,
         concat!(
             "Size of: ",
             stringify!(trit_t_to_mam_msg_write_context_t_map_s)
@@ -18375,10 +18472,23 @@ fn bindgen_test_layout_trit_t_to_mam_msg_write_context_t_map_s() {
     );
     assert_eq!(
         unsafe {
+            &(*(::std::ptr::null::<trit_t_to_mam_msg_write_context_t_map_s>())).value_size
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(trit_t_to_mam_msg_write_context_t_map_s),
+            "::",
+            stringify!(value_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
             &(*(::std::ptr::null::<trit_t_to_mam_msg_write_context_t_map_s>())).map as *const _
                 as usize
         },
-        8usize,
+        16usize,
         concat!(
             "Offset of field: ",
             stringify!(trit_t_to_mam_msg_write_context_t_map_s),
@@ -18392,18 +18502,19 @@ extern "C" {
     pub fn trit_t_to_mam_msg_write_context_t_map_init(
         map: *mut trit_t_to_mam_msg_write_context_t_map_t,
         key_size: usize,
+        value_size: usize,
     ) -> retcode_t;
 }
 extern "C" {
     pub fn trit_t_to_mam_msg_write_context_t_map_size(
         map: *const trit_t_to_mam_msg_write_context_t_map_t,
-    ) -> retcode_t;
+    ) -> usize;
 }
 extern "C" {
     pub fn trit_t_to_mam_msg_write_context_t_map_add(
         map: *mut trit_t_to_mam_msg_write_context_t_map_t,
         key: *const trit_t,
-        value: mam_msg_write_context_t,
+        value: *const mam_msg_write_context_t,
     ) -> retcode_t;
 }
 extern "C" {
@@ -18436,6 +18547,12 @@ extern "C" {
         key: *const trit_t,
     ) -> bool;
 }
+extern "C" {
+    pub fn trit_t_to_mam_msg_write_context_t_map_remove_entry(
+        map: *mut trit_t_to_mam_msg_write_context_t_map_t,
+        entry: *mut trit_t_to_mam_msg_write_context_t_map_entry_t,
+    ) -> retcode_t;
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct mam_api_s {
@@ -18454,7 +18571,7 @@ pub struct mam_api_s {
 fn bindgen_test_layout_mam_api_s() {
     assert_eq!(
         ::std::mem::size_of::<mam_api_s>(),
-        336usize,
+        352usize,
         concat!("Size of: ", stringify!(mam_api_s))
     );
     assert_eq!(
@@ -18534,7 +18651,7 @@ fn bindgen_test_layout_mam_api_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<mam_api_s>())).read_ctxs as *const _ as usize },
-        304usize,
+        312usize,
         concat!(
             "Offset of field: ",
             stringify!(mam_api_s),
@@ -18544,7 +18661,7 @@ fn bindgen_test_layout_mam_api_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<mam_api_s>())).trusted_channel_ids as *const _ as usize },
-        320usize,
+        336usize,
         concat!(
             "Offset of field: ",
             stringify!(mam_api_s),
@@ -18554,7 +18671,7 @@ fn bindgen_test_layout_mam_api_s() {
     );
     assert_eq!(
         unsafe { &(*(::std::ptr::null::<mam_api_s>())).trusted_endpoint_ids as *const _ as usize },
-        328usize,
+        344usize,
         concat!(
             "Offset of field: ",
             stringify!(mam_api_s),
@@ -18582,7 +18699,7 @@ extern "C" {
     pub fn mam_api_destroy(api: *mut mam_api_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Add a trusted channel id into the api\'s trusted channels set"]
+    #[doc = " Add a trusted channel id into the api's trusted channels set"]
     #[doc = ""]
     #[doc = " @param api - The API [in,out]"]
     #[doc = " @param pk - A new public key [in]"]
@@ -18591,7 +18708,7 @@ extern "C" {
     pub fn mam_api_add_trusted_channel_pk(api: *mut mam_api_t, pk: *const tryte_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Add a trusted endpoint id into the api\'s trusted endpoints set"]
+    #[doc = " Add a trusted endpoint id into the api's trusted endpoints set"]
     #[doc = ""]
     #[doc = " @param api - The API [in,out]"]
     #[doc = " @param pk - A new public key [in]"]
@@ -18600,7 +18717,7 @@ extern "C" {
     pub fn mam_api_add_trusted_endpoint_pk(api: *mut mam_api_t, pk: *const tryte_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Add a NTRU secret key to api\'s NTRU sks set"]
+    #[doc = " Add a NTRU secret key to api's NTRU sks set"]
     #[doc = ""]
     #[doc = " @param api - The API [in,out]"]
     #[doc = " @param ntru_sk - A new ntru public key (allows for both enc/dec) [in]"]
@@ -18609,7 +18726,7 @@ extern "C" {
     pub fn mam_api_add_ntru_sk(api: *mut mam_api_t, ntru_sk: *const mam_ntru_sk_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Add a NTRU public key to api\'s NTRU pks set"]
+    #[doc = " Add a NTRU public key to api's NTRU pks set"]
     #[doc = ""]
     #[doc = " @param api - The API [in,out]"]
     #[doc = " @param ntru_pk - A new ntru public key (allows for encryption only) [in]"]
@@ -18618,7 +18735,7 @@ extern "C" {
     pub fn mam_api_add_ntru_pk(api: *mut mam_api_t, ntru_pk: *const mam_ntru_pk_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Add a pre shared key to api\'s psks set"]
+    #[doc = " Add a pre shared key to api's psks set"]
     #[doc = ""]
     #[doc = " @param api - The API [in,out]"]
     #[doc = " @param psk - A new psk [in]"]
@@ -18630,7 +18747,7 @@ extern "C" {
     #[doc = " Creates and adds a channel to the API"]
     #[doc = ""]
     #[doc = " @param api - The API [in, out]"]
-    #[doc = " @param height - The channel\'s MSS height [in]"]
+    #[doc = " @param height - The channel's MSS height [in]"]
     #[doc = " @param channel_id - The channel id [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
@@ -18656,7 +18773,7 @@ extern "C" {
     #[doc = " Creates and adds an endpoint to the API"]
     #[doc = ""]
     #[doc = " @param api - The API [in, out]"]
-    #[doc = " @param height - The endpoint\'s MSS height [in]"]
+    #[doc = " @param height - The endpoint's MSS height [in]"]
     #[doc = " @param channel_id - The associated channel id [in]"]
     #[doc = " @param endpoint_id - The endpoint id [out]"]
     #[doc = ""]
@@ -18701,7 +18818,7 @@ extern "C" {
     #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
-    #[doc = "  channel) embedded into transaction\'s tag (together with packet index to"]
+    #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
@@ -18727,7 +18844,7 @@ extern "C" {
     #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
-    #[doc = "  channel) embedded into transaction\'s tag (together with packet index to"]
+    #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
@@ -18754,7 +18871,7 @@ extern "C" {
     #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
-    #[doc = "  channel) embedded into transaction\'s tag (together with packet index to"]
+    #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
@@ -18781,7 +18898,7 @@ extern "C" {
     #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
-    #[doc = "  channel) embedded into transaction\'s tag (together with packet index to"]
+    #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
     #[doc = " allow Tangle lookup) [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
@@ -18818,7 +18935,7 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Reads MAM\'s session key and potentially the first packet using NTRU secret"]
+    #[doc = " Reads MAM's session key and potentially the first packet using NTRU secret"]
     #[doc = " key"]
     #[doc = ""]
     #[doc = " @param api - The API"]

@@ -2,20 +2,26 @@ use crate::errors::{MamError, MamResult};
 use crate::trits::Trits;
 use ffi;
 
+///
+/// Destination context encoded in one tryte
+///
 pub enum PrngDst {
     SecKey = 0,
     WotsKey = 1,
     NtruKey = 2,
 }
 
+///
+/// MAM PRNG
+///
 #[derive(Clone)]
-pub struct MamPrng {
+pub struct Prng {
     pub c_prng: ffi::mam_prng_t,
 }
 
-impl MamPrng {
+impl Prng {
     ///
-    /// PRNG initialization
+    /// Initializes a PRNG with a secret key
     ///
     pub fn new(secret_key: Trits) -> Self {
         unsafe {
@@ -38,29 +44,26 @@ impl MamPrng {
     }
 
     ///
-    /// PRNG output generation with a nonce
+    /// Safely resets a PRNG secret key
     ///
-    /// @param prng A PRNG interface
-    /// @param destination A destination tryte
-    /// @param nonce The nonce
-    /// @param output Pseudorandom output trits
-    ///
-    pub fn gen(&self, destination: PrngDst, nonce: &Trits, output: &Trits) -> MamResult<()> {
-        self.gen3(destination, nonce, &Trits::null(), &Trits::null(), output)
+    pub fn reset(&mut self) {
+        for i in self.c_prng.secret_key.iter_mut() {
+            *i = 0;
+        }
     }
 
     ///
     /// @brief Generates pseudo random trits with three nonces
-    ///  *
+    ///
     /// @param[in] prng A PRNG
     /// @param[in] destination A destination tryte
     /// @param[in] nonce1 The first nonce
     /// @param[in] nonce2 The second nonce
     /// @param[in] nonce3 The third nonce
     /// @param[out] output The pseudo random trits
-    ///  *
+    ///
     /// @return a status code
-    ///  */
+    ///
     pub fn gen3(
         &self,
         destination: PrngDst,
@@ -85,6 +88,18 @@ impl MamPrng {
 
             Ok(())
         }
+    }
+
+    ///
+    /// Generates pseudo random trits with a nonce
+    ///
+    /// @param prng A PRNG interface
+    /// @param destination A destination tryte
+    /// @param nonce The nonce
+    /// @param output Pseudorandom output trits
+    ///
+    pub fn gen(&self, destination: PrngDst, nonce: &Trits, output: &Trits) -> MamResult<()> {
+        self.gen3(destination, nonce, &Trits::null(), &Trits::null(), output)
     }
 
     ///
@@ -120,7 +135,7 @@ impl MamPrng {
     ///
     pub fn serialize(&self) -> Trits {
         unsafe {
-            let mut buffer = Trits::new(MamPrng::serialize_size());
+            let mut buffer = Trits::new(Prng::serialize_size());
             buffer.set_zero();
 
             let mut from_rep = Trits::from((
@@ -140,7 +155,7 @@ impl MamPrng {
     ///
     /// @param[in] buffer The trits buffer
     ///
-    pub fn deserialize(buffer: &mut Trits) -> MamResult<MamPrng> {
+    pub fn deserialize(buffer: &mut Trits) -> MamResult<Prng> {
         unsafe {
             let c_prng = ffi::mam_prng_t {
                 secret_key: [0; ffi::MAM_PRNG_SECRET_KEY_SIZE as usize],
@@ -160,7 +175,7 @@ impl MamPrng {
                 return Err(MamError::from(rc));
             }
 
-            Ok(MamPrng { c_prng: c_prng })
+            Ok(Prng { c_prng: c_prng })
         }
     }
 }
@@ -183,7 +198,7 @@ mod tests {
         y2.set_zero();
         let y1 = Trits::new(243 * 2 + 18);
         y1.set_zero();
-        let prng = MamPrng::new(key);
+        let prng = Prng::new(key);
 
         match prng.gen(PrngDst::SecKey, &nonce, &y2) {
             Err(e) => {
@@ -209,10 +224,10 @@ mod tests {
         key.from_str(
             "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM",
         );
-        let prng1 = MamPrng::new(key);
+        let prng1 = Prng::new(key);
         let mut trits = prng1.serialize();
 
-        match MamPrng::deserialize(&mut trits) {
+        match Prng::deserialize(&mut trits) {
             Err(e) => {
                 println!("Error {:?}", e);
                 assert!(false);

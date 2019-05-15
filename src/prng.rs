@@ -39,6 +39,13 @@ impl Prng {
     ///
     /// Return the C raw info
     ///
+    pub fn into_raw_mut(&mut self) -> &mut ffi::mam_prng_t {
+        &mut self.c_prng
+    }
+
+    ///
+    /// Return the C raw info
+    ///
     pub fn into_raw(&self) -> ffi::mam_prng_t {
         self.c_prng
     }

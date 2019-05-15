@@ -7,6 +7,7 @@ extern crate iota_mam_sys as ffi;
 mod errors;
 mod trits;
 mod prng;
+mod mss;
 
 
 #[cfg(test)]

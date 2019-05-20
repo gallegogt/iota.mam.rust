@@ -1,5 +1,6 @@
 use crate::errors::{MamError, MamResult};
 use crate::prng::Prng;
+use crate::spongos::Spongos;
 use crate::trits::Trits;
 use ffi;
 use std::mem;
@@ -131,6 +132,64 @@ impl Mss {
         unsafe {
             ffi::mam_mss_num_remaining_sks(&self.c_mss)
         }
+    }
+
+    ///
+    /// Verifies MSS signature.
+    ///
+    /// mt_spongos [in] Spongos interface to hash Merkle Tree
+    /// hash [in] signed hash value
+    /// sig [in] signature
+    /// [in] public key (Merkle-tree root)
+    ///
+    pub fn verify(mt_spongos: &mut Spongos, hash: &Trits, sig: &Trits, pk: Trits) -> bool {
+        unsafe {
+            ffi::mam_mss_verify(mt_spongos.into_raw_mut(), hash.into_raw(), sig.into_raw(), pk.into_raw())
+        }
+    }
+
+    ///
+    /// returns The size of a serialized Merkle tree.
+    ///
+    pub fn serialized_size(&self) -> usize {
+        unsafe {
+            ffi::mam_mss_serialized_size(&self.c_mss)
+        }
+    }
+
+    ///
+    /// Serialize Merkle tree.
+    ///
+    pub fn serialize(&mut self, buffer: &Trits) {
+        unsafe {
+            ffi::mam_mss_serialize(&mut self.c_mss, buffer.into_raw())
+        }
+    }
+
+    ///
+    /// Deerialize Merkle tree.
+    ///
+    pub fn deserialize(buffer: &mut Trits, mss: &mut Mss) -> MamResult<()> {
+        unsafe {
+            let rc = ffi::mam_mss_deserialize(buffer.into_raw_mut(), mss.into_raw_mut());
+            if rc != ffi::retcode_t_RC_OK {
+                return Err(MamError::from(rc))
+            }
+            Ok(())
+        }
+    }
+    ///
+    /// Return the C raw info
+    ///
+    pub fn into_raw_mut(&mut self) -> &mut ffi::mam_mss_t {
+        &mut self.c_mss
+    }
+
+    ///
+    /// Return the C raw info
+    ///
+    pub fn into_raw(&self) -> ffi::mam_mss_t {
+        self.c_mss
     }
 }
 

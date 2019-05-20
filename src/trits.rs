@@ -97,7 +97,7 @@ impl Trits {
     ///
     /// Return the C raw info
     ///
-    pub fn mut_into_raw(&mut self) -> &mut ffi::trits_t {
+    pub fn into_raw_mut(&mut self) -> &mut ffi::trits_t {
         &mut self.c_trits
     }
 

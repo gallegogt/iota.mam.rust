@@ -150,7 +150,7 @@ impl Prng {
                 self.c_prng.secret_key.as_ptr(),
             ));
 
-            ffi::pb3_encode_ntrytes(from_rep.into_raw(), buffer.mut_into_raw());
+            ffi::pb3_encode_ntrytes(from_rep.into_raw(), buffer.into_raw_mut());
 
             from_rep.set_null();
 
@@ -173,7 +173,7 @@ impl Prng {
                 c_prng.secret_key.as_ptr(),
             ));
 
-            let rc = ffi::pb3_decode_ntrytes(trits.into_raw(), buffer.mut_into_raw());
+            let rc = ffi::pb3_decode_ntrytes(trits.into_raw(), buffer.into_raw_mut());
 
             // TODO: Fix error of no alloc memory
             trits.set_null();

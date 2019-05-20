@@ -1,5 +1,5 @@
 use crate::errors::{MamError, MamResult};
-use crate::mss::{Mss, MssMtHeight};
+use crate::mss::MssMtHeight;
 use crate::prng::Prng;
 use crate::trits::Trits;
 use ffi;

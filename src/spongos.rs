@@ -3,7 +3,7 @@ use ffi;
 use std::mem;
 
 ///
-/// MAM MSS
+/// MAM Spongos
 ///
 #[derive(Clone)]
 pub struct Spongos {

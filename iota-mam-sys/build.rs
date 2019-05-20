@@ -131,7 +131,9 @@ mod build {
 
         ]
     }
-
+    ///
+    /// Main
+    ///
     pub fn main () {
         // we rerun the build if the `build.rs` file is changed.
         println!("cargo:rerun-if-changed=build.rs");

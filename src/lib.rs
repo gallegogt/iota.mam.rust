@@ -8,6 +8,15 @@ mod errors;
 mod trits;
 mod prng;
 mod mss;
+mod endpoint;
+mod spongos;
+
+pub use errors::*;
+pub use trits::*;
+pub use prng::*;
+pub use mss::*;
+pub use endpoint::*;
+pub use spongos::*;
 
 
 #[cfg(test)]

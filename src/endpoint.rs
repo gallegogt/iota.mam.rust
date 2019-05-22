@@ -99,3 +99,12 @@ impl Drop for Endpoint {
         unsafe { ffi::mam_endpoint_destroy(&mut self.c_endpoint) }
     }
 }
+
+impl From<ffi::mam_endpoint_t> for Endpoint {
+    ///
+    /// From
+    ///
+    fn from(s: ffi::mam_endpoint_t) -> Endpoint {
+        Endpoint { c_endpoint: s }
+    }
+}

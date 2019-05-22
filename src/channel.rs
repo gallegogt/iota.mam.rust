@@ -83,3 +83,12 @@ impl Drop for Channel {
         unsafe { ffi::mam_channel_destroy(&mut self.c_channel) }
     }
 }
+
+impl From<ffi::mam_channel_t> for Channel {
+    ///
+    /// From
+    ///
+    fn from(s: ffi::mam_channel_t) -> Channel {
+        Channel { c_channel: s }
+    }
+}

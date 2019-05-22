@@ -4,6 +4,7 @@ use std::convert::From;
 use std::ffi::CStr;
 use std::ffi::CString;
 use std::mem;
+use crate::types::Trit;
 
 /// An MAM Trits
 #[derive(Debug, Clone)]
@@ -207,11 +208,11 @@ impl<'a> From<&'a str> for Trits {
     }
 }
 
-impl From<(usize, *const i8)> for Trits {
+impl From<(usize, *const Trit)> for Trits {
     ///
     /// Construct `n` trits from representation `w`.
     ///
-    fn from((s, t) :(usize, *const i8)) -> Trits {
+    fn from((s, t) :(usize, *const Trit)) -> Trits {
         unsafe {
             Trits {
               c_trits: ffi::trits_from_rep(s, t),

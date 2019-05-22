@@ -4,8 +4,6 @@ extern crate libc;
 
 extern crate iota_mam_sys as ffi;
 
-pub type Tryte = ffi::tryte_t;
-
 mod errors;
 mod trits;
 mod prng;
@@ -14,6 +12,8 @@ mod spongos;
 mod endpoint;
 mod channel;
 mod psk;
+mod api;
+mod types;
 
 pub use errors::*;
 pub use trits::*;
@@ -23,7 +23,8 @@ pub use endpoint::*;
 pub use spongos::*;
 pub use channel::*;
 pub use psk::*;
-
+pub use api::*;
+pub use types::*;
 
 #[cfg(test)]
 mod tests {

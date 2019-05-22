@@ -57,6 +57,13 @@ impl Psk {
     pub fn key(&self) -> Trits {
         Trits::from((ffi::MAM_PSK_KEY_SIZE as usize, self.c_psk.key.as_ptr()))
     }
+
+    ///
+    /// return C instance
+    ///
+    pub fn into_raw(&self) -> &ffi::mam_psk_t {
+        &self.c_psk
+    }
 }
 
 ///
@@ -73,6 +80,13 @@ impl PskSet {
     ///
     pub fn serialized_size(&self) -> usize {
         unsafe { ffi::mam_psks_serialized_size(self.c_psk_set) }
+    }
+
+    ///
+    /// return C instance
+    ///
+    pub fn into_raw(&self) -> &ffi::mam_psk_t_set_t {
+        &self.c_psk_set
     }
 
     ///

@@ -116,16 +116,16 @@ mod build {
             // "common/crypto/kerl:all",
             // "common/model:all",
             // "common/helpers:all",
-            // "common/trinary:all",
+            "common/trinary:all",
             "mam/sponge:all",
             "mam/trits:all",
             "mam/prng:all",
             "mam/mam:all",
             "mam/api:all",
-            // "mam/mss:all",
-            // "mam/ntru:all",
+            "mam/mss:all",
+            "mam/ntru:all",
             "mam/pb3:all",
-            // "mam/psk:all",
+            "mam/psk:all",
             "mam/troika:all",
             // "mam/wots:all",
 
@@ -206,6 +206,7 @@ mod build {
                 "entangled/bazel-bin/mam/**/*.a",
                 "entangled/bazel-bin/common/crypto/ftroika/**/*.a",
                 "entangled/bazel-bin/common/*.a",
+                "entangled/bazel-bin/common/trinary/*.a",
                 "entangled/bazel-bin/utils/*.a",
             ]
         , &lib_dir);

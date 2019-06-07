@@ -124,6 +124,8 @@ pub const STR_CCLIENT_POW_FAILED: &'static [u8; 17usize] = b"Local PoW failed\0"
 pub const SRT_CCLIENT_INVALID_TRANSFER: &'static [u8; 18usize] = b"Invalid transfers\0";
 pub const STR_CCLIENT_INVALID_TAIL_HASH: &'static [u8; 18usize] = b"Invalid tail hash\0";
 pub const SRT_CCLIENT_INVALID_BUNDLE: &'static [u8; 15usize] = b"Invalid bundle\0";
+pub const SRT_CCLIENT_CHECK_BALANCE: &'static [u8; 24usize] = b"Checking balance failed\0";
+pub const SRT_COMMON_BUNDLE_SIGN: &'static [u8; 24usize] = b"Signing a bundle failed\0";
 pub const STR_UTILS_SOCKET_TLS_RNG: &'static [u8; 28usize] = b"TLS random number generator\0";
 pub const STR_UTILS_SOCKET_TLS_CA: &'static [u8; 25usize] = b"TLS parsing CA PEM error\0";
 pub const STR_UTILS_SOCKET_TLS_CLIENT_PEM: &'static [u8; 47usize] =
@@ -301,41 +303,33 @@ pub const L_ctermid: u32 = 1024;
 pub const __CTERMID_DEFINED: u32 = 1;
 pub const _USE_FORTIFY_LEVEL: u32 = 2;
 pub const RC_SEVERITY_MASK: u32 = 192;
-pub const RC_SHIFT_SEVERITY: u32 = 6;
-pub const RC_SEVERITY_FATAL: u32 = 192;
-pub const RC_SEVERITY_MAJOR: u32 = 128;
-pub const RC_SEVERITY_MODERATE: u32 = 64;
+pub const RC_SEVERITY_SHIFT: u32 = 6;
 pub const RC_SEVERITY_MINOR: u32 = 0;
+pub const RC_SEVERITY_MODERATE: u32 = 64;
+pub const RC_SEVERITY_MAJOR: u32 = 128;
+pub const RC_SEVERITY_FATAL: u32 = 192;
 pub const RC_MODULE_MASK: u32 = 65280;
-pub const RC_SHIFT_MODULE: u32 = 8;
+pub const RC_MODULE_SHIFT: u32 = 8;
 pub const RC_MODULE_GENERAL: u32 = 256;
-pub const RC_MODULE_STORAGE: u32 = 512;
-pub const RC_MODULE_STORAGE_SQL: u32 = 768;
-pub const RC_MODULE_STORAGE_SQLITE3: u32 = 1024;
-pub const RC_MODULE_CORE: u32 = 1280;
-pub const RC_MODULE_NODE: u32 = 1536;
-pub const RC_MODULE_NEIGHBOR: u32 = 1792;
-pub const RC_MODULE_CCLIENT: u32 = 2048;
-pub const RC_MODULE_CONSENSUS: u32 = 2304;
-pub const RC_MODULE_CONSENSUS_CW: u32 = 2560;
-pub const RC_MODULE_CONSENSUS_EXIT_PROBABILITIES: u32 = 2816;
-pub const RC_MODULE_CONSENSUS_MT: u32 = 3072;
-pub const RC_MODULE_CONSENSUS_SNAPSHOT: u32 = 3328;
-pub const RC_MODULE_LEDGER_VALIDATOR: u32 = 3584;
-pub const RC_MODULE_CONSENSUS_TIP_SELECTOR: u32 = 3840;
-pub const RC_MODULE_CONSENSUS_TANGLE: u32 = 4096;
-pub const RC_MODULE_UTILS: u32 = 41216;
-pub const RC_MODULE_BROADCASTER: u32 = 41472;
-pub const RC_MODULE_PROCESSOR: u32 = 41728;
-pub const RC_MODULE_RECEIVER_COMPONENT: u32 = 41984;
-pub const RC_MODULE_REQUESTER_COMPONENT: u32 = 42240;
-pub const RC_MODULE_RESPONDER_COMPONENT: u32 = 42496;
-pub const RC_MODULE_CIRI_CONF: u32 = 42752;
-pub const RC_MODULE_API: u32 = 43008;
-pub const RC_MODULE_GOSSIP: u32 = 43264;
-pub const RC_MODULE_MAM: u32 = 45056;
-pub const RC_MODULE_HELPERS: u32 = 45312;
-pub const RC_MODULE_CRYPTO: u32 = 45568;
+pub const RC_MODULE_SQLITE3: u32 = 512;
+pub const RC_MODULE_NEIGHBOR: u32 = 768;
+pub const RC_MODULE_CCLIENT: u32 = 1024;
+pub const RC_MODULE_CONSENSUS: u32 = 1280;
+pub const RC_MODULE_CW: u32 = 1536;
+pub const RC_MODULE_EXIT_PROBABILITIES: u32 = 1792;
+pub const RC_MODULE_SNAPSHOT: u32 = 2048;
+pub const RC_MODULE_LEDGER_VALIDATOR: u32 = 2304;
+pub const RC_MODULE_TIP_SELECTOR: u32 = 2560;
+pub const RC_MODULE_TANGLE: u32 = 2816;
+pub const RC_MODULE_UTILS: u32 = 3072;
+pub const RC_MODULE_PROCESSOR: u32 = 3328;
+pub const RC_MODULE_CONF: u32 = 3584;
+pub const RC_MODULE_API: u32 = 3840;
+pub const RC_MODULE_GOSSIP: u32 = 4096;
+pub const RC_MODULE_MAM: u32 = 4352;
+pub const RC_MODULE_HELPERS: u32 = 4608;
+pub const RC_MODULE_CRYPTO: u32 = 4864;
+pub const RC_MODULE_COMMON: u32 = 5120;
 pub const RC_ERRORCODE_MASK: u32 = 63;
 pub const RC_RESOLVE_FORMAT_STR: &'static [u8; 36usize] = b"M=0x%02X, E=0x%02X, S=0x%X (0x%04X)\0";
 pub const _POSIX_VERSION: u32 = 200112;
@@ -2528,230 +2522,166 @@ pub const retcode_t_RC_OOM: retcode_t = 387;
 pub const retcode_t_RC_FAILED_THREAD_SPAWN: retcode_t = 452;
 pub const retcode_t_RC_FAILED_THREAD_JOIN: retcode_t = 325;
 pub const retcode_t_RC_STILL_RUNNING: retcode_t = 326;
-pub const retcode_t_RC_SQLITE3_FAILED_OPEN_DB: retcode_t = 1217;
-pub const retcode_t_RC_SQLITE3_FAILED_INSERT_DB: retcode_t = 1154;
-pub const retcode_t_RC_SQLITE3_FAILED_CREATE_INDEX_DB: retcode_t = 1155;
-pub const retcode_t_RC_SQLITE3_FAILED_WRITE_STATEMENT: retcode_t = 1156;
-pub const retcode_t_RC_SQLITE3_FAILED_SELECT_DB: retcode_t = 1157;
-pub const retcode_t_RC_SQLITE3_NO_PATH_FOR_DB_SPECIFIED: retcode_t = 1222;
-pub const retcode_t_RC_SQLITE3_FAILED_NOT_IMPLEMENTED: retcode_t = 1159;
-pub const retcode_t_RC_SQLITE3_FAILED_START_TRANSACTION: retcode_t = 1160;
-pub const retcode_t_RC_SQLITE3_FAILED_END_TRANSACTION: retcode_t = 1161;
-pub const retcode_t_RC_SQLITE3_FAILED_BINDING: retcode_t = 1162;
-pub const retcode_t_RC_SQLITE3_FAILED_PREPARED_STATEMENT: retcode_t = 1163;
-pub const retcode_t_RC_SQLITE3_FAILED_FINALIZE: retcode_t = 1164;
-pub const retcode_t_RC_SQLITE3_FAILED_STEP: retcode_t = 1165;
-pub const retcode_t_RC_SQLITE3_FAILED_BEGIN: retcode_t = 1166;
-pub const retcode_t_RC_SQLITE3_FAILED_END: retcode_t = 1167;
-pub const retcode_t_RC_SQLITE3_FAILED_ROLLBACK: retcode_t = 1232;
-pub const retcode_t_RC_SQLITE3_FAILED_CONFIG: retcode_t = 1233;
-pub const retcode_t_RC_SQLITE3_FAILED_INITIALIZE: retcode_t = 1234;
-pub const retcode_t_RC_SQLITE3_FAILED_SHUTDOWN: retcode_t = 1235;
-pub const retcode_t_RC_SQL_FAILED_WRITE_STATEMENT: retcode_t = 897;
-pub const retcode_t_RC_CORE_FAILED_DATABASE_INIT: retcode_t = 1474;
-pub const retcode_t_RC_CORE_FAILED_DATABASE_DESTROY: retcode_t = 1347;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_INIT: retcode_t = 1476;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_START: retcode_t = 1477;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_STOP: retcode_t = 1350;
-pub const retcode_t_RC_CORE_FAILED_MILESTONE_TRACKER_DESTROY: retcode_t = 1351;
-pub const retcode_t_RC_CORE_FAILED_NODE_INIT: retcode_t = 1480;
-pub const retcode_t_RC_CORE_FAILED_NODE_START: retcode_t = 1481;
-pub const retcode_t_RC_CORE_FAILED_NODE_STOP: retcode_t = 1354;
-pub const retcode_t_RC_CORE_FAILED_NODE_DESTROY: retcode_t = 1355;
-pub const retcode_t_RC_CORE_FAILED_API_INIT: retcode_t = 1484;
-pub const retcode_t_RC_CORE_FAILED_API_START: retcode_t = 1485;
-pub const retcode_t_RC_CORE_FAILED_API_STOP: retcode_t = 1358;
-pub const retcode_t_RC_CORE_FAILED_API_DESTROY: retcode_t = 1359;
-pub const retcode_t_RC_CORE_FAILED_SNAPSHOT_INIT: retcode_t = 1488;
-pub const retcode_t_RC_CORE_FAILED_SNAPSHOT_DESTROY: retcode_t = 1361;
-pub const retcode_t_RC_CORE_FAILED_LEDGER_VALIDATOR_INIT: retcode_t = 1490;
-pub const retcode_t_RC_CORE_FAILED_LEDGER_VALIDATOR_DESTROY: retcode_t = 1363;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_INIT: retcode_t = 1493;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_START: retcode_t = 1494;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_STOP: retcode_t = 1495;
-pub const retcode_t_RC_CORE_FAILED_CONSENSUS_DESTROY: retcode_t = 1496;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_INIT: retcode_t = 1497;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_START: retcode_t = 1498;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_STOP: retcode_t = 1499;
-pub const retcode_t_RC_CORE_FAILED_API_HTTP_DESTROY: retcode_t = 1500;
-pub const retcode_t_RC_NODE_FAILED_NEIGHBORS_INIT: retcode_t = 1731;
-pub const retcode_t_RC_NODE_FAILED_NEIGHBORS_DESTROY: retcode_t = 1732;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_INIT: retcode_t = 1733;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_START: retcode_t = 1734;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_STOP: retcode_t = 1607;
-pub const retcode_t_RC_NODE_FAILED_BROADCASTER_DESTROY: retcode_t = 1608;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_INIT: retcode_t = 1737;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_START: retcode_t = 1738;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_STOP: retcode_t = 1611;
-pub const retcode_t_RC_NODE_FAILED_PROCESSOR_DESTROY: retcode_t = 1612;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_INIT: retcode_t = 1741;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_START: retcode_t = 1742;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_STOP: retcode_t = 1615;
-pub const retcode_t_RC_NODE_FAILED_RECEIVER_DESTROY: retcode_t = 1616;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_INIT: retcode_t = 1747;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_START: retcode_t = 1748;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_STOP: retcode_t = 1621;
-pub const retcode_t_RC_NODE_FAILED_RESPONDER_DESTROY: retcode_t = 1622;
-pub const retcode_t_RC_NODE_FAILED_REQUESTER_INIT: retcode_t = 1751;
-pub const retcode_t_RC_NODE_FAILED_REQUESTER_DESTROY: retcode_t = 1624;
-pub const retcode_t_RC_NEIGHBOR_NULL_NEIGHBOR: retcode_t = 1985;
-pub const retcode_t_RC_NEIGHBOR_NULL_URI: retcode_t = 1986;
-pub const retcode_t_RC_NEIGHBOR_NULL_HASH: retcode_t = 1987;
-pub const retcode_t_RC_NEIGHBOR_NULL_PACKET: retcode_t = 1988;
-pub const retcode_t_RC_NEIGHBOR_NULL_NODE: retcode_t = 1989;
-pub const retcode_t_RC_NEIGHBOR_FAILED_URI_PARSING: retcode_t = 1926;
-pub const retcode_t_RC_NEIGHBOR_INVALID_PROTOCOL: retcode_t = 1927;
-pub const retcode_t_RC_NEIGHBOR_INVALID_HOST: retcode_t = 1928;
-pub const retcode_t_RC_NEIGHBOR_FAILED_SEND: retcode_t = 1865;
-pub const retcode_t_RC_NEIGHBOR_FAILED_REQUESTER: retcode_t = 1994;
-pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_INIT: retcode_t = 1995;
-pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_DESTROY: retcode_t = 1996;
-pub const retcode_t_RC_NEIGHBOR_ALREADY_PAIRED: retcode_t = 1869;
-pub const retcode_t_RC_NEIGHBOR_NOT_PAIRED: retcode_t = 1870;
+pub const retcode_t_RC_SQLITE3_FAILED_OPEN_DB: retcode_t = 705;
+pub const retcode_t_RC_SQLITE3_FAILED_INSERT_DB: retcode_t = 642;
+pub const retcode_t_RC_SQLITE3_NO_PATH_FOR_DB_SPECIFIED: retcode_t = 707;
+pub const retcode_t_RC_SQLITE3_FAILED_NOT_IMPLEMENTED: retcode_t = 644;
+pub const retcode_t_RC_SQLITE3_FAILED_BINDING: retcode_t = 645;
+pub const retcode_t_RC_SQLITE3_FAILED_PREPARED_STATEMENT: retcode_t = 646;
+pub const retcode_t_RC_SQLITE3_FAILED_FINALIZE: retcode_t = 647;
+pub const retcode_t_RC_SQLITE3_FAILED_STEP: retcode_t = 648;
+pub const retcode_t_RC_SQLITE3_FAILED_BEGIN: retcode_t = 649;
+pub const retcode_t_RC_SQLITE3_FAILED_END: retcode_t = 650;
+pub const retcode_t_RC_SQLITE3_FAILED_ROLLBACK: retcode_t = 715;
+pub const retcode_t_RC_SQLITE3_FAILED_CONFIG: retcode_t = 716;
+pub const retcode_t_RC_SQLITE3_FAILED_INITIALIZE: retcode_t = 717;
+pub const retcode_t_RC_SQLITE3_FAILED_SHUTDOWN: retcode_t = 718;
+pub const retcode_t_RC_NEIGHBOR_FAILED_URI_PARSING: retcode_t = 897;
+pub const retcode_t_RC_NEIGHBOR_INVALID_PROTOCOL: retcode_t = 898;
+pub const retcode_t_RC_NEIGHBOR_INVALID_HOST: retcode_t = 899;
+pub const retcode_t_RC_NEIGHBOR_FAILED_SEND: retcode_t = 836;
+pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_INIT: retcode_t = 965;
+pub const retcode_t_RC_NEIGHBOR_FAILED_ENDPOINT_DESTROY: retcode_t = 966;
+pub const retcode_t_RC_NEIGHBOR_ALREADY_PAIRED: retcode_t = 839;
+pub const retcode_t_RC_NEIGHBOR_NOT_PAIRED: retcode_t = 840;
 #[doc = "< json create object error, might OOM."]
-pub const retcode_t_RC_CCLIENT_JSON_CREATE: retcode_t = 2241;
-pub const retcode_t_RC_CCLIENT_JSON_PARSE: retcode_t = 2178;
-#[doc = "< Out of memory"]
-pub const retcode_t_RC_CCLIENT_OOM: retcode_t = 2243;
+pub const retcode_t_RC_CCLIENT_JSON_CREATE: retcode_t = 1217;
+pub const retcode_t_RC_CCLIENT_JSON_PARSE: retcode_t = 1154;
 #[doc = "< HTTP service error"]
-pub const retcode_t_RC_CCLIENT_HTTP: retcode_t = 2180;
+pub const retcode_t_RC_CCLIENT_HTTP: retcode_t = 1156;
 #[doc = "< HTTP post error"]
-pub const retcode_t_RC_CCLIENT_HTTP_REQ: retcode_t = 2181;
-#[doc = "< HTTP response error"]
-pub const retcode_t_RC_CCLIENT_HTTP_RES: retcode_t = 2182;
+pub const retcode_t_RC_CCLIENT_HTTP_REQ: retcode_t = 1157;
 #[doc = "< IRI response error string"]
-pub const retcode_t_RC_CCLIENT_RES_ERROR: retcode_t = 2119;
+pub const retcode_t_RC_CCLIENT_RES_ERROR: retcode_t = 1095;
 #[doc = "< JSON key not found"]
-pub const retcode_t_RC_CCLIENT_JSON_KEY: retcode_t = 2056;
+pub const retcode_t_RC_CCLIENT_JSON_KEY: retcode_t = 1032;
 #[doc = "< Flex trits converting error"]
-pub const retcode_t_RC_CCLIENT_FLEX_TRITS: retcode_t = 2121;
+pub const retcode_t_RC_CCLIENT_FLEX_TRITS: retcode_t = 1097;
 #[doc = "< Null pointer"]
-pub const retcode_t_RC_CCLIENT_NULL_PTR: retcode_t = 2186;
+pub const retcode_t_RC_CCLIENT_NULL_PTR: retcode_t = 1162;
 #[doc = "< Method unimplemented"]
-pub const retcode_t_RC_CCLIENT_UNIMPLEMENTED: retcode_t = 2187;
+pub const retcode_t_RC_CCLIENT_UNIMPLEMENTED: retcode_t = 1163;
 #[doc = "< invalid security level"]
-pub const retcode_t_RC_CCLIENT_INVALID_SECURITY: retcode_t = 2060;
-#[doc = "< Host not found"]
-pub const retcode_t_RC_CCLIENT_HOST_NOT_FOUND: retcode_t = 2189;
-pub const retcode_t_RC_CCLIENT_TX_DESERIALIZE_FAILED: retcode_t = 2126;
+pub const retcode_t_RC_CCLIENT_INVALID_SECURITY: retcode_t = 1036;
+pub const retcode_t_RC_CCLIENT_TX_DESERIALIZE_FAILED: retcode_t = 1102;
 #[doc = "< Insufficient balance"]
-pub const retcode_t_RC_CCLIENT_INSUFFICIENT_BALANCE: retcode_t = 2063;
+pub const retcode_t_RC_CCLIENT_INSUFFICIENT_BALANCE: retcode_t = 1039;
 #[doc = "< PoW failed"]
-pub const retcode_t_RC_CCLIENT_POW_FAILED: retcode_t = 2064;
+pub const retcode_t_RC_CCLIENT_POW_FAILED: retcode_t = 1040;
 #[doc = "< Invalid transfer object"]
-pub const retcode_t_RC_CCLIENT_INVALID_TRANSFER: retcode_t = 2129;
+pub const retcode_t_RC_CCLIENT_INVALID_TRANSFER: retcode_t = 1105;
 #[doc = "< Invalid tail hash"]
-pub const retcode_t_RC_CCLIENT_INVALID_TAIL_HASH: retcode_t = 2194;
+pub const retcode_t_RC_CCLIENT_INVALID_TAIL_HASH: retcode_t = 1170;
 #[doc = "< Invalid bundle object"]
-pub const retcode_t_RC_CCLIENT_INVALID_BUNDLE: retcode_t = 2067;
-pub const retcode_t_RC_CONSENSUS_NOT_IMPLEMENTED: retcode_t = 2433;
-pub const retcode_t_RC_CONSENSUS_CW_FAILED_IN_DFS_FROM_DB: retcode_t = 2690;
-pub const retcode_t_RC_CONSENSUS_CW_FAILED_IN_LIGHT_DFS: retcode_t = 2691;
-pub const retcode_t_RC_CONSENSUS_NULL_PTR: retcode_t = 2501;
-pub const retcode_t_RC_CONSENSUS_EXIT_PROBABILITIES_INVALID_ENTRYPOINT: retcode_t = 2950;
-pub const retcode_t_RC_CONSENSUS_EXIT_PROBABILITIES_MISSING_RATING: retcode_t = 2887;
-pub const retcode_t_RC_CONSENSUS_NULL_BUNDLE_PTR: retcode_t = 2696;
-pub const retcode_t_RC_UTILS_FAILED_REMOVE_FILE: retcode_t = 41345;
-pub const retcode_t_RC_UTILS_FAILED_TO_COPY_FILE: retcode_t = 41346;
-pub const retcode_t_RC_UTILS_FAILED_TO_OPEN_FILE: retcode_t = 41347;
-pub const retcode_t_RC_UTILS_FAILED_TO_DIGEST_FILE: retcode_t = 41348;
-pub const retcode_t_RC_UTILS_INVALID_SIG_FILE: retcode_t = 41350;
-pub const retcode_t_RC_UTILS_INVALID_LOGGER_VERSION: retcode_t = 41351;
-pub const retcode_t_RC_UTILS_FAILED_WRITE_FILE: retcode_t = 41352;
-pub const retcode_t_RC_UTILS_FAILED_READ_FILE: retcode_t = 41353;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_RNG: retcode_t = 41354;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CA: retcode_t = 41355;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PEM: retcode_t = 41356;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PK: retcode_t = 41357;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_CONF: retcode_t = 41358;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_AUTHMODE: retcode_t = 41359;
-pub const retcode_t_RC_UTILS_SOCKET_CLIENT_AUTH: retcode_t = 41360;
-pub const retcode_t_RC_UTILS_SOCKET_TLS_HANDSHAKE: retcode_t = 41361;
-pub const retcode_t_RC_UTILS_SOCKET_CONNECT: retcode_t = 41362;
-pub const retcode_t_RC_UTILS_SOCKET_RECV: retcode_t = 41235;
-pub const retcode_t_RC_UTILS_SOCKET_SEND: retcode_t = 41236;
-pub const retcode_t_RC_BROADCASTER_FAILED_PUSH_QUEUE: retcode_t = 41473;
-pub const retcode_t_RC_BROADCASTER_STILL_RUNNING: retcode_t = 41666;
-pub const retcode_t_RC_PROCESSOR_INVALID_TRANSACTION: retcode_t = 41793;
-pub const retcode_t_RC_PROCESSOR_INVALID_REQUEST: retcode_t = 41794;
-pub const retcode_t_RC_RECEIVER_COMPONENT_INVALID_PROCESSOR: retcode_t = 42177;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_INIT_LIST: retcode_t = 42433;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_DESTROY_LIST: retcode_t = 42306;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_ADD_LIST: retcode_t = 42243;
-pub const retcode_t_RC_REQUESTER_COMPONENT_FAILED_REMOVE_LIST: retcode_t = 42244;
-pub const retcode_t_RC_RESPONDER_COMPONENT_FAILED_TX_PROCESSING: retcode_t = 42509;
-pub const retcode_t_RC_RESPONDER_COMPONENT_FAILED_REQ_PROCESSING: retcode_t = 42510;
-pub const retcode_t_RC_RESPONDER_COMPONENT_INVALID_TX: retcode_t = 42575;
-pub const retcode_t_RC_GOSSIP_SET_PACKET_TRANSACTION_FAILED: retcode_t = 43329;
-pub const retcode_t_RC_GOSSIP_SET_PACKET_REQUEST_FAILED: retcode_t = 43330;
-pub const retcode_t_RC_CIRI_CONF_INVALID_ARGUMENT: retcode_t = 42945;
-pub const retcode_t_RC_CIRI_CONF_MISSING_ARGUMENT: retcode_t = 42946;
-pub const retcode_t_RC_CIRI_CONF_UNKNOWN_OPTION: retcode_t = 42947;
-pub const retcode_t_RC_CIRI_CONF_FILE_NOT_FOUND: retcode_t = 42948;
-pub const retcode_t_RC_CIRI_CONF_PARSER_ERROR: retcode_t = 42949;
-pub const retcode_t_RC_API_SERIALIZER_NOT_IMPLEMENTED: retcode_t = 43201;
-pub const retcode_t_RC_API_MAX_GET_TRYTES: retcode_t = 43074;
-pub const retcode_t_RC_API_FIND_TRANSACTIONS_NO_INPUT: retcode_t = 43075;
-pub const retcode_t_RC_API_MAX_FIND_TRANSACTIONS: retcode_t = 43076;
-pub const retcode_t_RC_API_INVALID_DEPTH_INPUT: retcode_t = 43077;
-pub const retcode_t_RC_API_INVALID_SUBTANGLE_STATUS: retcode_t = 43078;
-pub const retcode_t_RC_API_TAIL_MISSING: retcode_t = 43079;
-pub const retcode_t_RC_API_NOT_TAIL: retcode_t = 43080;
-pub const retcode_t_RC_API_INVALID_COMMAND: retcode_t = 43017;
-pub const retcode_t_RC_API_GET_BALANCES_INVALID_THRESHOLD: retcode_t = 43018;
-pub const retcode_t_RC_API_GET_BALANCES_UNKNOWN_TIP: retcode_t = 43019;
-pub const retcode_t_RC_API_GET_BALANCES_INCONSISTENT_TIP: retcode_t = 43019;
-pub const retcode_t_RC_SNAPSHOT_FILE_NOT_FOUND: retcode_t = 3521;
-pub const retcode_t_RC_SNAPSHOT_INVALID_FILE: retcode_t = 3522;
-pub const retcode_t_RC_SNAPSHOT_INVALID_SUPPLY: retcode_t = 3523;
-pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_SNAPSHOT: retcode_t = 3524;
-pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_PATCH: retcode_t = 3461;
-pub const retcode_t_RC_SNAPSHOT_BALANCE_NOT_FOUND: retcode_t = 3398;
-pub const retcode_t_RC_SNAPSHOT_INVALID_SIGNATURE: retcode_t = 3527;
-pub const retcode_t_RC_SNAPSHOT_FAILED_JSON_PARSING: retcode_t = 3528;
-pub const retcode_t_RC_LEDGER_VALIDATOR_INVALID_TRANSACTION: retcode_t = 3713;
-pub const retcode_t_RC_LEDGER_VALIDATOR_COULD_NOT_LOAD_MILESTONE: retcode_t = 3714;
-pub const retcode_t_RC_LEDGER_VALIDATOR_INCONSISTENT_DELTA: retcode_t = 3779;
-pub const retcode_t_RC_LEDGER_VALIDATOR_TRANSACTION_NOT_SOLID: retcode_t = 3780;
-pub const retcode_t_RC_TIP_SELECTOR_TIPS_NOT_CONSISTENT: retcode_t = 3905;
-pub const retcode_t_RC_TIP_SELECTOR_REFERENCE_TOO_OLD: retcode_t = 3906;
-pub const retcode_t_RC_TANGLE_TAIL_NOT_FOUND: retcode_t = 4161;
-pub const retcode_t_RC_TANGLE_NOT_A_TAIL: retcode_t = 4162;
-pub const retcode_t_RC_MAM_BUFFER_TOO_SMALL: retcode_t = 45121;
-pub const retcode_t_RC_MAM_INVALID_ARGUMENT: retcode_t = 45122;
-pub const retcode_t_RC_MAM_INVALID_VALUE: retcode_t = 45123;
-pub const retcode_t_RC_MAM_NEGATIVE_VALUE: retcode_t = 45124;
-pub const retcode_t_RC_MAM_INTERNAL_ERROR: retcode_t = 45125;
-pub const retcode_t_RC_MAM_NOT_IMPLEMENTED: retcode_t = 45126;
-pub const retcode_t_RC_MAM_PB3_EOF: retcode_t = 45127;
-pub const retcode_t_RC_MAM_PB3_BAD_ONEOF: retcode_t = 45128;
-pub const retcode_t_RC_MAM_PB3_BAD_OPTIONAL: retcode_t = 45129;
-pub const retcode_t_RC_MAM_PB3_BAD_REPEATED: retcode_t = 45130;
-pub const retcode_t_RC_MAM_PB3_BAD_MAC: retcode_t = 45131;
-pub const retcode_t_RC_MAM_PB3_BAD_SIG: retcode_t = 45132;
-pub const retcode_t_RC_MAM_PB3_BAD_EKEY: retcode_t = 45133;
-pub const retcode_t_RC_MAM_PB3_SIZE_T_NOT_SUPPORTED: retcode_t = 45134;
-pub const retcode_t_RC_MAM_CHANNEL_NOT_FOUND: retcode_t = 45135;
-pub const retcode_t_RC_MAM_ENDPOINT_NOT_FOUND: retcode_t = 45136;
-pub const retcode_t_RC_MAM_VERSION_NOT_SUPPORTED: retcode_t = 45137;
-pub const retcode_t_RC_MAM_CHANNEL_NOT_TRUSTED: retcode_t = 45138;
-pub const retcode_t_RC_MAM_ENDPOINT_NOT_TRUSTED: retcode_t = 45139;
-pub const retcode_t_RC_MAM_KEYLOAD_IRRELEVANT: retcode_t = 45140;
-pub const retcode_t_RC_MAM_KEYLOAD_OVERLOADED: retcode_t = 45141;
-pub const retcode_t_RC_MAM_BUNDLE_NOT_EMPTY: retcode_t = 45142;
-pub const retcode_t_RC_MAM_BUNDLE_DOES_NOT_CONTAIN_HEADER: retcode_t = 45143;
-pub const retcode_t_RC_MAM_RECV_CTX_NOT_FOUND: retcode_t = 45144;
-pub const retcode_t_RC_MAM_SEND_CTX_NOT_FOUND: retcode_t = 45145;
-pub const retcode_t_RC_MAM_MESSAGE_NOT_FOUND: retcode_t = 45146;
-pub const retcode_t_RC_MAM_BAD_PACKET_ORD: retcode_t = 45147;
-pub const retcode_t_RC_MAM_MSS_EXHAUSTED: retcode_t = 45148;
-pub const retcode_t_RC_MAM_NTRU_POLY_FAILED: retcode_t = 45149;
-pub const retcode_t_RC_MAM_API_FAILED_CREATE_ENDPOINT: retcode_t = 45150;
-pub const retcode_t_RC_MAM_API_FAILED_CREATE_CHANNEL: retcode_t = 45151;
-pub const retcode_t_RC_MAM_PK_IS_NOT_TRUSTED: retcode_t = 45152;
-pub const retcode_t_RC_MAM_MSS_NOT_FOUND: retcode_t = 45153;
-pub const retcode_t_RC_HELPERS_POW_INVALID_TX: retcode_t = 45377;
-pub const retcode_t_RC_CRYPTO_UNSUPPORTED_SPONGE_TYPE: retcode_t = 45441;
+pub const retcode_t_RC_CCLIENT_INVALID_BUNDLE: retcode_t = 1043;
+#[doc = "< Checking balance value failed"]
+pub const retcode_t_RC_CCLIENT_CHECK_BALANCE: retcode_t = 1044;
+pub const retcode_t_RC_CONSENSUS_NOT_IMPLEMENTED: retcode_t = 1409;
+pub const retcode_t_RC_CW_FAILED_IN_DFS_FROM_DB: retcode_t = 1665;
+pub const retcode_t_RC_CW_FAILED_IN_LIGHT_DFS: retcode_t = 1666;
+pub const retcode_t_RC_EXIT_PROBABILITIES_INVALID_ENTRYPOINT: retcode_t = 1921;
+pub const retcode_t_RC_EXIT_PROBABILITIES_MISSING_RATING: retcode_t = 1858;
+pub const retcode_t_RC_EXIT_PROBABILITIES_NOT_IMPLEMENTED: retcode_t = 1923;
+pub const retcode_t_RC_SNAPSHOT_FILE_NOT_FOUND: retcode_t = 2241;
+pub const retcode_t_RC_SNAPSHOT_INVALID_FILE: retcode_t = 2242;
+pub const retcode_t_RC_SNAPSHOT_INVALID_SUPPLY: retcode_t = 2243;
+pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_SNAPSHOT: retcode_t = 2244;
+pub const retcode_t_RC_SNAPSHOT_INCONSISTENT_PATCH: retcode_t = 2181;
+pub const retcode_t_RC_SNAPSHOT_BALANCE_NOT_FOUND: retcode_t = 2118;
+pub const retcode_t_RC_SNAPSHOT_INVALID_SIGNATURE: retcode_t = 2247;
+pub const retcode_t_RC_SNAPSHOT_FAILED_JSON_PARSING: retcode_t = 2248;
+pub const retcode_t_RC_SNAPSHOT_SERVICE_NOT_ENOUGH_DEPTH: retcode_t = 2121;
+pub const retcode_t_RC_SNAPSHOT_SERVICE_MILESTONE_NOT_LOADED: retcode_t = 2122;
+pub const retcode_t_RC_SNAPSHOT_SERVICE_MILESTONE_NOT_SOLID: retcode_t = 2123;
+pub const retcode_t_RC_SNAPSHOT_SERVICE_MILESTONE_TOO_OLD: retcode_t = 2124;
+pub const retcode_t_RC_SNAPSHOT_METADATA_FAILED_DESERIALIZING: retcode_t = 2125;
+pub const retcode_t_RC_SNAPSHOT_METADATA_FAILED_SERIALIZING: retcode_t = 2126;
+pub const retcode_t_RC_SNAPSHOT_STATE_DELTA_FAILED_DESERIALIZING: retcode_t = 2127;
+pub const retcode_t_RC_SNAPSHOT_MISSING_MILESTONE_TRANSACTION: retcode_t = 2128;
+pub const retcode_t_RC_LEDGER_VALIDATOR_INVALID_TRANSACTION: retcode_t = 2433;
+pub const retcode_t_RC_LEDGER_VALIDATOR_COULD_NOT_LOAD_MILESTONE: retcode_t = 2434;
+pub const retcode_t_RC_LEDGER_VALIDATOR_INCONSISTENT_DELTA: retcode_t = 2499;
+pub const retcode_t_RC_LEDGER_VALIDATOR_TRANSACTION_NOT_SOLID: retcode_t = 2500;
+pub const retcode_t_RC_TIP_SELECTOR_TIPS_NOT_CONSISTENT: retcode_t = 2625;
+pub const retcode_t_RC_TIP_SELECTOR_REFERENCE_TOO_OLD: retcode_t = 2626;
+pub const retcode_t_RC_TANGLE_TAIL_NOT_FOUND: retcode_t = 2881;
+pub const retcode_t_RC_TANGLE_NOT_A_TAIL: retcode_t = 2882;
+pub const retcode_t_RC_UTILS_FAILED_REMOVE_FILE: retcode_t = 3201;
+pub const retcode_t_RC_UTILS_FAILED_TO_COPY_FILE: retcode_t = 3202;
+pub const retcode_t_RC_UTILS_FAILED_TO_OPEN_FILE: retcode_t = 3203;
+pub const retcode_t_RC_UTILS_INVALID_SIG_FILE: retcode_t = 3204;
+pub const retcode_t_RC_UTILS_INVALID_LOGGER_VERSION: retcode_t = 3205;
+pub const retcode_t_RC_UTILS_FAILED_WRITE_FILE: retcode_t = 3206;
+pub const retcode_t_RC_UTILS_FAILED_READ_FILE: retcode_t = 3207;
+pub const retcode_t_RC_UTILS_FAILED_OPEN_SRC_FILE: retcode_t = 3208;
+pub const retcode_t_RC_UTILS_FAILED_OPEN_CREATE_DST_FILE: retcode_t = 3209;
+pub const retcode_t_RC_UTILS_FAILED_CLOSE_FILE: retcode_t = 3210;
+pub const retcode_t_RC_UTILS_FILE_DOES_NOT_EXITS: retcode_t = 3211;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_RNG: retcode_t = 3212;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CA: retcode_t = 3213;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PEM: retcode_t = 3214;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CLIENT_PK: retcode_t = 3215;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_CONF: retcode_t = 3216;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_AUTHMODE: retcode_t = 3217;
+pub const retcode_t_RC_UTILS_SOCKET_CLIENT_AUTH: retcode_t = 3218;
+pub const retcode_t_RC_UTILS_SOCKET_TLS_HANDSHAKE: retcode_t = 3219;
+pub const retcode_t_RC_UTILS_SOCKET_CONNECT: retcode_t = 3220;
+pub const retcode_t_RC_UTILS_SOCKET_RECV: retcode_t = 3093;
+pub const retcode_t_RC_UTILS_SOCKET_SEND: retcode_t = 3094;
+pub const retcode_t_RC_PROCESSOR_INVALID_TRANSACTION: retcode_t = 3393;
+pub const retcode_t_RC_PROCESSOR_INVALID_REQUEST: retcode_t = 3394;
+pub const retcode_t_RC_CONF_INVALID_ARGUMENT: retcode_t = 3777;
+pub const retcode_t_RC_CONF_MISSING_ARGUMENT: retcode_t = 3778;
+pub const retcode_t_RC_CONF_UNKNOWN_OPTION: retcode_t = 3779;
+pub const retcode_t_RC_CONF_PARSER_ERROR: retcode_t = 3780;
+pub const retcode_t_RC_API_MAX_GET_TRYTES: retcode_t = 3905;
+pub const retcode_t_RC_API_FIND_TRANSACTIONS_NO_INPUT: retcode_t = 3906;
+pub const retcode_t_RC_API_MAX_FIND_TRANSACTIONS: retcode_t = 3907;
+pub const retcode_t_RC_API_INVALID_DEPTH_INPUT: retcode_t = 3908;
+pub const retcode_t_RC_API_INVALID_SUBTANGLE_STATUS: retcode_t = 3909;
+pub const retcode_t_RC_API_TAIL_MISSING: retcode_t = 3910;
+pub const retcode_t_RC_API_NOT_TAIL: retcode_t = 3911;
+pub const retcode_t_RC_API_GET_BALANCES_INVALID_THRESHOLD: retcode_t = 3848;
+pub const retcode_t_RC_API_GET_BALANCES_UNKNOWN_TIP: retcode_t = 3849;
+pub const retcode_t_RC_API_GET_BALANCES_INCONSISTENT_TIP: retcode_t = 3850;
+pub const retcode_t_RC_GOSSIP_SET_PACKET_TRANSACTION_FAILED: retcode_t = 4161;
+pub const retcode_t_RC_GOSSIP_SET_PACKET_REQUEST_FAILED: retcode_t = 4162;
+pub const retcode_t_RC_MAM_BUFFER_TOO_SMALL: retcode_t = 4417;
+pub const retcode_t_RC_MAM_INVALID_ARGUMENT: retcode_t = 4418;
+pub const retcode_t_RC_MAM_INVALID_VALUE: retcode_t = 4419;
+pub const retcode_t_RC_MAM_NEGATIVE_VALUE: retcode_t = 4420;
+pub const retcode_t_RC_MAM_INTERNAL_ERROR: retcode_t = 4421;
+pub const retcode_t_RC_MAM_NOT_IMPLEMENTED: retcode_t = 4422;
+pub const retcode_t_RC_MAM_PB3_EOF: retcode_t = 4423;
+pub const retcode_t_RC_MAM_PB3_BAD_ONEOF: retcode_t = 4424;
+pub const retcode_t_RC_MAM_PB3_BAD_OPTIONAL: retcode_t = 4425;
+pub const retcode_t_RC_MAM_PB3_BAD_REPEATED: retcode_t = 4426;
+pub const retcode_t_RC_MAM_PB3_BAD_MAC: retcode_t = 4427;
+pub const retcode_t_RC_MAM_PB3_BAD_SIG: retcode_t = 4428;
+pub const retcode_t_RC_MAM_PB3_BAD_EKEY: retcode_t = 4429;
+pub const retcode_t_RC_MAM_PB3_SIZE_T_NOT_SUPPORTED: retcode_t = 4430;
+pub const retcode_t_RC_MAM_CHANNEL_NOT_FOUND: retcode_t = 4431;
+pub const retcode_t_RC_MAM_ENDPOINT_NOT_FOUND: retcode_t = 4432;
+pub const retcode_t_RC_MAM_VERSION_NOT_SUPPORTED: retcode_t = 4433;
+pub const retcode_t_RC_MAM_CHANNEL_NOT_TRUSTED: retcode_t = 4434;
+pub const retcode_t_RC_MAM_ENDPOINT_NOT_TRUSTED: retcode_t = 4435;
+pub const retcode_t_RC_MAM_KEYLOAD_IRRELEVANT: retcode_t = 4436;
+pub const retcode_t_RC_MAM_KEYLOAD_OVERLOADED: retcode_t = 4437;
+pub const retcode_t_RC_MAM_BUNDLE_NOT_EMPTY: retcode_t = 4438;
+pub const retcode_t_RC_MAM_BUNDLE_DOES_NOT_CONTAIN_HEADER: retcode_t = 4439;
+pub const retcode_t_RC_MAM_RECV_CTX_NOT_FOUND: retcode_t = 4440;
+pub const retcode_t_RC_MAM_SEND_CTX_NOT_FOUND: retcode_t = 4441;
+pub const retcode_t_RC_MAM_MESSAGE_NOT_FOUND: retcode_t = 4442;
+pub const retcode_t_RC_MAM_BAD_PACKET_ORD: retcode_t = 4443;
+pub const retcode_t_RC_MAM_MSS_EXHAUSTED: retcode_t = 4444;
+pub const retcode_t_RC_MAM_NTRU_POLY_FAILED: retcode_t = 4445;
+pub const retcode_t_RC_MAM_API_FAILED_CREATE_ENDPOINT: retcode_t = 4446;
+pub const retcode_t_RC_MAM_API_FAILED_CREATE_CHANNEL: retcode_t = 4447;
+pub const retcode_t_RC_MAM_PK_IS_NOT_TRUSTED: retcode_t = 4448;
+pub const retcode_t_RC_MAM_MSS_NOT_FOUND: retcode_t = 4449;
+pub const retcode_t_RC_HELPERS_POW_INVALID_TX: retcode_t = 4673;
+pub const retcode_t_RC_CRYPTO_UNSUPPORTED_SPONGE_TYPE: retcode_t = 4993;
+pub const retcode_t_RC_COMMON_BUNDLE_SIGN: retcode_t = 5121;
 #[doc = " @brief Error codes"]
 #[doc = ""]
 pub type retcode_t = u32;
@@ -4364,12 +4294,6 @@ extern "C" {
     pub fn trits_put_char(x: trits_t, c: ::std::os::raw::c_char) -> bool;
 }
 extern "C" {
-    pub fn trits_get_byte(x: trits_t) -> byte;
-}
-extern "C" {
-    pub fn trits_put_byte(x: trits_t, b: byte) -> bool;
-}
-extern "C" {
     #[doc = " \\brief Convert trytes to string."]
     #[doc = "\\note `trits_size(x)` must be multiple of 3."]
     #[doc = "Size of `s` must be equal `trits_size(x)/3`."]
@@ -4391,25 +4315,8 @@ extern "C" {
     pub fn trits_padc0(c0: trit_t, y: trits_t);
 }
 extern "C" {
-    #[doc = " \\brief Copy and pad trits: `y := x || c0 || 0^{|y|-|x|-1}`."]
-    pub fn trits_copy_padc0(c0: trit_t, x: trits_t, y: trits_t);
-}
-extern "C" {
     #[doc = " \\brief Pad non-empty trits: `y := c0 || 0^{|y|-1}` if `|y|>0`."]
     pub fn trits_padc(c0: trit_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Copy and pad non-empty trits: `y := x || c0 || 0^{|y|-|x|-1}` if `|y|"]
-    #[doc = " > |x|` else `y := x`."]
-    pub fn trits_copy_padc(c0: trit_t, x: trits_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Add trits: `y` := `x` + `s`."]
-    pub fn trits_add(x: trits_t, s: trits_t, y: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Sub trits: `x` := `y` - `s`."]
-    pub fn trits_sub(y: trits_t, s: trits_t, x: trits_t);
 }
 extern "C" {
     #[doc = " \\brief Copy and add trits: `y` := `x` + `s`, `s` := `x`."]
@@ -4484,17 +4391,6 @@ extern "C" {
 extern "C" {
     #[doc = " \\brief Free trits `x`."]
     pub fn trits_free(x: trits_t);
-}
-extern "C" {
-    #[doc = " \\brief Print string rep of `x` into stdout."]
-    pub fn trits_print(x: trits_t);
-}
-extern "C" {
-    pub fn trits_print2(
-        pfx: *const ::std::os::raw::c_char,
-        x: trits_t,
-        sfx: *const ::std::os::raw::c_char,
-    );
 }
 #[doc = " Sponge interface"]
 #[doc = ""]
@@ -4984,13 +4880,6 @@ extern "C" {
         output: trits_t,
     ) -> retcode_t;
 }
-extern "C" {
-    #[doc = " @brief Serializes a PRNG into a trits buffer"]
-    #[doc = ""]
-    #[doc = " @param[in] prng The PRNG"]
-    #[doc = " @param[out] buffer The trits buffer"]
-    pub fn mam_prng_serialize_2(prng: *const mam_prng_t, buffer: *mut trits_t);
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct mam_wots_s {
@@ -5053,107 +4942,38 @@ extern "C" {
 }
 #[doc = " \\brief Leaves have height `0`, root has height `D`; `0 <= d < D`; `D <="]
 #[doc = " 20`."]
-pub type mss_mt_height_t = trint6_t;
+pub type mss_mt_height_t = u8;
 #[doc = " \\brief Index (skn) of leaf/node on the level of height `d`; 0 <= i <"]
 #[doc = " 2^(D-d)."]
-pub type mss_mt_idx_t = trint18_t;
-#[doc = " \\brief MSS interface used to generate public key and sign."]
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub struct mss_s {
-    #[doc = "< Merkle tree height."]
-    pub height: mss_mt_height_t,
-    #[doc = "< Current WOTS private key number."]
-    pub skn: mss_mt_idx_t,
-    #[doc = "< PRNG interface used to generate WOTS private keys."]
-    pub prng: *mut mam_prng_t,
-    #[doc = "< Buffer storing complete Merkle-tree."]
-    pub mt: *mut trit_t,
-    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
-    pub nonce1: trits_t,
-    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
-    pub nonce2: trits_t,
-    pub root: [trit_t; 243usize],
+pub type mss_mt_idx_t = u32;
+pub type mam_mss_t = mam_mss_s;
+extern "C" {
+    pub fn mss_parse_skn(
+        height: *mut mss_mt_height_t,
+        skn: *mut mss_mt_idx_t,
+        trits: trits_t,
+    ) -> bool;
 }
-#[test]
-fn bindgen_test_layout_mss_s() {
-    assert_eq!(
-        ::std::mem::size_of::<mss_s>(),
-        320usize,
-        concat!("Size of: ", stringify!(mss_s))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<mss_s>(),
-        8usize,
-        concat!("Alignment of ", stringify!(mss_s))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).height as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(height)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).skn as *const _ as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(skn)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).prng as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(prng)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).mt as *const _ as usize },
-        16usize,
-        concat!("Offset of field: ", stringify!(mss_s), "::", stringify!(mt))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).nonce1 as *const _ as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(nonce1)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).nonce2 as *const _ as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(nonce2)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<mss_s>())).root as *const _ as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(mss_s),
-            "::",
-            stringify!(root)
-        )
+extern "C" {
+    pub fn mss_fold_auth_path(
+        spongos: *mut mam_spongos_t,
+        skn: mss_mt_idx_t,
+        auth_path: trits_t,
+        pk: trits_t,
     );
 }
-pub type mam_mss_t = mss_s;
+extern "C" {
+    pub fn mss_mt_serialized_size(mss: *const mam_mss_t) -> usize;
+}
+extern "C" {
+    pub fn mss_hash2(s: *mut mam_spongos_t, children_hashes: *mut trits_t, parent_hash: trits_t);
+}
+extern "C" {
+    pub fn mss_mt_serialize(mss: *const mam_mss_t, buffer: *mut trits_t);
+}
+extern "C" {
+    pub fn mss_mt_gen_leaf(mss: *mut mam_mss_t, i: mss_mt_idx_t, pk: trits_t);
+}
 extern "C" {
     #[doc = " MSS interface initialization"]
     #[doc = ""]
@@ -5290,7 +5110,7 @@ extern "C" {
     #[doc = " @param buffer [out] The serialized MT buffer"]
     #[doc = ""]
     #[doc = " @return void"]
-    pub fn mam_mss_serialize(mss: *const mam_mss_t, buffer: trits_t);
+    pub fn mam_mss_serialize(mss: *const mam_mss_t, buffer: *mut trits_t);
 }
 extern "C" {
     #[doc = " Deerialize Merkle tree."]
@@ -5300,6 +5120,107 @@ extern "C" {
     #[doc = ""]
     #[doc = " @return void"]
     pub fn mam_mss_deserialize(buffer: *mut trits_t, mss: *mut mam_mss_t) -> retcode_t;
+}
+#[doc = " \\brief MSS interface used to generate public key and sign."]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct mam_mss_s {
+    #[doc = "< Merkle tree height."]
+    pub height: mss_mt_height_t,
+    #[doc = "< Current WOTS private key number."]
+    pub skn: mss_mt_idx_t,
+    #[doc = "< PRNG interface used to generate WOTS private keys."]
+    pub prng: *mut mam_prng_t,
+    #[doc = "< Buffer storing complete Merkle-tree."]
+    pub mt: *mut trit_t,
+    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
+    pub nonce1: trits_t,
+    #[doc = "< Nonce = `N1`||`N2`, stored pointers only, NOT copies."]
+    pub nonce2: trits_t,
+    pub root: [trit_t; 243usize],
+}
+#[test]
+fn bindgen_test_layout_mam_mss_s() {
+    assert_eq!(
+        ::std::mem::size_of::<mam_mss_s>(),
+        320usize,
+        concat!("Size of: ", stringify!(mam_mss_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<mam_mss_s>(),
+        8usize,
+        concat!("Alignment of ", stringify!(mam_mss_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).height as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(height)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).skn as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(skn)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).prng as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(prng)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).mt as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(mt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).nonce1 as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(nonce1)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).nonce2 as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(nonce2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<mam_mss_s>())).root as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(mam_mss_s),
+            "::",
+            stringify!(root)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -16196,10 +16117,6 @@ extern "C" {
         ntru_sks: *mut mam_ntru_sk_t_set_t,
     ) -> retcode_t;
 }
-#[doc = " Pre-Shared Key (PSK) is a secret key of Authenticated Encryption (AE)"]
-#[doc = " It is preliminarily transmitted between the entities and is beyond the scope"]
-#[doc = " of MAM"]
-#[doc = " The PSK id is an identifier of a group of recipients who share the same PSK"]
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct mam_psk_s {
@@ -16243,13 +16160,13 @@ pub type mam_psk_t = mam_psk_s;
 pub type mam_psk_t_set_entry_t = mam_psk_t_set_entry_s;
 pub type mam_psk_t_set_t = *mut mam_psk_t_set_entry_t;
 extern "C" {
-    #[doc = " Generates a pre-shared key with an id and a nonce"]
+    #[doc = " @brief Generates a pre-shared key with an id and a nonce"]
     #[doc = ""]
-    #[doc = " @param psk The pre-shared key"]
-    #[doc = " @param prng A PRNG interface"]
-    #[doc = " @param id The pre-shared key id (27 trytes)"]
-    #[doc = " @param nonce A trytes nonce"]
-    #[doc = " @param nonce_length Length of the trytes nonce"]
+    #[doc = " @param[out] psk The pre-shared key"]
+    #[doc = " @param[in] prng A PRNG"]
+    #[doc = " @param[in] id The pre-shared key id"]
+    #[doc = " @param[in] nonce A trytes nonce"]
+    #[doc = " @param[in] nonce_length Length of the trytes nonce"]
     #[doc = ""]
     #[doc = " @return a status code"]
     pub fn mam_psk_gen(
@@ -16261,56 +16178,35 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Safely destroys a pre-shared key by clearing its secret part"]
+    #[doc = " @brief Safely destroys a set of pre-shared keys by clearing their secret part and releasing memory"]
     #[doc = ""]
-    #[doc = " @param psk The pre-shared key"]
-    pub fn mam_psk_destroy(psk: *mut mam_psk_t);
+    #[doc = " @param[out] psks The set of pre-shared keys"]
+    #[doc = ""]
+    #[doc = " @return a status code"]
+    pub fn mam_psks_destroy(psks: *mut mam_psk_t_set_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Gets a pre-shared key id trits"]
+    #[doc = " @brief Gets the size of a serialized set of pre-shared keys"]
     #[doc = ""]
-    #[doc = " @param psk The pre-shared key"]
-    #[doc = ""]
-    #[doc = " @return the pre-shared key id trits"]
-    pub fn mam_psk_id(psk: *const mam_psk_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " Gets a pre-shared key trits"]
-    #[doc = ""]
-    #[doc = " @param psk The pre-shared key"]
-    #[doc = ""]
-    #[doc = " @return the pre-shared key trits"]
-    pub fn mam_psk_key(psk: *const mam_psk_t) -> trits_t;
-}
-extern "C" {
-    #[doc = " Safely destroys a set of pre-shared keys by clearing their secret part and"]
-    #[doc = " releasing memory"]
-    #[doc = ""]
-    #[doc = " @param psks The set of pre-shared keys"]
-    pub fn mam_psks_destroy(psks: *mut mam_psk_t_set_t);
-}
-extern "C" {
-    #[doc = " Gets the size of a serialized set of pre-shared keys"]
-    #[doc = ""]
-    #[doc = " @param psks The set of pre-shared keys"]
+    #[doc = " @param[in] psks The set of pre-shared keys"]
     #[doc = ""]
     #[doc = " @return the serialized size"]
     pub fn mam_psks_serialized_size(psks: mam_psk_t_set_t) -> usize;
 }
 extern "C" {
-    #[doc = " Serializes a set of pre-shared keys into a trits buffer"]
+    #[doc = " @brief Serializes a set of pre-shared keys into a trits buffer"]
     #[doc = ""]
-    #[doc = " @param psks The set of pre-shared keys"]
-    #[doc = " @param trits The trits buffer to serialize into"]
+    #[doc = " @param[in] psks The set of pre-shared keys"]
+    #[doc = " @param[out] trits The trits buffer to serialize into"]
     #[doc = ""]
     #[doc = " @return a status code"]
     pub fn mam_psks_serialize(psks: mam_psk_t_set_t, trits: *mut trits_t) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Deserializes a set of pre-shared keys from a trits buffer"]
+    #[doc = " @brief Deserializes a set of pre-shared keys from a trits buffer"]
     #[doc = ""]
-    #[doc = " @param trits The trits buffer to deserialize from"]
-    #[doc = " @param psks The set of pre-shared keys"]
+    #[doc = " @param trits[in] The trits buffer to deserialize from"]
+    #[doc = " @param psks[out] The set of pre-shared keys"]
     #[doc = ""]
     #[doc = " @return a status code"]
     pub fn mam_psks_deserialize(trits: *mut trits_t, psks: *mut mam_psk_t_set_t) -> retcode_t;
@@ -16404,19 +16300,23 @@ extern "C" {
 extern "C" {
     pub fn mam_psk_t_set_cmp(lhs: *const mam_psk_t_set_t, rhs: *const mam_psk_t_set_t) -> bool;
 }
-pub const mam_msg_pubkey_e_mam_msg_pubkey_chid: mam_msg_pubkey_e = 0;
-pub const mam_msg_pubkey_e_mam_msg_pubkey_epid: mam_msg_pubkey_e = 1;
-pub const mam_msg_pubkey_e_mam_msg_pubkey_chid1: mam_msg_pubkey_e = 2;
-pub const mam_msg_pubkey_e_mam_msg_pubkey_epid1: mam_msg_pubkey_e = 3;
+pub const mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID: mam_msg_pubkey_e = 0;
+pub const mam_msg_pubkey_e_MAM_MSG_PUBKEY_EPID: mam_msg_pubkey_e = 1;
+pub const mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID1: mam_msg_pubkey_e = 2;
+pub const mam_msg_pubkey_e_MAM_MSG_PUBKEY_EPID1: mam_msg_pubkey_e = 3;
 pub type mam_msg_pubkey_e = u32;
 pub use self::mam_msg_pubkey_e as mam_msg_pubkey_t;
-pub const mam_msg_keyload_e_mam_msg_keyload_psk: mam_msg_keyload_e = 1;
-pub const mam_msg_keyload_e_mam_msg_keyload_ntru: mam_msg_keyload_e = 2;
+pub const mam_msg_type_e_MAM_MSG_TYPE_UNSTRUCTURED: mam_msg_type_e = 0;
+pub const mam_msg_type_e_MAM_MSG_TYPE_PK_CERT: mam_msg_type_e = 1;
+pub type mam_msg_type_e = u32;
+pub use self::mam_msg_type_e as mam_msg_type_t;
+pub const mam_msg_keyload_e_MAM_MSG_KEYLOAD_PSK: mam_msg_keyload_e = 1;
+pub const mam_msg_keyload_e_MAM_MSG_KEYLOAD_NTRU: mam_msg_keyload_e = 2;
 pub type mam_msg_keyload_e = u32;
 pub use self::mam_msg_keyload_e as mam_msg_keyload_t;
-pub const mam_msg_checksum_e_mam_msg_checksum_none: mam_msg_checksum_e = 0;
-pub const mam_msg_checksum_e_mam_msg_checksum_mac: mam_msg_checksum_e = 1;
-pub const mam_msg_checksum_e_mam_msg_checksum_mssig: mam_msg_checksum_e = 2;
+pub const mam_msg_checksum_e_MAM_MSG_CHECKSUM_NONE: mam_msg_checksum_e = 0;
+pub const mam_msg_checksum_e_MAM_MSG_CHECKSUM_MAC: mam_msg_checksum_e = 1;
+pub const mam_msg_checksum_e_MAM_MSG_CHECKSUM_SIG: mam_msg_checksum_e = 2;
 pub type mam_msg_checksum_e = u32;
 pub use self::mam_msg_checksum_e as mam_msg_checksum_t;
 #[repr(C)]
@@ -16900,6 +16800,13 @@ extern "C" {
         len: usize,
         num_trits: usize,
     ) -> usize;
+}
+extern "C" {
+    #[doc = " @brief Print flex trits through stdout"]
+    #[doc = ""]
+    #[doc = " @param trits A pointer to flex trits"]
+    #[doc = " @param trits_len Number of trit"]
+    pub fn flex_trit_print(trits: *const flex_trit_t, trits_len: usize);
 }
 extern "C" {
     pub fn normalize_hash_to_trits(hash: *const trit_t, normalized_hash: *mut trit_t);
@@ -17511,6 +17418,114 @@ extern "C" {
 extern "C" {
     pub static ut_ptr_icd: UT_icd;
 }
+#[doc = " @brief input object"]
+#[doc = ""]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct input_t {
+    pub balance: i64,
+    pub key_index: u64,
+    pub security: u8,
+    pub address: [flex_trit_t; 243usize],
+}
+#[test]
+fn bindgen_test_layout_input_t() {
+    assert_eq!(
+        ::std::mem::size_of::<input_t>(),
+        264usize,
+        concat!("Size of: ", stringify!(input_t))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<input_t>(),
+        8usize,
+        concat!("Alignment of ", stringify!(input_t))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<input_t>())).balance as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(input_t),
+            "::",
+            stringify!(balance)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<input_t>())).key_index as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(input_t),
+            "::",
+            stringify!(key_index)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<input_t>())).security as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(input_t),
+            "::",
+            stringify!(security)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<input_t>())).address as *const _ as usize },
+        17usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(input_t),
+            "::",
+            stringify!(address)
+        )
+    );
+}
+pub type input_array_t = UT_array;
+#[doc = " @brief a list of input object"]
+#[doc = ""]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct inputs_t {
+    pub total_balance: i64,
+    pub input_array: *mut input_array_t,
+}
+#[test]
+fn bindgen_test_layout_inputs_t() {
+    assert_eq!(
+        ::std::mem::size_of::<inputs_t>(),
+        16usize,
+        concat!("Size of: ", stringify!(inputs_t))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<inputs_t>(),
+        8usize,
+        concat!("Alignment of ", stringify!(inputs_t))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<inputs_t>())).total_balance as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(inputs_t),
+            "::",
+            stringify!(total_balance)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<inputs_t>())).input_array as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(inputs_t),
+            "::",
+            stringify!(input_array)
+        )
+    );
+}
+extern "C" {
+    pub static input_array_icd: UT_icd;
+}
 #[doc = " Transaction data structure"]
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -17519,8 +17534,8 @@ pub struct iota_transaction_fields_essence_s {
     pub value: i64,
     pub obsolete_tag: [flex_trit_t; 81usize],
     pub timestamp: u64,
-    pub current_index: i64,
-    pub last_index: i64,
+    pub current_index: u64,
+    pub last_index: u64,
     pub bundle: [flex_trit_t; 243usize],
 }
 #[test]
@@ -18133,6 +18148,110 @@ pub type transaction_array_t = UT_array;
 extern "C" {
     pub static ut_transactions_icd: UT_icd;
 }
+#[doc = " @brief A transfer object"]
+#[doc = ""]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct transfer_s {
+    pub value: i64,
+    pub timestamp: u64,
+    pub msg_len: usize,
+    pub message: *mut tryte_t,
+    pub address: [flex_trit_t; 243usize],
+    pub tag: [flex_trit_t; 81usize],
+}
+#[test]
+fn bindgen_test_layout_transfer_s() {
+    assert_eq!(
+        ::std::mem::size_of::<transfer_s>(),
+        360usize,
+        concat!("Size of: ", stringify!(transfer_s))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<transfer_s>(),
+        8usize,
+        concat!("Alignment of ", stringify!(transfer_s))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<transfer_s>())).value as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(transfer_s),
+            "::",
+            stringify!(value)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<transfer_s>())).timestamp as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(transfer_s),
+            "::",
+            stringify!(timestamp)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<transfer_s>())).msg_len as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(transfer_s),
+            "::",
+            stringify!(msg_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<transfer_s>())).message as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(transfer_s),
+            "::",
+            stringify!(message)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<transfer_s>())).address as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(transfer_s),
+            "::",
+            stringify!(address)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<transfer_s>())).tag as *const _ as usize },
+        275usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(transfer_s),
+            "::",
+            stringify!(tag)
+        )
+    );
+}
+pub type transfer_t = transfer_s;
+pub type signature_fragments_t = UT_array;
+pub type transfer_array_t = UT_array;
+extern "C" {
+    pub fn transfer_message_set_trytes(
+        tf: *mut transfer_t,
+        trytes: *const tryte_t,
+        length: usize,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn transfer_message_set_string(
+        tf: *mut transfer_t,
+        str: *const ::std::os::raw::c_char,
+    ) -> retcode_t;
+}
+extern "C" {
+    pub fn transfer_array_new() -> *mut transfer_array_t;
+}
 pub const bundle_status_e_BUNDLE_NOT_INITIALIZED: bundle_status_e = 0;
 pub const bundle_status_e_BUNDLE_VALID: bundle_status_e = 1;
 pub const bundle_status_e_BUNDLE_EMPTY: bundle_status_e = 2;
@@ -18159,6 +18278,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn bundle_at(bundle: *mut bundle_transactions_t, index: usize) -> *mut iota_transaction_t;
+}
+extern "C" {
     pub fn bundle_calculate_hash(
         bundle: *mut bundle_transactions_t,
         kerl: *mut Kerl,
@@ -18176,6 +18298,20 @@ extern "C" {
 }
 extern "C" {
     pub fn bundle_reset_indexes(bundle: *mut bundle_transactions_t);
+}
+extern "C" {
+    pub fn bundle_set_messages(
+        bundle: *mut bundle_transactions_t,
+        messages: *mut signature_fragments_t,
+    );
+}
+extern "C" {
+    pub fn bundle_sign(
+        bundle: *mut bundle_transactions_t,
+        seed: *const flex_trit_t,
+        inputs: *const inputs_t,
+        kerl: *mut Kerl,
+    ) -> retcode_t;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -18758,18 +18894,6 @@ extern "C" {
     ) -> retcode_t;
 }
 extern "C" {
-    #[doc = " Gets a channel from its id"]
-    #[doc = ""]
-    #[doc = " @param api - The API [in]"]
-    #[doc = " @param channel_id - The channel id [in]"]
-    #[doc = ""]
-    #[doc = " @return a pointer to the channel or NULL if not found"]
-    pub fn mam_api_get_channel(
-        api: *const mam_api_t,
-        channel_id: *const tryte_t,
-    ) -> *mut mam_channel_t;
-}
-extern "C" {
     #[doc = " Creates and adds an endpoint to the API"]
     #[doc = ""]
     #[doc = " @param api - The API [in, out]"]
@@ -18784,20 +18908,6 @@ extern "C" {
         channel_id: *const tryte_t,
         endpoint_id: *mut tryte_t,
     ) -> retcode_t;
-}
-extern "C" {
-    #[doc = " Gets an endpoint from its id"]
-    #[doc = ""]
-    #[doc = " @param api - The API [in]"]
-    #[doc = " @param channel_id - The associated channel id [in]"]
-    #[doc = " @param endpoint_id - The endpoint id [in]"]
-    #[doc = ""]
-    #[doc = " @return a pointer to the endpoint or NULL if not found"]
-    pub fn mam_api_get_endpoint(
-        api: *const mam_api_t,
-        channel_id: *const tryte_t,
-        endpoint_id: *const tryte_t,
-    ) -> *mut mam_endpoint_t;
 }
 extern "C" {
     #[doc = " Creates a MAM tag that can be used in IOTA transactions"]
@@ -18815,7 +18925,6 @@ extern "C" {
     #[doc = " @param ch_id - A known channel ID [in]"]
     #[doc = " @param psks - pre shared keys used for encrypting the session keys [in]"]
     #[doc = " @param ntru_pks - ntru public keys used for encrypting the session keys [in]"]
-    #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
     #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
@@ -18827,7 +18936,6 @@ extern "C" {
         ch_id: *const tryte_t,
         psks: mam_psk_t_set_t,
         ntru_pks: mam_ntru_pk_t_set_t,
-        msg_type_id: trint9_t,
         bundle: *mut bundle_transactions_t,
         msg_id: *mut trit_t,
     ) -> retcode_t;
@@ -18841,7 +18949,6 @@ extern "C" {
     #[doc = " @param ep_id - A known endpoint ID [in]"]
     #[doc = " @param psks - pre shared keys used for encrypting the session keys [in]"]
     #[doc = " @param ntru_pks - ntru public keys used for encrypting the session keys [in]"]
-    #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
     #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
@@ -18854,7 +18961,6 @@ extern "C" {
         ep_id: *const tryte_t,
         psks: mam_psk_t_set_t,
         ntru_pks: mam_ntru_pk_t_set_t,
-        msg_type_id: trint9_t,
         bundle: *mut bundle_transactions_t,
         msg_id: *mut trit_t,
     ) -> retcode_t;
@@ -18868,7 +18974,6 @@ extern "C" {
     #[doc = " @param ch1_id - The new channel ID [in]"]
     #[doc = " @param psks - pre shared keys used for encrypting the session keys [in]"]
     #[doc = " @param ntru_pks - ntru public keys used for encrypting the session keys [in]"]
-    #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
     #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
@@ -18881,7 +18986,6 @@ extern "C" {
         ch1_id: *const tryte_t,
         psks: mam_psk_t_set_t,
         ntru_pks: mam_ntru_pk_t_set_t,
-        msg_type_id: trint9_t,
         bundle: *mut bundle_transactions_t,
         msg_id: *mut trit_t,
     ) -> retcode_t;
@@ -18895,7 +18999,6 @@ extern "C" {
     #[doc = " @param ep1_id - The new endpoint ID [in]"]
     #[doc = " @param psks - pre shared keys used for encrypting the session keys [in]"]
     #[doc = " @param ntru_pks - ntru public keys used for encrypting the session keys [in]"]
-    #[doc = " @param msg_type_id - The message type [in]"]
     #[doc = " @param bundle - The bundle that the packet will be written into [out]"]
     #[doc = " @param msg_id - The msg_id (hashed channel_name and message index within the"]
     #[doc = "  channel) embedded into transaction's tag (together with packet index to"]
@@ -18908,7 +19011,6 @@ extern "C" {
         ep1_id: *const tryte_t,
         psks: mam_psk_t_set_t,
         ntru_pks: mam_ntru_pk_t_set_t,
-        msg_type_id: trint9_t,
         bundle: *mut bundle_transactions_t,
         msg_id: *mut trit_t,
     ) -> retcode_t;
@@ -18965,16 +19067,21 @@ extern "C" {
     #[doc = " @param buffer - The buffer to serialize the api into [out]"]
     #[doc = ""]
     #[doc = " @return return void"]
-    pub fn mam_api_serialize(api: *const mam_api_t, buffer: *mut trits_t);
+    pub fn mam_api_serialize(api: *const mam_api_t, buffer: *mut trit_t);
 }
 extern "C" {
     #[doc = " Deserializes a buffer into API struct"]
     #[doc = ""]
     #[doc = " @param buffer - The buffer from where to deserialize [in]"]
+    #[doc = " @param buffer_size - The size of the buffer [in]"]
     #[doc = " @param api - The API [out]"]
     #[doc = ""]
     #[doc = " @return return code"]
-    pub fn mam_api_deserialize(buffer: *mut trits_t, api: *mut mam_api_t) -> retcode_t;
+    pub fn mam_api_deserialize(
+        buffer: *const trit_t,
+        buffer_size: usize,
+        api: *mut mam_api_t,
+    ) -> retcode_t;
 }
 extern "C" {
     #[doc = " Saves an API into a file"]

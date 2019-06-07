@@ -33,10 +33,14 @@ impl Mss {
     /// @param nonce1 [in] first nonce
     /// @param nonce2 [in] second nonce
     ///
-    /// Argument:
-    ///     height: the tree's height
-    ///
-    pub fn new(prng: &mut Prng, height: MssMtHeight, nonce1: Trits, nonce2: Trits) -> MamResult<Self> {
+    pub fn new(
+        prng: &mut Prng,
+        height: MssMtHeight,
+        nonce1: Trits,
+        nonce2: Trits,
+        nonce3: Trits,
+        nonce4: Trits,
+    ) -> MamResult<Self> {
         unsafe {
             let mut c_mss: ffi::mam_mss_t = mem::uninitialized();
             let rc = ffi::mam_mss_create(&mut c_mss, height);
@@ -46,7 +50,15 @@ impl Mss {
                 return Err(MamError::from(rc));
             }
 
-            ffi::mam_mss_init(&mut c_mss, prng.into_raw_mut(), height, nonce1.into_raw(), nonce2.into_raw());
+            ffi::mam_mss_init(
+                &mut c_mss,
+                prng.into_raw_mut(),
+                height,
+                nonce1.into_raw(),
+                nonce2.into_raw(),
+                nonce3.into_raw(),
+                nonce4.into_raw(),
+            );
 
             Ok(Mss { c_mss: c_mss })
         }
@@ -56,9 +68,7 @@ impl Mss {
     /// Generate MSS keys, stores current and next auth_path
     ///
     pub fn gen(&mut self) {
-        unsafe {
-            ffi::mam_mss_gen(&mut self.c_mss)
-        }
+        unsafe { ffi::mam_mss_gen(&mut self.c_mss) }
     }
 
     ///
@@ -67,9 +77,7 @@ impl Mss {
     /// trists_skn [out] encoded height and current private key number
     ///
     pub fn skn(&self, trists_skn: &Trits) {
-        unsafe {
-            ffi::mam_mss_skn(&self.c_mss, trists_skn.into_raw())
-        }
+        unsafe { ffi::mam_mss_skn(&self.c_mss, trists_skn.into_raw()) }
     }
 
     ///
@@ -82,56 +90,49 @@ impl Mss {
     ///  path [out] authentication path
     ///
     pub fn auth_path(&mut self, skn: MssMtIdx, path: Trits) {
-        unsafe {
-            ffi::mam_mss_auth_path(&mut self.c_mss, skn, path.into_raw())
-        }
+        unsafe { ffi::mam_mss_auth_path(&mut self.c_mss, skn, path.into_raw()) }
     }
 
-
-     /// Signs a hash
-     ///
-     /// @param hash [in] the hash to sign on
-     /// @param sig [out] the signature
-     ///
-     pub fn sign(&mut self, hash: &Trits, sig: &Trits) -> MamResult<()> {
-         unsafe {
+    /// Signs a hash
+    ///
+    /// @param hash [in] the hash to sign on
+    /// @param sig [out] the signature
+    ///
+    pub fn sign(&mut self, hash: &Trits, sig: &Trits) -> MamResult<()> {
+        unsafe {
             let rc = ffi::mam_mss_sign(&mut self.c_mss, hash.into_raw(), sig.into_raw());
             if rc != ffi::retcode_t_RC_OK {
-                return Err(MamError::from(rc))
+                return Err(MamError::from(rc));
             }
             Ok(())
-         }
-     }
-     /// Signs a hash and advances skn
-     ///
-     /// @param hash [in] the hash to sign on
-     /// @param sig [out] the signature
-     ///
-     pub fn sign_and_next(&mut self, hash: &Trits, sig: &Trits) -> MamResult<()> {
-         unsafe {
+        }
+    }
+    /// Signs a hash and advances skn
+    ///
+    /// @param hash [in] the hash to sign on
+    /// @param sig [out] the signature
+    ///
+    pub fn sign_and_next(&mut self, hash: &Trits, sig: &Trits) -> MamResult<()> {
+        unsafe {
             let rc = ffi::mam_mss_sign_and_next(&mut self.c_mss, hash.into_raw(), sig.into_raw());
             if rc != ffi::retcode_t_RC_OK {
-                return Err(MamError::from(rc))
+                return Err(MamError::from(rc));
             }
             Ok(())
-         }
-     }
+        }
+    }
 
     /// Advances skn
     ///
     pub fn next(&mut self) -> bool {
-        unsafe {
-            ffi::mam_mss_next(&mut self.c_mss)
-        }
+        unsafe { ffi::mam_mss_next(&mut self.c_mss) }
     }
 
     ///
     /// Returns the number of remaining secret keys (unused leaves on merkle tree)
     ///
     pub fn remaining_sks(&self) -> usize {
-        unsafe {
-            ffi::mam_mss_num_remaining_sks(&self.c_mss)
-        }
+        unsafe { ffi::mam_mss_num_remaining_sks(&self.c_mss) }
     }
 
     ///
@@ -144,7 +145,12 @@ impl Mss {
     ///
     pub fn verify(mt_spongos: &mut Spongos, hash: &Trits, sig: &Trits, pk: Trits) -> bool {
         unsafe {
-            ffi::mam_mss_verify(mt_spongos.into_raw_mut(), hash.into_raw(), sig.into_raw(), pk.into_raw())
+            ffi::mam_mss_verify(
+                mt_spongos.into_raw_mut(),
+                hash.into_raw(),
+                sig.into_raw(),
+                pk.into_raw(),
+            )
         }
     }
 
@@ -152,18 +158,14 @@ impl Mss {
     /// returns The size of a serialized Merkle tree.
     ///
     pub fn serialized_size(&self) -> usize {
-        unsafe {
-            ffi::mam_mss_serialized_size(&self.c_mss)
-        }
+        unsafe { ffi::mam_mss_serialized_size(&self.c_mss) }
     }
 
     ///
     /// Serialize Merkle tree.
     ///
-    pub fn serialize(&mut self, buffer: &Trits) {
-        unsafe {
-            ffi::mam_mss_serialize(&mut self.c_mss, buffer.into_raw())
-        }
+    pub fn serialize(&mut self, buffer: &mut Trits) {
+        unsafe { ffi::mam_mss_serialize(&mut self.c_mss, buffer.into_raw_mut()) }
     }
 
     ///
@@ -173,7 +175,7 @@ impl Mss {
         unsafe {
             let rc = ffi::mam_mss_deserialize(buffer.into_raw_mut(), mss.into_raw_mut());
             if rc != ffi::retcode_t_RC_OK {
-                return Err(MamError::from(rc))
+                return Err(MamError::from(rc));
             }
             Ok(())
         }

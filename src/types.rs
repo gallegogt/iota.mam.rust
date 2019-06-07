@@ -23,4 +23,4 @@ pub type Byte = ffi::byte;
 ///
 /// Trit
 ///
-pub type Trit = ffi::trit_t;
+pub type Trit = i8;

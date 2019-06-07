@@ -1,10 +1,10 @@
+use crate::constants::ENDPOINT_ID_SIZE;
 use crate::errors::{MamError, MamResult};
 use crate::mss::MssMtHeight;
 use crate::prng::Prng;
 use crate::trits::Trits;
 use ffi;
 use std::mem;
-
 ///
 /// MAM Endpoint
 ///
@@ -20,6 +20,7 @@ impl Endpoint {
     /// @param allocator A MAM allocator
     /// @param prng A shared PRNG interface used to generate WOTS private keys
     /// @param height MSS MT height
+    /// @param channel_name_size The channel name size
     /// @param channel_name The channel name
     /// @param endpoint_name The endpoint name
     /// @param endpoint The endpoint
@@ -27,6 +28,7 @@ impl Endpoint {
     pub fn new(
         prng: &mut Prng,
         height: MssMtHeight,
+        channel_name_size: Trits,
         channel_name: Trits,
         endpoint_name: Trits,
     ) -> MamResult<Endpoint> {
@@ -35,6 +37,7 @@ impl Endpoint {
             let rc = ffi::mam_endpoint_create(
                 prng.into_raw_mut(),
                 height,
+                channel_name_size.into_raw(),
                 channel_name.into_raw(),
                 endpoint_name.into_raw(),
                 &mut c_endpoint,
@@ -54,32 +57,23 @@ impl Endpoint {
     ///  Gets an endpoint's id
     ///
     pub fn id(&self) -> Trits {
-        unsafe {
-            Trits {
-                c_trits: ffi::mam_endpoint_id(&self.c_endpoint),
-            }
-        }
+        Trits::from((ENDPOINT_ID_SIZE, self.c_endpoint.mss.root.as_ptr()))
     }
 
     ///
     /// Gets an endpoint channel's name
     ///
-    pub fn channel_name(&self) -> Trits {
-        unsafe {
-            Trits {
-                c_trits: ffi::mam_endpoint_channel_name(&self.c_endpoint),
-            }
+    pub fn name(&self) -> Trits {
+        Trits {
+            c_trits: self.c_endpoint.name,
         }
     }
-
     ///
-    ///  Gets an endpoint's name
+    /// Gets an endpoint's name size
     ///
-    pub fn name(&self) -> Trits {
-        unsafe {
-            Trits {
-                c_trits: ffi::mam_endpoint_name(&self.c_endpoint),
-            }
+    pub fn name_size(&self) -> Trits {
+        Trits {
+            c_trits: self.c_endpoint.name_size,
         }
     }
 

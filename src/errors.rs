@@ -1,22 +1,20 @@
 use std::convert::From;
 use std::error;
+use std::ffi::CStr;
 use std::fmt;
 use std::io;
-use std::str::Utf8Error;
 use std::str;
-use std::ffi::CStr;
+use std::str::Utf8Error;
 // use std::os::raw::c_char;
 
 use ffi;
 
 // Gets the string associated with the error code from the C lib.
-pub (crate) fn error_message<'a>(rc: ffi::retcode_t) -> String {
+pub(crate) fn error_message<'a>(rc: ffi::retcode_t) -> String {
     unsafe {
-        CStr::from_ptr(
-            ffi::error_2_string(rc)
-        )
-        .to_string_lossy()
-        .to_string()
+        CStr::from_ptr(ffi::error_2_string(rc))
+            .to_string_lossy()
+            .to_string()
     }
 }
 
@@ -66,9 +64,7 @@ impl From<ffi::retcode_t> for MamError {
     /// Create an MamError from a ffi::retcode_t error
     fn from(rc: ffi::retcode_t) -> MamError {
         MamError {
-            repr: ErrorRepr::WithDescription(
-                ErrorKind::General, rc as i32, error_message(rc)
-            ),
+            repr: ErrorRepr::WithDescription(ErrorKind::General, rc as i32, error_message(rc)),
         }
     }
 }
@@ -98,7 +94,8 @@ impl From<(ErrorKind, &'static str, String)> for MamError {
 }
 
 impl<S> From<(ErrorKind, i32, &'static str, S)> for MamError
-    where S: Into<String>,
+where
+    S: Into<String>,
 {
     fn from((kind, err, desc, detail): (ErrorKind, i32, &'static str, S)) -> MamError {
         MamError {
@@ -113,9 +110,7 @@ impl error::Error for MamError {
     /// This should not contain newlines or explicit formatting.
     fn description(&self) -> &str {
         match self.repr {
-            ErrorRepr::WithDescription(_, _, ref desc) => {
-                desc.as_str()
-            },
+            ErrorRepr::WithDescription(_, _, ref desc) => desc.as_str(),
             ErrorRepr::WithDescriptionAndDetail(_, _, desc, _) => desc,
             ErrorRepr::IoError(ref err) => err.description(),
         }
@@ -132,7 +127,7 @@ impl error::Error for MamError {
 
 impl fmt::Display for MamError {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-         match &self.repr {
+        match &self.repr {
             ErrorRepr::WithDescription(_, _err, desc) => desc.fmt(f),
             ErrorRepr::WithDescriptionAndDetail(_, _, desc, ref detail) => {
                 desc.fmt(f)?;
@@ -144,18 +139,14 @@ impl fmt::Display for MamError {
     }
 }
 
-
 impl fmt::Debug for MamError {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         fmt::Display::fmt(self, f)
     }
 }
 
-
 /// Generic result for the entire public API
 pub type MamResult<T> = Result<T, MamError>;
-
-
 
 #[cfg(test)]
 mod tests {

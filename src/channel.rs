@@ -1,3 +1,4 @@
+use crate::constants::{CHANNEL_ID_SIZE, CHANNEL_MSG_ORD_SIZE};
 use crate::errors::{MamError, MamResult};
 use crate::mss::MssMtHeight;
 use crate::prng::Prng;
@@ -41,21 +42,24 @@ impl Channel {
     /// Gets a channel's id
     ///
     pub fn id(&mut self) -> Trits {
-        unsafe {
-            Trits {
-                c_trits: ffi::mam_channel_id(&mut self.c_channel),
-            }
-        }
+        Trits::from((CHANNEL_ID_SIZE, self.c_channel.mss.root.as_ptr()))
     }
 
     ///
     /// Gets a channel's name
     ///
-    pub fn name(&mut self) -> Trits {
-        unsafe {
-            Trits {
-                c_trits: ffi::mam_channel_name(&mut self.c_channel),
-            }
+    pub fn name(&self) -> Trits {
+        Trits {
+            c_trits: self.c_channel.name,
+        }
+    }
+
+    ///
+    /// Gets a channel's name size
+    ///
+    pub fn name_size(&self) -> Trits {
+        Trits {
+            c_trits: self.c_channel.name_size,
         }
     }
 
@@ -63,11 +67,7 @@ impl Channel {
     /// Gets a channel's msg_ord
     ///
     pub fn msg_ord(&mut self) -> Trits {
-        unsafe {
-            Trits {
-                c_trits: ffi::mam_channel_msg_ord(&mut self.c_channel),
-            }
-        }
+        Trits::from((CHANNEL_MSG_ORD_SIZE, self.c_channel.msg_ord.as_ptr()))
     }
 
     ///

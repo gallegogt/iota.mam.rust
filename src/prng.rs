@@ -1,5 +1,6 @@
 use crate::errors::{MamError, MamResult};
 use crate::trits::Trits;
+
 use ffi;
 
 ///
@@ -67,6 +68,49 @@ impl Prng {
     /// @param[in] nonce1 The first nonce
     /// @param[in] nonce2 The second nonce
     /// @param[in] nonce3 The third nonce
+    /// @param[in] nonce4 The fourth nonce
+    /// @param[in] nonce5 The fifth nonce
+    /// @param[out] output The pseudo random trits
+    ///
+    /// @return a status code
+    ///
+    pub fn gen5(
+        &self,
+        destination: PrngDst,
+        nonce1: &Trits,
+        nonce2: &Trits,
+        nonce3: &Trits,
+        nonce4: &Trits,
+        nonce5: &Trits,
+        output: &Trits,
+    ) -> MamResult<()> {
+        unsafe {
+            let rc = ffi::mam_prng_gen5(
+                &self.c_prng,
+                destination as u32,
+                nonce1.into_raw(),
+                nonce2.into_raw(),
+                nonce3.into_raw(),
+                nonce4.into_raw(),
+                nonce5.into_raw(),
+                output.into_raw(),
+            );
+
+            if rc != ffi::retcode_t_RC_OK {
+                return Err(MamError::from(rc));
+            }
+
+            Ok(())
+        }
+    }
+    ///
+    /// @brief Generates pseudo random trits with three nonces
+    ///
+    /// @param[in] prng A PRNG
+    /// @param[in] destination A destination tryte
+    /// @param[in] nonce1 The first nonce
+    /// @param[in] nonce2 The second nonce
+    /// @param[in] nonce3 The third nonce
     /// @param[out] output The pseudo random trits
     ///
     /// @return a status code
@@ -79,22 +123,15 @@ impl Prng {
         nonce3: &Trits,
         output: &Trits,
     ) -> MamResult<()> {
-        unsafe {
-            let rc = ffi::mam_prng_gen3(
-                &self.c_prng,
-                destination as u32,
-                nonce1.into_raw(),
-                nonce2.into_raw(),
-                nonce3.into_raw(),
-                output.into_raw(),
-            );
-
-            if rc != ffi::retcode_t_RC_OK {
-                return Err(MamError::from(rc));
-            }
-
-            Ok(())
-        }
+        self.gen5(
+            destination,
+            nonce1,
+            nonce2,
+            nonce3,
+            &Trits::null(),
+            &Trits::null(),
+            output,
+        )
     }
 
     ///
@@ -106,7 +143,15 @@ impl Prng {
     /// @param output Pseudorandom output trits
     ///
     pub fn gen(&self, destination: PrngDst, nonce: &Trits, output: &Trits) -> MamResult<()> {
-        self.gen3(destination, nonce, &Trits::null(), &Trits::null(), output)
+        self.gen5(
+            destination,
+            nonce,
+            &Trits::null(),
+            &Trits::null(),
+            &Trits::null(),
+            &Trits::null(),
+            output,
+        )
     }
 
     ///
@@ -127,7 +172,15 @@ impl Prng {
         nonce2: &Trits,
         output: &Trits,
     ) -> MamResult<()> {
-        self.gen3(destination, nonce1, nonce2, &Trits::null(), output)
+        self.gen5(
+            destination,
+            nonce1,
+            nonce2,
+            &Trits::null(),
+            &Trits::null(),
+            &Trits::null(),
+            output,
+        )
     }
 
     ///
@@ -190,11 +243,12 @@ impl Prng {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::constants::PRNG_SECRET_KEY_SIZE;
     use std::error::Error;
 
     #[test]
     fn check_new_mam_prng() {
-        let mut key = Trits::new(ffi::MAM_PRNG_SECRET_KEY_SIZE as usize);
+        let mut key = Trits::new(PRNG_SECRET_KEY_SIZE);
         key.set_zero();
         key.from_str(
             "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM",

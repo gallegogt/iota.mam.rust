@@ -127,7 +127,7 @@ mod build {
             "mam/pb3:all",
             "mam/psk:all",
             "mam/troika:all",
-            // "mam/wots:all",
+            "mam/wots:all",
 
         ]
     }

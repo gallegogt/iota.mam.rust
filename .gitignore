@@ -180,3 +180,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/c,c++,rust,macos,linux,bazel,windows,visualstudiocode
+
+mam-api.bin

@@ -142,7 +142,7 @@ impl Api {
     pub fn create_endpoint(
         &mut self,
         height: usize,
-        channel_id: &[Tryte],
+        channel_id: [Tryte; CHANNEL_ID_SIZE],
     ) -> MamResult<[Tryte; ENDPOINT_ID_SIZE]> {
         unsafe {
             let mut endpoint_id: [Tryte; ENDPOINT_ID_SIZE] = [9; ENDPOINT_ID_SIZE];
@@ -152,7 +152,6 @@ impl Api {
                 channel_id.as_ptr(),
                 endpoint_id.as_mut_ptr(),
             );
-
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
             }
@@ -519,6 +518,7 @@ impl Drop for Api {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::error::Error;
 
     const API_SEED: &'static str =
         "APISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPI9";
@@ -529,10 +529,73 @@ mod tests {
         let api = Api::new(&s);
 
         match api {
-            Ok(_) => assert!(true, true),
+            Ok(_) => assert_eq!(true, true),
             Err(e) => {
                 println!("Error: {}", e);
-                assert!(true, true)
+                assert_eq!(false, true)
+            }
+        }
+    }
+
+    #[test]
+    fn check_save_load_wrong_key() {
+        let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let api = Api::new(&s).unwrap();
+        let eck_trytes = "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
+        let encryption_key_trytes = eck_trytes.chars().map(|c| c as i8).collect::<Vec<i8>>();
+
+        let result = api.save("mam-api.bin", &encryption_key_trytes, encryption_key_trytes.len());
+        match result {
+            Ok(_) => assert_eq!(true, true),
+            Err(e) => {
+                println!("Error: {}", e);
+                assert_eq!(true, false)
+            }
+        }
+
+        let dck_trytes = "MOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
+        let decryption_key_trytes = dck_trytes.chars().map(|c| c as i8).collect::<Vec<i8>>();
+
+        let n_api = Api::load("mam-api.bin", &decryption_key_trytes, encryption_key_trytes.len());
+        match n_api {
+            Ok(_) => assert_eq!(true, false),
+            Err(e) => {
+                println!("Error: {}", e);
+                assert_eq!(true, true);
+            }
+        }
+    }
+
+    #[test]
+    fn check_api_create_channels() {
+        let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let mut api = Api::new(&s).unwrap();
+        let depth = 6;
+        let channel_trytes = api.create_channel(depth);
+        match channel_trytes {
+            Ok(channel_id) => {
+                assert!(true, true);
+                match api.create_endpoint(depth, channel_id) {
+                    Ok(_) => {
+                        assert_eq!(true, true);
+                    },
+                    Err(e) => {
+                        assert_eq!(true, false, "{}", e.description());
+                    }
+                }
+
+                match api.create_endpoint(depth, channel_id) {
+                    Ok(_) => {
+                        assert_eq!(true, true);
+                    },
+                    Err(e) => {
+                        assert_eq!(true, false, "{}", e.description());
+                    }
+                }
+            }
+            Err(e) => {
+                println!("+++ Error => {}", e);
+                assert!(true, false);
             }
         }
     }

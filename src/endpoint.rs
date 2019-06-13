@@ -76,13 +76,6 @@ impl Endpoint {
             c_trits: self.c_endpoint.name_size,
         }
     }
-
-    ///
-    /// Returns the number of remaining secret keys (unused leaves on merkle tree)
-    ///
-    pub fn num_remaining_sks(&self) -> usize {
-        unsafe { ffi::mam_endpoint_num_remaining_sks(&self.c_endpoint) }
-    }
 }
 
 impl Drop for Endpoint {

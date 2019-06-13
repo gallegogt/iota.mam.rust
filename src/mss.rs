@@ -129,13 +129,6 @@ impl Mss {
     }
 
     ///
-    /// Returns the number of remaining secret keys (unused leaves on merkle tree)
-    ///
-    pub fn remaining_sks(&self) -> usize {
-        unsafe { ffi::mam_mss_num_remaining_sks(&self.c_mss) }
-    }
-
-    ///
     /// Verifies MSS signature.
     ///
     /// mt_spongos [in] Spongos interface to hash Merkle Tree

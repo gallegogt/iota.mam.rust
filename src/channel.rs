@@ -69,13 +69,6 @@ impl Channel {
     pub fn msg_ord(&mut self) -> Trits {
         Trits::from((CHANNEL_MSG_ORD_SIZE, self.c_channel.msg_ord.as_ptr()))
     }
-
-    ///
-    /// Returns the number of remaining secret keys (unused leaves on merkle tree)
-    ///
-    pub fn num_remaining_sks(&mut self) -> usize {
-        unsafe { ffi::mam_channel_num_remaining_sks(&mut self.c_channel) }
-    }
 }
 
 impl Drop for Channel {

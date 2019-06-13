@@ -120,16 +120,40 @@ impl Api {
     ///
     /// height - The channel's MSS height [in]
     ///
-    pub fn create_channel(&mut self, height: usize) -> MamResult<[Tryte; CHANNEL_ID_SIZE]> {
+    pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; CHANNEL_ID_SIZE]> {
         unsafe {
-            let mut channel_id: [Tryte; CHANNEL_ID_SIZE] = [9; CHANNEL_ID_SIZE];
-            let rc = ffi::mam_api_create_channel(&mut self.c_api, height, channel_id.as_mut_ptr());
-
+            let mut channel_id: [Tryte; CHANNEL_ID_SIZE] = [-1; CHANNEL_ID_SIZE];
+            let rc = ffi::mam_api_channel_create(&mut self.c_api, height, channel_id.as_mut_ptr());
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
             }
-
             Ok(channel_id)
+        }
+    }
+
+    ///
+    /// Returns the number of remaining secret keys of a channel
+    ///
+    /// api - The API
+    /// channel_id - The channel id
+    ///
+    pub fn channel_remaining_sks(&mut self, channel_id: &[Tryte]) -> usize {
+        unsafe { ffi::mam_api_channel_remaining_sks(&mut self.c_api, channel_id.as_ptr()) }
+    }
+    ///
+    /// Returns the number of remaining secret keys of an endpoint
+    ///
+    /// api - The API
+    /// channel_id - The associated channel id
+    /// endpoint_id - The endpoint id
+    ///
+    pub fn endpoint_remaining_sks(&mut self, channel_id: &[Tryte], endpoint_id: &[Tryte]) -> usize {
+        unsafe {
+            ffi::mam_api_endpoint_remaining_sks(
+                &mut self.c_api,
+                channel_id.as_ptr(),
+                endpoint_id.as_ptr(),
+            )
         }
     }
 
@@ -142,11 +166,11 @@ impl Api {
     pub fn create_endpoint(
         &mut self,
         height: usize,
-        channel_id: [Tryte; CHANNEL_ID_SIZE],
+        channel_id: &[Tryte],
     ) -> MamResult<[Tryte; ENDPOINT_ID_SIZE]> {
         unsafe {
             let mut endpoint_id: [Tryte; ENDPOINT_ID_SIZE] = [9; ENDPOINT_ID_SIZE];
-            let rc = ffi::mam_api_create_endpoint(
+            let rc = ffi::mam_api_endpoint_create(
                 &mut self.c_api,
                 height,
                 channel_id.as_ptr(),
@@ -268,7 +292,7 @@ impl Api {
         msg_id: &mut Trit,
     ) -> MamResult<()> {
         unsafe {
-            let rc = ffi::mam_api_bundle_announce_new_channel(
+            let rc = ffi::mam_api_bundle_announce_channel(
                 &mut self.c_api,
                 ch_id.as_ptr(),
                 ch1_id.as_ptr(),
@@ -307,7 +331,7 @@ impl Api {
         msg_id: &mut Trit,
     ) -> MamResult<()> {
         unsafe {
-            let rc = ffi::mam_api_bundle_announce_new_endpoint(
+            let rc = ffi::mam_api_bundle_announce_endpoint(
                 &mut self.c_api,
                 ch_id.as_ptr(),
                 ep1_id.as_ptr(),
@@ -541,10 +565,15 @@ mod tests {
     fn check_save_load_wrong_key() {
         let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
         let api = Api::new(&s).unwrap();
-        let eck_trytes = "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
+        let eck_trytes =
+            "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
         let encryption_key_trytes = eck_trytes.chars().map(|c| c as i8).collect::<Vec<i8>>();
 
-        let result = api.save("mam-api.bin", &encryption_key_trytes, encryption_key_trytes.len());
+        let result = api.save(
+            "mam-api.bin",
+            &encryption_key_trytes,
+            encryption_key_trytes.len(),
+        );
         match result {
             Ok(_) => assert_eq!(true, true),
             Err(e) => {
@@ -553,10 +582,15 @@ mod tests {
             }
         }
 
-        let dck_trytes = "MOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
+        let dck_trytes =
+            "MOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
         let decryption_key_trytes = dck_trytes.chars().map(|c| c as i8).collect::<Vec<i8>>();
 
-        let n_api = Api::load("mam-api.bin", &decryption_key_trytes, encryption_key_trytes.len());
+        let n_api = Api::load(
+            "mam-api.bin",
+            &decryption_key_trytes,
+            encryption_key_trytes.len(),
+        );
         match n_api {
             Ok(_) => assert_eq!(true, false),
             Err(e) => {
@@ -567,18 +601,41 @@ mod tests {
     }
 
     #[test]
-    fn check_api_create_channels() {
+    fn check_api_channels() {
         let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        println!("{} {}", API_SEED.len(), s.len());
+
         let mut api = Api::new(&s).unwrap();
         let depth = 6;
-        let channel_trytes = api.create_channel(depth);
+        let channel_trytes = api.channel_create(depth);
         match channel_trytes {
-            Ok(channel_id) => {
+            Ok(ref channel_id) => {
                 assert!(true, true);
+
+                let rf_ci = channel_id
+                    .iter()
+                    .filter(| &&v | { v != -1 })
+                    .map(|&v| v );
+
+                let rid = rf_ci.collect::<Vec<_>>();
+
+                let v = api.channel_remaining_sks(&rid);
+
+                println!(
+                    "{} {:?}",
+                    channel_id.len(),
+                    channel_id
+                        .into_iter()
+                        .filter(move |&v| { *v != -1 })
+                        .collect::<Vec<_>>()
+                        .len()
+                );
+                assert_eq!(v as u32, (1_u32 << (depth as u32)) - 1);
+
                 match api.create_endpoint(depth, channel_id) {
                     Ok(_) => {
                         assert_eq!(true, true);
-                    },
+                    }
                     Err(e) => {
                         assert_eq!(true, false, "{}", e.description());
                     }
@@ -587,7 +644,7 @@ mod tests {
                 match api.create_endpoint(depth, channel_id) {
                     Ok(_) => {
                         assert_eq!(true, true);
-                    },
+                    }
                     Err(e) => {
                         assert_eq!(true, false, "{}", e.description());
                     }

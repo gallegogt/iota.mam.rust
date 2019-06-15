@@ -1,5 +1,4 @@
-use crate::constants::CHANNEL_ID_SIZE;
-use crate::constants::ENDPOINT_ID_SIZE;
+use crate::constants::{TRYTE_CHANNEL_ID_SIZE, TRYTE_ENDPOINT_ID_SIZE};
 use crate::errors::{MamError, MamResult};
 use crate::psk::{Psk, PskSet};
 use crate::types::{Trint18, Trit, Tryte};
@@ -120,9 +119,9 @@ impl Api {
     ///
     /// height - The channel's MSS height [in]
     ///
-    pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; CHANNEL_ID_SIZE]> {
+    pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; TRYTE_CHANNEL_ID_SIZE]> {
         unsafe {
-            let mut channel_id: [Tryte; CHANNEL_ID_SIZE] = [9; CHANNEL_ID_SIZE];
+            let mut channel_id: [Tryte; TRYTE_CHANNEL_ID_SIZE] = [57 ; TRYTE_CHANNEL_ID_SIZE];
             let rc = ffi::mam_api_channel_create(&mut self.c_api, height, channel_id.as_mut_ptr());
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
@@ -167,9 +166,9 @@ impl Api {
         &mut self,
         height: usize,
         channel_id: &[Tryte],
-    ) -> MamResult<[Tryte; ENDPOINT_ID_SIZE]> {
+    ) -> MamResult<[Tryte; TRYTE_ENDPOINT_ID_SIZE]> {
         unsafe {
-            let mut endpoint_id: [Tryte; ENDPOINT_ID_SIZE] = [9; ENDPOINT_ID_SIZE];
+            let mut endpoint_id: [Tryte; TRYTE_ENDPOINT_ID_SIZE] = [57; TRYTE_ENDPOINT_ID_SIZE];
             let rc = ffi::mam_api_endpoint_create(
                 &mut self.c_api,
                 height,
@@ -601,24 +600,15 @@ mod tests {
     }
 
     #[test]
-    fn check_api_channels() {
+    fn check_api_create_channels() {
         let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
-        println!("{} {}", API_SEED.len(), s.len());
-
         let mut api = Api::new(&s).unwrap();
         let depth = 6;
         let channel_trytes = api.channel_create(depth);
         match channel_trytes {
             Ok(ref channel_id) => {
-                assert!(true, true);
                 let v = api.channel_remaining_sks(channel_id);
-
-                println!(
-                    "{} {:?}",
-                    channel_id.len(),
-                    channel_id.to_vec()
-                );
-                assert_eq!(v as u32, (1_u32 << (depth as u32)) - 1);
+                assert_eq!(v, 64);
 
                 match api.create_endpoint(depth, channel_id) {
                     Ok(_) => {

@@ -122,7 +122,7 @@ impl Api {
     ///
     pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; CHANNEL_ID_SIZE]> {
         unsafe {
-            let mut channel_id: [Tryte; CHANNEL_ID_SIZE] = [-1; CHANNEL_ID_SIZE];
+            let mut channel_id: [Tryte; CHANNEL_ID_SIZE] = [9; CHANNEL_ID_SIZE];
             let rc = ffi::mam_api_channel_create(&mut self.c_api, height, channel_id.as_mut_ptr());
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
@@ -611,24 +611,12 @@ mod tests {
         match channel_trytes {
             Ok(ref channel_id) => {
                 assert!(true, true);
-
-                let rf_ci = channel_id
-                    .iter()
-                    .filter(| &&v | { v != -1 })
-                    .map(|&v| v );
-
-                let rid = rf_ci.collect::<Vec<_>>();
-
-                let v = api.channel_remaining_sks(&rid);
+                let v = api.channel_remaining_sks(channel_id);
 
                 println!(
                     "{} {:?}",
                     channel_id.len(),
-                    channel_id
-                        .into_iter()
-                        .filter(move |&v| { *v != -1 })
-                        .collect::<Vec<_>>()
-                        .len()
+                    channel_id.to_vec()
                 );
                 assert_eq!(v as u32, (1_u32 << (depth as u32)) - 1);
 

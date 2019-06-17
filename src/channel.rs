@@ -1,4 +1,4 @@
-use crate::constants::{CHANNEL_ID_SIZE, CHANNEL_MSG_ORD_SIZE};
+use crate::constants::{CHANNEL_ID_TRIT_SIZE, CHANNEL_MSG_ORD_SIZE};
 use crate::errors::{MamError, MamResult};
 use crate::mss::MssMtHeight;
 use crate::prng::Prng;
@@ -42,7 +42,7 @@ impl Channel {
     /// Gets a channel's id
     ///
     pub fn id(&mut self) -> Trits {
-        Trits::from((CHANNEL_ID_SIZE, self.c_channel.mss.root.as_ptr()))
+        Trits::from((CHANNEL_ID_TRIT_SIZE, self.c_channel.mss.root.as_ptr()))
     }
 
     ///

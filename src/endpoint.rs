@@ -1,4 +1,4 @@
-use crate::constants::ENDPOINT_ID_SIZE;
+use crate::constants::ENDPOINT_ID_TRIT_SIZE;
 use crate::errors::{MamError, MamResult};
 use crate::mss::MssMtHeight;
 use crate::prng::Prng;
@@ -57,7 +57,7 @@ impl Endpoint {
     ///  Gets an endpoint's id
     ///
     pub fn id(&self) -> Trits {
-        Trits::from((ENDPOINT_ID_SIZE, self.c_endpoint.mss.root.as_ptr()))
+        Trits::from((ENDPOINT_ID_TRIT_SIZE, self.c_endpoint.mss.root.as_ptr()))
     }
 
     ///

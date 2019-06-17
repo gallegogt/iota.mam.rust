@@ -1,4 +1,4 @@
-use crate::constants::{TRYTE_CHANNEL_ID_SIZE, TRYTE_ENDPOINT_ID_SIZE};
+use crate::constants::{CHANNEL_ID_TRYTE_SIZE, ENDPOINT_ID_TRYTE_SIZE};
 use crate::errors::{MamError, MamResult};
 use crate::psk::{Psk, PskSet};
 use crate::types::{Trint18, Trit, Tryte};
@@ -119,9 +119,9 @@ impl Api {
     ///
     /// height - The channel's MSS height [in]
     ///
-    pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; TRYTE_CHANNEL_ID_SIZE]> {
+    pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; CHANNEL_ID_TRYTE_SIZE]> {
         unsafe {
-            let mut channel_id: [Tryte; TRYTE_CHANNEL_ID_SIZE] = [57 ; TRYTE_CHANNEL_ID_SIZE];
+            let mut channel_id: [Tryte; CHANNEL_ID_TRYTE_SIZE] = [57 ; CHANNEL_ID_TRYTE_SIZE];
             let rc = ffi::mam_api_channel_create(&mut self.c_api, height, channel_id.as_mut_ptr());
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
@@ -166,9 +166,9 @@ impl Api {
         &mut self,
         height: usize,
         channel_id: &[Tryte],
-    ) -> MamResult<[Tryte; TRYTE_ENDPOINT_ID_SIZE]> {
+    ) -> MamResult<[Tryte; ENDPOINT_ID_TRYTE_SIZE]> {
         unsafe {
-            let mut endpoint_id: [Tryte; TRYTE_ENDPOINT_ID_SIZE] = [57; TRYTE_ENDPOINT_ID_SIZE];
+            let mut endpoint_id: [Tryte; ENDPOINT_ID_TRYTE_SIZE] = [57; ENDPOINT_ID_TRYTE_SIZE];
             let rc = ffi::mam_api_endpoint_create(
                 &mut self.c_api,
                 height,

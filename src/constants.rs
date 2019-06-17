@@ -55,14 +55,14 @@ pub const MIN_TRYTE_VALUE: i8 = -13;
 pub const MAX_TRYTE_VALUE: i8 = 13;
 
 // Channel Constants
-pub const CHANNEL_ID_SIZE: usize = ffi::MAM_CHANNEL_ID_SIZE as usize;
-pub const TRYTE_CHANNEL_ID_SIZE: usize = (ffi::MAM_CHANNEL_ID_SIZE as usize) / 3;
+pub const CHANNEL_ID_TRYTE_SIZE: usize = ffi::MAM_CHANNEL_ID_TRYTE_SIZE as usize;
+pub const CHANNEL_ID_TRIT_SIZE: usize = ffi::MAM_CHANNEL_ID_TRIT_SIZE as usize;
 pub const CHANNEL_NAME_SIZE: usize = ffi::MAM_CHANNEL_NAME_SIZE as usize;
 pub const CHANNEL_MSG_ORD_SIZE: usize = ffi::MAM_CHANNEL_MSG_ORD_SIZE as usize;
 
 // Endpoint Constants
-pub const ENDPOINT_ID_SIZE: usize = ffi::MAM_ENDPOINT_ID_SIZE as usize;
-pub const TRYTE_ENDPOINT_ID_SIZE: usize = (ffi::MAM_ENDPOINT_ID_SIZE as usize) / 3;
+pub const ENDPOINT_ID_TRYTE_SIZE: usize = ffi::MAM_ENDPOINT_ID_TRYTE_SIZE as usize;
+pub const ENDPOINT_ID_TRIT_SIZE: usize = ffi::MAM_ENDPOINT_ID_TRIT_SIZE as usize;
 pub const ENDPOINT_NAME_SIZE: usize = ffi::MAM_ENDPOINT_NAME_SIZE as usize;
 
 // PRNG Constants

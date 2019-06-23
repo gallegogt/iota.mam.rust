@@ -67,3 +67,11 @@ pub const ENDPOINT_NAME_SIZE: usize = ffi::MAM_ENDPOINT_NAME_SIZE as usize;
 
 // PRNG Constants
 pub const PRNG_SECRET_KEY_SIZE: usize = ffi::MAM_PRNG_SECRET_KEY_SIZE as usize;
+
+// Message Constants
+pub const MAM_MSG_ID_SIZE: usize = ffi::MAM_MSG_ID_SIZE as usize;
+pub const MAM_MSG_ORD_SIZE: usize = ffi::MAM_MSG_ORD_SIZE as usize;
+
+// NTRU
+pub const MAM_NTRU_ID_SIZE: usize = ffi::MAM_NTRU_ID_SIZE as usize;
+pub const MAM_NTRU_PK_SIZE: usize = ffi::MAM_NTRU_PK_SIZE as usize;

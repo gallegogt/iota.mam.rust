@@ -114,7 +114,8 @@ mod build {
             "utils:memset_safe",
             // "common/crypto/iss:all",
             // "common/crypto/kerl:all",
-            // "common/model:all",
+            "common/model:all",
+            "utils:all",
             // "common/helpers:all",
             "common/trinary:all",
             "mam/sponge:all",
@@ -206,6 +207,8 @@ mod build {
                 "entangled/bazel-bin/mam/**/*.a",
                 "entangled/bazel-bin/common/crypto/ftroika/**/*.a",
                 "entangled/bazel-bin/common/*.a",
+                "entangled/bazel-bin/common/model/*.a",
+                "entangled/bazel-bin/utils/*.a",
                 "entangled/bazel-bin/common/trinary/*.a",
                 "entangled/bazel-bin/utils/*.a",
             ]

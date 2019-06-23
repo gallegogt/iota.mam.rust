@@ -1,5 +1,6 @@
 use crate::constants::TRYTE_ALPHABET;
 use crate::converter::{ConverterErrorKind, ConverterResult};
+use crate::types::Tryte;
 
 ///
 /// Converts an ascii encoded string to trytes.
@@ -48,6 +49,16 @@ pub fn trytes_to_ascii<'a>(trytes: &'a str) -> ConverterResult<String> {
     }
 
     Ok(ascii)
+}
+
+///
+/// Converts an ASCII Trytes string in Vec Trytes
+///
+pub fn ascii_trytes_to_trytes<'a>(ascii_trytes: &'a str) -> Vec<Tryte> {
+    ascii_trytes
+        .chars()
+        .map(|c| c as Tryte)
+        .collect::<Vec<i8>>()
 }
 
 #[cfg(test)]

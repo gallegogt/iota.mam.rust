@@ -240,6 +240,15 @@ impl Prng {
     }
 }
 
+impl From<ffi::mam_prng_t> for Prng {
+    ///
+    /// prng
+    ///
+    fn from(prng: ffi::mam_prng_t) -> Prng {
+        Prng { c_prng: prng }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

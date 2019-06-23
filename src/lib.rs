@@ -4,20 +4,20 @@ extern crate libc;
 
 extern crate iota_mam_sys as ffi;
 
+mod api;
+mod bundle;
 mod channel;
+mod constants;
+pub mod converter;
 mod endpoint;
 mod errors;
 mod mss;
+mod ntru;
 mod prng;
+mod psk;
 mod spongos;
 mod trits;
-// mod message;
-mod api;
-mod constants;
-mod psk;
 mod types;
-// mod ntru;
-pub mod converter;
 
 pub use channel::*;
 pub use endpoint::*;
@@ -28,10 +28,11 @@ pub use spongos::*;
 pub use trits::*;
 // pub use message::*;
 pub use api::*;
+pub use bundle::*;
 pub use constants::*;
+pub use ntru::*;
 pub use psk::*;
 pub use types::*;
-// pub use ntru::*;
 
 #[cfg(test)]
 mod tests {

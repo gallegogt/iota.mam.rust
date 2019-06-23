@@ -1,10 +1,9 @@
 use crate::errors::{MamError, MamResult};
-use crate::prng::Prng;
 use crate::trits::Trits;
 use crate::Tryte;
-
 use ffi;
 use std::mem;
+use std::ptr;
 
 ///
 /// MAM Psk
@@ -16,6 +15,17 @@ pub struct Psk {
 
 impl Psk {
     ///
+    /// Create new instance for NtruSk, uninitialized
+    ///
+    pub fn new() -> Self {
+        unsafe {
+            Psk {
+                c_psk: mem::uninitialized(),
+            }
+        }
+    }
+
+    ///
     /// Generates a pre-shared key with an id and a nonce
     ///
     /// [in] prng A PRNG
@@ -23,10 +33,15 @@ impl Psk {
     /// [in] nonce A trytes nonce
     /// [in] nonce_length Length of the trytes nonce
     ///
-    pub fn gen(prng: &Prng, id: &Tryte, nonce: &Tryte, nonce_length: usize) -> MamResult<Psk> {
+    pub fn gen(
+        prng: &ffi::mam_prng_t,
+        id: &[Tryte],
+        nonce: &[Tryte],
+        nonce_length: usize,
+    ) -> MamResult<Psk> {
         unsafe {
             let mut pks: ffi::mam_psk_t = mem::uninitialized();
-            let rc = ffi::mam_psk_gen(&mut pks, &prng.into_raw(), id, nonce, nonce_length);
+            let rc = ffi::mam_psk_gen(&mut pks, prng, id.as_ptr(), nonce.as_ptr(), nonce_length);
 
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
@@ -76,6 +91,14 @@ pub struct PskSet {
 
 impl PskSet {
     ///
+    /// Initialize
+    ///
+    pub fn new() -> Self {
+        PskSet {
+            c_psk_set: ptr::null_mut(),
+        }
+    }
+    ///
     /// Gets the size of a serialized set of pre-shared keys
     ///
     pub fn serialized_size(&self) -> usize {
@@ -121,6 +144,21 @@ impl PskSet {
             }
 
             Ok(PskSet { c_psk_set: psks })
+        }
+    }
+
+    ///
+    /// Add PKS
+    ///
+    pub fn add(&mut self, value: &Psk) -> MamResult<()> {
+        unsafe {
+            let rc = ffi::mam_psk_t_set_add(&mut self.c_psk_set, value.into_raw());
+
+            if rc != ffi::retcode_t_RC_OK {
+                return Err(MamError::from(rc));
+            }
+
+            Ok(())
         }
     }
 }

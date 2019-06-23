@@ -1,7 +1,12 @@
+use crate::bundle::BundleTransactions;
 use crate::constants::{CHANNEL_ID_TRYTE_SIZE, ENDPOINT_ID_TRYTE_SIZE};
+use crate::converter::ascii_trytes_to_trytes;
 use crate::errors::{MamError, MamResult};
+use crate::ntru::{NtruPkSet, NtruSk};
 use crate::psk::{Psk, PskSet};
+use crate::trits::Trits;
 use crate::types::{Trint18, Trit, Tryte};
+
 use std::ffi::CString;
 
 use ffi;
@@ -71,9 +76,9 @@ impl Api {
     ///
     /// ntru_sk - A new ntru public key (allows for both enc/dec) [in]
     ///
-    pub fn add_ntru_sk(&mut self, ntru_sk: &ffi::mam_ntru_sk_t) -> MamResult<()> {
+    pub fn add_ntru_sk(&mut self, ntru_sk: &NtruSk) -> MamResult<()> {
         unsafe {
-            let rc = ffi::mam_api_add_ntru_sk(&mut self.c_api, ntru_sk);
+            let rc = ffi::mam_api_add_ntru_sk(&mut self.c_api, ntru_sk.into_raw());
 
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
@@ -121,7 +126,7 @@ impl Api {
     ///
     pub fn channel_create(&mut self, height: usize) -> MamResult<[Tryte; CHANNEL_ID_TRYTE_SIZE]> {
         unsafe {
-            let mut channel_id: [Tryte; CHANNEL_ID_TRYTE_SIZE] = [57 ; CHANNEL_ID_TRYTE_SIZE];
+            let mut channel_id: [Tryte; CHANNEL_ID_TRYTE_SIZE] = [57; CHANNEL_ID_TRYTE_SIZE];
             let rc = ffi::mam_api_channel_create(&mut self.c_api, height, channel_id.as_mut_ptr());
             if rc != ffi::retcode_t_RC_OK {
                 return Err(MamError::from(rc));
@@ -208,8 +213,8 @@ impl Api {
         &mut self,
         ch_id: &[Tryte],
         psks: &PskSet,
-        ntru_pks: ffi::mam_ntru_pk_t_set_t,
-        bundle: &mut ffi::bundle_transactions_t,
+        ntru_pks: &NtruPkSet,
+        bundle: &mut BundleTransactions,
         msg_id: &mut Trit,
     ) -> MamResult<()> {
         unsafe {
@@ -217,8 +222,8 @@ impl Api {
                 &mut self.c_api,
                 ch_id.as_ptr(),
                 *psks.into_raw(),
-                ntru_pks,
-                bundle,
+                *ntru_pks.into_raw(),
+                bundle.into_raw_mut(),
                 msg_id,
             );
 
@@ -247,9 +252,9 @@ impl Api {
         ch_id: &[Tryte],
         ep_id: &[Tryte],
         psks: &PskSet,
-        ntru_pks: ffi::mam_ntru_pk_t_set_t,
-        bundle: &mut ffi::bundle_transactions_t,
-        msg_id: &mut Trit,
+        ntru_pks: &NtruPkSet,
+        bundle: &mut BundleTransactions,
+        msg_id: &mut [Trit],
     ) -> MamResult<()> {
         unsafe {
             let rc = ffi::mam_api_bundle_write_header_on_endpoint(
@@ -257,9 +262,9 @@ impl Api {
                 ch_id.as_ptr(),
                 ep_id.as_ptr(),
                 *psks.into_raw(),
-                ntru_pks,
-                bundle,
-                msg_id,
+                *ntru_pks.into_raw(),
+                bundle.into_raw_mut(),
+                msg_id.as_mut_ptr(),
             );
 
             if rc != ffi::retcode_t_RC_OK {
@@ -281,14 +286,14 @@ impl Api {
     /// msg_id - The msg_id (hashed channel_name and message index within the
     ///     channel) embedded into transaction's tag (together with packet index to
     ///     allow Tangle lookup) [out]
-    pub fn bundle_announce_new_channel(
+    pub fn bundle_announce_channel(
         &mut self,
         ch_id: &[Tryte],
         ch1_id: &[Tryte],
         psks: &PskSet,
-        ntru_pks: ffi::mam_ntru_pk_t_set_t,
-        bundle: &mut ffi::bundle_transactions_t,
-        msg_id: &mut Trit,
+        ntru_pks: &NtruPkSet,
+        bundle: &mut BundleTransactions,
+        msg_id: &mut [Trit],
     ) -> MamResult<()> {
         unsafe {
             let rc = ffi::mam_api_bundle_announce_channel(
@@ -296,9 +301,9 @@ impl Api {
                 ch_id.as_ptr(),
                 ch1_id.as_ptr(),
                 *psks.into_raw(),
-                ntru_pks,
-                bundle,
-                msg_id,
+                *ntru_pks.into_raw(),
+                bundle.into_raw_mut(),
+                msg_id.as_mut_ptr(),
             );
 
             if rc != ffi::retcode_t_RC_OK {
@@ -325,9 +330,9 @@ impl Api {
         ch_id: &[Tryte],
         ep1_id: &[Tryte],
         psks: &PskSet,
-        ntru_pks: ffi::mam_ntru_pk_t_set_t,
-        bundle: &mut ffi::bundle_transactions_t,
-        msg_id: &mut Trit,
+        ntru_pks: &NtruPkSet,
+        bundle: &mut BundleTransactions,
+        msg_id: &mut [Trit],
     ) -> MamResult<()> {
         unsafe {
             let rc = ffi::mam_api_bundle_announce_endpoint(
@@ -335,9 +340,9 @@ impl Api {
                 ch_id.as_ptr(),
                 ep1_id.as_ptr(),
                 *psks.into_raw(),
-                ntru_pks,
-                bundle,
-                msg_id,
+                *ntru_pks.into_raw(),
+                bundle.into_raw_mut(),
+                msg_id.as_mut_ptr(),
             );
 
             if rc != ffi::retcode_t_RC_OK {
@@ -528,6 +533,31 @@ impl Api {
             Ok(Api { c_api: c_api })
         }
     }
+
+    ///
+    ///
+    ///
+    pub fn into_raw_mut(&mut self) -> &mut ffi::mam_api_t {
+        &mut self.c_api
+    }
+
+    ///
+    /// Gen NTRU SK
+    ///
+    pub fn gen_ntru_sk(&self, nonce: Trits) -> NtruSk {
+        NtruSk::gen(&self.c_api.prng, &nonce)
+    }
+
+    pub fn gen_pks<'a>(&self, id: &'a str, nonce: &'a str) -> MamResult<Psk> {
+        let trytes_id = ascii_trytes_to_trytes(id);
+        let trytes_nonce = ascii_trytes_to_trytes(nonce);
+        Psk::gen(
+            &self.c_api.prng,
+            &trytes_id,
+            &trytes_nonce,
+            trytes_nonce.len(),
+        )
+    }
 }
 
 impl Drop for Api {
@@ -541,14 +571,22 @@ impl Drop for Api {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::constants::*;
+    use crate::converter::ascii_trytes_to_trytes;
+    use crate::trits::*;
     use std::error::Error;
 
     const API_SEED: &'static str =
         "APISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPISEEDAPI9";
+    const TEST_NTRU_NONCE: &'static str = "NTRUBNONCE";
+    const TEST_PRE_SHARED_KEY_A_STR: &'static str = "PSKIDAPSKIDAPSKIDAPSKIDAPSK";
+    const TEST_PRE_SHARED_KEY_A_NONCE_STR: &'static str = "PSKANONCE";
+    const TEST_PRE_SHARED_KEY_B_STR: &'static str = "PSKIDBPSKIDBPSKIDBPSKIDBPSK";
+    const TEST_PRE_SHARED_KEY_B_NONCE_STR: &'static str = "PSKBNONCE";
 
     #[test]
     fn check_init_api() {
-        let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let s: Vec<i8> = ascii_trytes_to_trytes(API_SEED);
         let api = Api::new(&s);
 
         match api {
@@ -562,11 +600,11 @@ mod tests {
 
     #[test]
     fn check_save_load_wrong_key() {
-        let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let s: Vec<i8> = ascii_trytes_to_trytes(API_SEED);
         let api = Api::new(&s).unwrap();
         let eck_trytes =
             "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
-        let encryption_key_trytes = eck_trytes.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let encryption_key_trytes = ascii_trytes_to_trytes(eck_trytes);
 
         let result = api.save(
             "mam-api.bin",
@@ -583,7 +621,7 @@ mod tests {
 
         let dck_trytes =
             "MOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
-        let decryption_key_trytes = dck_trytes.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let decryption_key_trytes = ascii_trytes_to_trytes(dck_trytes);
 
         let n_api = Api::load(
             "mam-api.bin",
@@ -601,11 +639,10 @@ mod tests {
 
     #[test]
     fn check_api_create_channels() {
-        let s: Vec<i8> = API_SEED.chars().map(|c| c as i8).collect::<Vec<i8>>();
+        let s: Vec<i8> = ascii_trytes_to_trytes(API_SEED);
         let mut api = Api::new(&s).unwrap();
         let depth = 6;
-        let channel_trytes = api.channel_create(depth);
-        match channel_trytes {
+        match api.channel_create(depth) {
             Ok(ref channel_id) => {
                 let v = api.channel_remaining_sks(channel_id);
                 assert_eq!(v, 64);
@@ -633,5 +670,94 @@ mod tests {
                 assert!(true, false);
             }
         }
+    }
+
+    #[test]
+    fn check_api_generic() {
+        let s: Vec<i8> = ascii_trytes_to_trytes(API_SEED);
+        let mut sender_api = Api::new(&s).unwrap();
+        // Create Channel ID
+        let depth = 6;
+        let ch_id = sender_api.channel_create(depth).unwrap();
+        let ch1_id = sender_api.channel_create(depth).unwrap();
+        let ep_id = sender_api.create_endpoint(depth, &ch_id).unwrap();
+
+        let mut msg_id: [Trit; MAM_MSG_ID_SIZE] = [0; MAM_MSG_ID_SIZE];
+        let ntru_nonce = Trits::from(TEST_NTRU_NONCE);
+
+        let ntru = sender_api.gen_ntru_sk(ntru_nonce);
+        match sender_api.add_ntru_sk(&ntru) {
+            Ok(_) => assert_eq!(true, true),
+            Err(e) => {
+                println!("{:?}", e);
+                assert_eq!(true, false)
+            }
+        };
+        let pska = sender_api
+            .gen_pks(TEST_PRE_SHARED_KEY_A_STR, TEST_PRE_SHARED_KEY_A_NONCE_STR)
+            .unwrap();
+        let pskb = sender_api
+            .gen_pks(TEST_PRE_SHARED_KEY_B_STR, TEST_PRE_SHARED_KEY_B_NONCE_STR)
+            .unwrap();
+
+        match sender_api.add_psk(&pskb) {
+            Ok(_) => assert_eq!(true, true),
+            Err(e) => {
+                println!("{:?}", e);
+                assert_eq!(true, false)
+            }
+        };
+
+        for pubkey in 0..4 {
+            for keyload in 0..3 {
+                for checksum in 0..3 {
+                    let mut bundle = BundleTransactions::new();
+                    let mut pks_set = PskSet::new();
+                    let mut ntru_pk_set = NtruPkSet::new();
+
+                    if keyload == ffi::mam_msg_keyload_e_MAM_MSG_KEYLOAD_PSK {
+                        pks_set.add(&pska).unwrap();
+                        pks_set.add(&pskb).unwrap();
+                    }
+                    else if keyload == ffi::mam_msg_keyload_e_MAM_MSG_KEYLOAD_NTRU {
+                        // pks_set.add(&pska).unwrap();
+                        ntru_pk_set.add(&ntru.public_key()).unwrap();
+                    }
+
+                    if pubkey == ffi::mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID {
+                        println!("Pass bf bundle");
+                        match sender_api.bundle_write_header_on_endpoint(
+                            &ch_id,
+                            &ep_id,
+                            &pks_set,
+                            &ntru_pk_set,
+                            &mut bundle,
+                            &mut msg_id,
+                        ) {
+                            Ok(_) => assert_eq!(true, true),
+                            Err(e) => {
+                                println!("Error: {:?}", e);
+                                assert_eq!(true, false);
+                            }
+                        };
+                        println!("Pass");
+                    }
+                    else if pubkey == ffi::mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID1 {
+                        let remaining_sks = sender_api.channel_remaining_sks(&ch_id);
+                        sender_api.bundle_announce_channel(&ch_id, &ch1_id,
+                            &pks_set,
+                            &ntru_pk_set,
+                            &mut bundle,
+                            &mut msg_id).unwrap();
+
+                        assert_eq!(remaining_sks - 1, sender_api.channel_remaining_sks(&ch_id));
+
+                        println!("Pass");
+                    }
+                }
+            }
+        }
+
+        // ntru.gen(sender_api.into_raw_mut().prng, nonce: Trits)
     }
 }

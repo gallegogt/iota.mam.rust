@@ -171,8 +171,12 @@ impl NtruPkSet {
     ///
     /// Into Raw
     ///
-    pub fn into_raw(&self) -> &ffi::mam_ntru_pk_t_set_t {
-        &self.c_inner
+    pub fn into_raw(&self) -> ffi::mam_ntru_pk_t_set_t {
+        self.c_inner
+    }
+
+    pub fn size(&self) -> usize {
+        unsafe { ffi::mam_ntru_pk_t_set_size(self.c_inner) }
     }
 }
 
@@ -181,6 +185,7 @@ impl NtruPkSet {
 ///
 impl Drop for NtruPkSet {
     fn drop(&mut self) {
+        println!("Drop for NtruPkSet");
         unsafe { ffi::mam_ntru_pk_t_set_free(&mut self.c_inner) }
     }
 }

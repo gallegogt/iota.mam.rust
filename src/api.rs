@@ -221,8 +221,8 @@ impl Api {
             let rc = ffi::mam_api_bundle_write_header_on_channel(
                 &mut self.c_api,
                 ch_id.as_ptr(),
-                *psks.into_raw(),
-                *ntru_pks.into_raw(),
+                psks.into_raw(),
+                ntru_pks.into_raw(),
                 bundle.into_raw_mut(),
                 msg_id,
             );
@@ -261,8 +261,8 @@ impl Api {
                 &mut self.c_api,
                 ch_id.as_ptr(),
                 ep_id.as_ptr(),
-                *psks.into_raw(),
-                *ntru_pks.into_raw(),
+                psks.into_raw(),
+                ntru_pks.into_raw(),
                 bundle.into_raw_mut(),
                 msg_id.as_mut_ptr(),
             );
@@ -300,8 +300,8 @@ impl Api {
                 &mut self.c_api,
                 ch_id.as_ptr(),
                 ch1_id.as_ptr(),
-                *psks.into_raw(),
-                *ntru_pks.into_raw(),
+                psks.into_raw(),
+                ntru_pks.into_raw(),
                 bundle.into_raw_mut(),
                 msg_id.as_mut_ptr(),
             );
@@ -339,8 +339,8 @@ impl Api {
                 &mut self.c_api,
                 ch_id.as_ptr(),
                 ep1_id.as_ptr(),
-                *psks.into_raw(),
-                *ntru_pks.into_raw(),
+                psks.into_raw(),
+                ntru_pks.into_raw(),
                 bundle.into_raw_mut(),
                 msg_id.as_mut_ptr(),
             );
@@ -551,6 +551,7 @@ impl Api {
     pub fn gen_pks<'a>(&self, id: &'a str, nonce: &'a str) -> MamResult<Psk> {
         let trytes_id = ascii_trytes_to_trytes(id);
         let trytes_nonce = ascii_trytes_to_trytes(nonce);
+
         Psk::gen(
             &self.c_api.prng,
             &trytes_id,
@@ -718,14 +719,16 @@ mod tests {
                     if keyload == ffi::mam_msg_keyload_e_MAM_MSG_KEYLOAD_PSK {
                         pks_set.add(&pska).unwrap();
                         pks_set.add(&pskb).unwrap();
-                    }
-                    else if keyload == ffi::mam_msg_keyload_e_MAM_MSG_KEYLOAD_NTRU {
-                        // pks_set.add(&pska).unwrap();
+                    } else if keyload == ffi::mam_msg_keyload_e_MAM_MSG_KEYLOAD_NTRU {
                         ntru_pk_set.add(&ntru.public_key()).unwrap();
                     }
 
                     if pubkey == ffi::mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID {
-                        println!("Pass bf bundle");
+                        println!(
+                            "Pass bf bundle size {} pkset {}",
+                            bundle.size(),
+                            pks_set.size()
+                        );
                         match sender_api.bundle_write_header_on_endpoint(
                             &ch_id,
                             &ep_id,
@@ -741,14 +744,18 @@ mod tests {
                             }
                         };
                         println!("Pass");
-                    }
-                    else if pubkey == ffi::mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID1 {
+                    } else if pubkey == ffi::mam_msg_pubkey_e_MAM_MSG_PUBKEY_CHID1 {
                         let remaining_sks = sender_api.channel_remaining_sks(&ch_id);
-                        sender_api.bundle_announce_channel(&ch_id, &ch1_id,
-                            &pks_set,
-                            &ntru_pk_set,
-                            &mut bundle,
-                            &mut msg_id).unwrap();
+                        sender_api
+                            .bundle_announce_channel(
+                                &ch_id,
+                                &ch1_id,
+                                &pks_set,
+                                &ntru_pk_set,
+                                &mut bundle,
+                                &mut msg_id,
+                            )
+                            .unwrap();
 
                         assert_eq!(remaining_sks - 1, sender_api.channel_remaining_sks(&ch_id));
 

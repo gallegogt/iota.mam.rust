@@ -98,6 +98,7 @@ impl PskSet {
             c_psk_set: ptr::null_mut(),
         }
     }
+
     ///
     /// Gets the size of a serialized set of pre-shared keys
     ///
@@ -108,8 +109,8 @@ impl PskSet {
     ///
     /// return C instance
     ///
-    pub fn into_raw(&self) -> &ffi::mam_psk_t_set_t {
-        &self.c_psk_set
+    pub fn into_raw(&self) -> ffi::mam_psk_t_set_t {
+        self.c_psk_set
     }
 
     ///
@@ -161,10 +162,15 @@ impl PskSet {
             Ok(())
         }
     }
+
+    pub fn size(&self) -> usize {
+        unsafe { ffi::mam_psk_t_set_size(self.c_psk_set) }
+    }
 }
 
 impl Drop for PskSet {
     fn drop(&mut self) {
+        println!("Drop for PskSet");
         unsafe {
             ffi::mam_psks_destroy(&mut self.c_psk_set);
         }

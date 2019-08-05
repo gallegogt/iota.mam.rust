@@ -23,5 +23,9 @@ crate-type = ["rlib", "staticlib"]
 # doc = true
 
 [dependencies]
+iota-constants = "^0.2"
+iota-conversion = "^0.2"
+iota-crypto = "^0.2"
+troika-rust = "^0.1"
 log = "^0.4"
 env_logger = "^0.6"

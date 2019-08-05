@@ -179,7 +179,7 @@ impl Spongos {
 
 mod should {
     #[test]
-    fn spongos_test() {
+    fn spongos_test_encr_decr() {
         use super::{ISpongos, Spongos};
         const FIXED_SIZE: usize = 243;
 
@@ -197,6 +197,13 @@ mod should {
         spos1.commit();
         spos1.encr(&x, &mut z).unwrap();
 
-        assert_eq!(y, z)
+        assert_eq!(y, z);
+
+        spos.reset();
+        spos.absorb(&x);
+        spos.commit();
+        spos.decr(&z.clone(), &mut z).unwrap();
+
+        assert_eq!(x, z);
     }
 }

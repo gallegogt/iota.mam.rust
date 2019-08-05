@@ -126,7 +126,7 @@ impl fmt::Debug for Sponge {
 
 impl Sponge {
     /// Transform Function
-    fn transform(&mut self) {
+    pub fn transform(&mut self) {
         let mut fstate: [u8; MAM_SPONGE_WIDTH] = [0; MAM_SPONGE_WIDTH];
 
         for (idx, t) in self.state.iter().enumerate() {
@@ -144,8 +144,19 @@ impl Sponge {
         }
     }
 
+    /// Reset State
     fn reset(&mut self) {
         self.state = [0; MAM_SPONGE_WIDTH];
+    }
+
+    /// Update State by Position
+    pub fn update_state_by_pos(&mut self, pos: usize, trit_value: &Trit) {
+        self.state[pos] = *trit_value;
+    }
+
+    /// Get state in pos
+    pub fn take_state(&self, pos: usize) -> Trit {
+        self.state[pos]
     }
 }
 

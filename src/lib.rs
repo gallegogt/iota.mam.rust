@@ -13,6 +13,7 @@
 
 /// Sponge Layer
 mod sponge;
+mod spongos;
 
 pub use crate::sponge::*;
 

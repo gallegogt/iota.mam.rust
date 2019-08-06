@@ -11,6 +11,7 @@
 )]
 #![cfg_attr(not(debug_assertions), deny(warnings))]
 
+mod prng;
 /// Sponge Layer
 mod sponge;
 mod spongos;

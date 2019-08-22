@@ -3,7 +3,6 @@
 //! The WOTS Layer supports Winternitz One-Time Signatures
 //!
 
-use crate::conversion::trits_from_value;
 use crate::prng::{Prng, PrngDestinationTryte};
 use crate::spongos::{ISpongos, Spongos};
 use crate::{mam_divs, mam_mods, trits_get3};

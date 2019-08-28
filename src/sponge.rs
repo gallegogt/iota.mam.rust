@@ -2,7 +2,7 @@
 //! MAM Sponge Layer
 //!
 
-use iota_conversion::Trit;
+use crate::constants::Trit;
 use std::fmt;
 use troika_rust::Ftroika;
 

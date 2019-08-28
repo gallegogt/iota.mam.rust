@@ -1,7 +1,7 @@
 //! Spongos Layer
 //!
 use crate::sponge::{Sponge, MAM_SPONGE_RATE};
-use iota_conversion::Trit;
+use crate::constants::Trit;
 
 /// Spongos
 #[derive(Debug, Clone)]

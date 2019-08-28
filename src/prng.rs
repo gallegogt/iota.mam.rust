@@ -4,8 +4,8 @@
 //! more precisely, strings of trytes. The layer makes calls to the Sponge layer
 //!
 
+use crate::constants::Trit;
 use crate::sponge::{ISponge, Sponge, SpongeCtrl};
-use iota_conversion::Trit;
 use std::fmt;
 
 /// PRNG Secret Key Size

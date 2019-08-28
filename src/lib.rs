@@ -11,12 +11,16 @@
 )]
 #![cfg_attr(not(debug_assertions), deny(warnings))]
 
-mod conversion;
+mod constants;
+/// PRNG Layer
 mod prng;
 /// Sponge Layer
 mod sponge;
 mod spongos;
+/// WOTS Layer
 mod wots;
+/// MSS Layer
+mod mss_classic;
 
 pub use crate::sponge::*;
 

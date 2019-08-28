@@ -3,25 +3,25 @@
 //! The WOTS Layer supports Winternitz One-Time Signatures
 //!
 
+use crate::constants::{mam_divs, mam_mods, trits_get3};
 use crate::prng::{Prng, PrngDestinationTryte};
 use crate::spongos::{ISpongos, Spongos};
-use crate::{mam_divs, mam_mods, trits_get3};
-use iota_conversion::Trit;
+use crate::constants::Trit;
 use std::fmt;
 
 /// Size of a WOTS public key
-const MAM_WOTS_PUBLIC_KEY_SIZE: usize = 243;
+pub const MAM_WOTS_PUBLIC_KEY_SIZE: usize = 243;
 /// Size of a WOTS private key part
-const MAM_WOTS_PRIVATE_KEY_PART_SIZE: usize = 162;
+pub const MAM_WOTS_PRIVATE_KEY_PART_SIZE: usize = 162;
 /// Number of parts in a WOTS private key
-const MAM_WOTS_PRIVATE_KEY_PART_COUNT: usize = 81;
+pub const MAM_WOTS_PRIVATE_KEY_PART_COUNT: usize = 81;
 /// Size of a WOTS private key
-const MAM_WOTS_PRIVATE_KEY_SIZE: usize =
+pub const MAM_WOTS_PRIVATE_KEY_SIZE: usize =
     (MAM_WOTS_PRIVATE_KEY_PART_SIZE * MAM_WOTS_PRIVATE_KEY_PART_COUNT);
 /// Size of a WOTS signed hash
-const MAM_WOTS_HASH_SIZE: usize = 234;
+pub const MAM_WOTS_HASH_SIZE: usize = 234;
 /// Size of a WOTS signature
-const MAM_WOTS_SIGNATURE_SIZE: usize = MAM_WOTS_PRIVATE_KEY_SIZE;
+pub const MAM_WOTS_SIGNATURE_SIZE: usize = MAM_WOTS_PRIVATE_KEY_SIZE;
 
 ///
 /// WOTS

@@ -1,6 +1,4 @@
-//!
 //! MAM Sponge Layer
-//!
 
 use crate::constants::Trit;
 use std::fmt;
@@ -22,9 +20,7 @@ pub const MAM_SPONGE_HASH_SIZE: usize = 243;
 /// Sponge fixed MAC size
 pub const MAM_SPONGE_MAC_SIZE: usize = 243;
 
-///
 /// MAM Sponge CTRL
-///
 pub enum SpongeCtrl {
     /// Control trit DATA
     Data = 0,
@@ -54,59 +50,46 @@ impl SpongeCtrl {
     }
 }
 
-///
 /// Mam Sponge Definition
-///
 pub trait ISponge
 where
     Self: Default + Clone,
 {
     /// Sponge absorption
     ///
-    /// Arguments
-    ///      c2 Control trit encoding output data type
-    ///      data Input data blocks
-    ///
+    /// * `c2` - Control trit encoding output data type
+    /// * `data` - Input data blocks
     fn absorb(&mut self, c2: SpongeCtrl, data: &[Trit]) -> Result<(), String>;
 
     /// Sponge squeezing
     ///
-    /// Arguments
-    ///     c2 Control trit encoding output data type
-    ///     squeezed Output data
-    ///
+    /// * `c2` -  Control trit encoding output data type
+    /// * `data` - Output data
     fn squeeze(&mut self, c2: SpongeCtrl, squeezed: &mut [Trit]) -> Result<(), String>;
 
     /// Sponge Hashing
     ///
-    /// Arguments
-    ///     plain_text Input data
-    ///     digest Hash value
+    /// * `plain_text` - Input data
+    /// * `digest` - Hash value
     fn hash(&mut self, plain_text: &[Trit], digest: &mut [Trit]) -> Result<(), String>;
 
     /// Sponge AE encryption
     ///
-    /// Arguments
-    ///     plain_text Input data
-    ///
+    /// * `plain_text` - Input data
     fn encr(&mut self, plain_text: &[Trit], cipher_text: &mut [Trit]) -> Result<(), String>;
 
     /// Sponge AE decryption
     ///
-    /// Arguments
-    ///     cipher_text Hash value
-    ///     plain_text Input data
-    ///
+    /// * `cipher_text` - Hash value
+    /// * `plain_text` - Input data
     fn decr(&mut self, cipher_text: &[Trit], plain_text: &mut [Trit]) -> Result<(), String>;
 }
 
-///
 /// Sponge interface
-///
 #[derive(Clone)]
 pub struct Sponge {
     /// state
-    state: [Trit; MAM_SPONGE_WIDTH],
+    pub state: [Trit; MAM_SPONGE_WIDTH],
 }
 
 impl Default for Sponge {
@@ -118,7 +101,6 @@ impl Default for Sponge {
 }
 
 impl fmt::Debug for Sponge {
-    /// Format
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Sponge: [state: {:?}]", self.state.to_vec())
     }
@@ -161,12 +143,6 @@ impl Sponge {
 }
 
 impl ISponge for Sponge {
-    /// Sponge absorption
-    ///
-    /// Arguments
-    ///      c2 Control trit encoding output data type
-    ///      data Input data blocks
-    ///
     fn absorb(&mut self, c2: SpongeCtrl, data: &[Trit]) -> Result<(), String> {
         let chk = match c2 {
             SpongeCtrl::Data => false,
@@ -205,12 +181,6 @@ impl ISponge for Sponge {
         Ok(())
     }
 
-    /// Sponge squeezing
-    ///
-    /// Arguments
-    ///     c2 Control trit encoding output data type
-    ///     squeezed Output data
-    ///
     fn squeeze(&mut self, c2: SpongeCtrl, squeezed: &mut [Trit]) -> Result<(), String> {
         let n: usize = (squeezed.len() as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
 
@@ -234,11 +204,6 @@ impl ISponge for Sponge {
         Ok(())
     }
 
-    /// Sponge Hashing
-    ///
-    /// Arguments
-    ///     plain_text Input data
-    ///     digest Hash value
     fn hash(&mut self, plain_text: &[Trit], digest: &mut [Trit]) -> Result<(), String> {
         self.reset();
         self.absorb(SpongeCtrl::Data, plain_text)?;
@@ -246,12 +211,6 @@ impl ISponge for Sponge {
         Ok(())
     }
 
-    /// Sponge AE encryption
-    ///
-    /// Arguments
-    ///     plain_text Input data
-    ///     [out] cipher_text
-    ///
     fn encr(&mut self, plain_text: &[Trit], cipher_text: &mut [Trit]) -> Result<(), String> {
         if cipher_text.len() != plain_text.len() {
             return Err("Cipher text and plain text must be the same length".to_string());
@@ -297,12 +256,6 @@ impl ISponge for Sponge {
         Ok(())
     }
 
-    /// Sponge AE decryption
-    ///
-    /// Arguments
-    ///     cipher_text Hash value
-    ///     [out] plain_text data
-    ///
     fn decr(&mut self, cipher_text: &[Trit], plain_text: &mut [Trit]) -> Result<(), String> {
         if cipher_text.len() != plain_text.len() {
             return Err("Cipher text and plain text must be the same length".to_string());
@@ -348,14 +301,15 @@ impl ISponge for Sponge {
     }
 }
 
-mod should {
+#[cfg(test)]
+mod tests {
     use crate::sponge::{ISponge, Sponge, SpongeCtrl};
     use iota_conversion::Trinary;
     const TRYTES: &str =
         "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
 
     #[test]
-    fn absorb_squeeze_data() {
+    fn sponge_absorb_squeeze_data() {
         let in_trits = TRYTES.trits();
         let mut prn_trits = vec![0; 81 * 3];
         let mut layer = Sponge::default();
@@ -365,7 +319,7 @@ mod should {
     }
 
     #[test]
-    fn encr_decr_data() {
+    fn sponge_encr_decr_data() {
         let trits_size = [
             0, 1, 2, 3, 4, 5, 6, 242, 243, 244, 485, 486, 487, 972, 1110, 1111,
         ];

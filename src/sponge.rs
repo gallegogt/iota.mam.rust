@@ -1,6 +1,7 @@
 //! MAM Sponge Layer
 
-use crate::constants::Trit;
+use crate::definitions::{Sponge, Transform};
+use iota_conversion::Trit;
 use std::fmt;
 use troika_rust::Ftroika;
 
@@ -50,68 +51,34 @@ impl SpongeCtrl {
     }
 }
 
-/// Mam Sponge Definition
-pub trait ISponge
-where
-    Self: Default + Clone,
-{
-    /// Sponge absorption
-    ///
-    /// * `c2` - Control trit encoding output data type
-    /// * `data` - Input data blocks
-    fn absorb(&mut self, c2: SpongeCtrl, data: &[Trit]) -> Result<(), String>;
-
-    /// Sponge squeezing
-    ///
-    /// * `c2` -  Control trit encoding output data type
-    /// * `data` - Output data
-    fn squeeze(&mut self, c2: SpongeCtrl, squeezed: &mut [Trit]) -> Result<(), String>;
-
-    /// Sponge Hashing
-    ///
-    /// * `plain_text` - Input data
-    /// * `digest` - Hash value
-    fn hash(&mut self, plain_text: &[Trit], digest: &mut [Trit]) -> Result<(), String>;
-
-    /// Sponge AE encryption
-    ///
-    /// * `plain_text` - Input data
-    fn encr(&mut self, plain_text: &[Trit], cipher_text: &mut [Trit]) -> Result<(), String>;
-
-    /// Sponge AE decryption
-    ///
-    /// * `cipher_text` - Hash value
-    /// * `plain_text` - Input data
-    fn decr(&mut self, cipher_text: &[Trit], plain_text: &mut [Trit]) -> Result<(), String>;
-}
-
 /// Sponge interface
 #[derive(Clone)]
-pub struct Sponge {
+pub struct MamSponge {
     /// state
     pub state: [Trit; MAM_SPONGE_WIDTH],
 }
 
-impl Default for Sponge {
+impl Default for MamSponge {
     fn default() -> Self {
-        Sponge {
+        MamSponge {
             state: [0; MAM_SPONGE_WIDTH],
         }
     }
 }
 
-impl fmt::Debug for Sponge {
+impl fmt::Debug for MamSponge {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Sponge: [state: {:?}]", self.state.to_vec())
     }
 }
 
-impl Sponge {
-    /// Transform Function
-    pub fn transform(&mut self) {
+struct SpongeTransform;
+
+impl Transform for SpongeTransform {
+    fn transform(state: &mut [Trit]) {
         let mut fstate: [u8; MAM_SPONGE_WIDTH] = [0; MAM_SPONGE_WIDTH];
 
-        for (idx, t) in self.state.iter().enumerate() {
+        for (idx, t) in state.iter().enumerate() {
             fstate[idx] = (*t + 1) as u8;
         }
 
@@ -122,15 +89,12 @@ impl Sponge {
 
         for (idx, t) in fstate.iter().enumerate() {
             let v = *t as i8;
-            self.state[idx] = v - 1;
+            state[idx] = v - 1;
         }
     }
+}
 
-    /// Reset State
-    fn reset(&mut self) {
-        self.state = [0; MAM_SPONGE_WIDTH];
-    }
-
+impl MamSponge {
     /// Update State by Position
     pub fn update_state_by_pos(&mut self, pos: usize, trit_value: &Trit) {
         self.state[pos] = *trit_value;
@@ -140,10 +104,21 @@ impl Sponge {
     pub fn take_state(&self, pos: usize) -> Trit {
         self.state[pos]
     }
+    ///
+    /// Transform State
+    ///
+    pub fn transform(&mut self) {
+        SpongeTransform::transform(&mut self.state);
+    }
 }
 
-impl ISponge for Sponge {
-    fn absorb(&mut self, c2: SpongeCtrl, data: &[Trit]) -> Result<(), String> {
+impl Sponge for MamSponge {
+    type Error = String;
+    type AbsorbInput = (SpongeCtrl, Vec<Trit>);
+    type SqueezeInput = (SpongeCtrl, usize);
+
+    fn absorb(&mut self, absorb_info: Self::AbsorbInput) -> Result<(), Self::Error> {
+        let c2 = absorb_info.0;
         let chk = match c2 {
             SpongeCtrl::Data => false,
             SpongeCtrl::Key => false,
@@ -155,9 +130,9 @@ impl ISponge for Sponge {
             ));
         }
 
-        let mut r_data = data.clone();
-        if data.is_empty() {
-            r_data = &[0i8];
+        let mut r_data = absorb_info.1.clone();
+        if r_data.is_empty() {
+            r_data = [0i8].to_vec();
         }
 
         let n: usize = (r_data.len() as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
@@ -167,7 +142,7 @@ impl ISponge for Sponge {
 
             if self.state[MAM_SPONGE_RATE + 1] != 0 {
                 self.state[489..492].copy_from_slice(&[c0, c1, c2.ctrl()]);
-                self.transform();
+                SpongeTransform::transform(&mut self.state);
             }
 
             let mut padr = [0; MAM_SPONGE_RATE + 1];
@@ -181,15 +156,19 @@ impl ISponge for Sponge {
         Ok(())
     }
 
-    fn squeeze(&mut self, c2: SpongeCtrl, squeezed: &mut [Trit]) -> Result<(), String> {
-        let n: usize = (squeezed.len() as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
+    fn squeeze(&mut self, data: Self::SqueezeInput) -> Vec<Trit> {
+        let squeezed_len = data.1;
+        let c2 = data.0;
+        let mut squeezed: Vec<Trit> = vec![0_i8; squeezed_len];
+
+        let n: usize = (squeezed_len as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
 
         for (idx, chunk) in squeezed.chunks_mut(MAM_SPONGE_RATE).enumerate() {
             let t0: Trit = -1;
             let t1: Trit = if idx == (n - 1) { -1 } else { 1 };
 
             self.state[489..492].copy_from_slice(&[t0, t1, c2.ctrl()]);
-            self.transform();
+            SpongeTransform::transform(&mut self.state);
             chunk.copy_from_slice(&self.state[..chunk.len()]);
 
             if chunk.len() == MAM_SPONGE_RATE {
@@ -201,20 +180,17 @@ impl ISponge for Sponge {
             }
             self.state[MAM_SPONGE_RATE..489].copy_from_slice(&[t0, t1, c2.ctrl()]);
         }
-        Ok(())
+        squeezed
     }
 
-    fn hash(&mut self, plain_text: &[Trit], digest: &mut [Trit]) -> Result<(), String> {
+    fn hash(&mut self, plain_text: &[Trit], hash_len: usize) -> Result<Vec<Trit>, Self::Error> {
         self.reset();
-        self.absorb(SpongeCtrl::Data, plain_text)?;
-        self.squeeze(SpongeCtrl::Hash, digest)?;
-        Ok(())
+        self.absorb((SpongeCtrl::Data, plain_text.to_vec()))?;
+        Ok(self.squeeze((SpongeCtrl::Hash, hash_len)))
     }
 
-    fn encr(&mut self, plain_text: &[Trit], cipher_text: &mut [Trit]) -> Result<(), String> {
-        if cipher_text.len() != plain_text.len() {
-            return Err("Cipher text and plain text must be the same length".to_string());
-        }
+    fn encr(&mut self, plain_text: &[Trit]) -> Vec<Trit> {
+        let mut cipher_text: Vec<Trit> = vec![0_i8; plain_text.len()];
 
         let n: usize = (plain_text.len() as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
         let mut it_pt = plain_text.chunks(MAM_SPONGE_RATE).enumerate();
@@ -229,7 +205,7 @@ impl ISponge for Sponge {
                     let t1 = if idx == (n - 1) { -1 } else { 1 };
                     // Update State
                     self.state[489..492].copy_from_slice(&[t0, t1, -1]);
-                    self.transform();
+                    SpongeTransform::transform(&mut self.state);
 
                     for (it, value) in chunk
                         .iter()
@@ -253,17 +229,15 @@ impl ISponge for Sponge {
                 None => break,
             }
         }
-        Ok(())
+        cipher_text
     }
 
-    fn decr(&mut self, cipher_text: &[Trit], plain_text: &mut [Trit]) -> Result<(), String> {
-        if cipher_text.len() != plain_text.len() {
-            return Err("Cipher text and plain text must be the same length".to_string());
-        }
-
+    fn decr(&mut self, cipher_text: &[Trit]) -> Vec<Trit> {
+        let mut plain_text: Vec<Trit> = vec![0_i8; cipher_text.len()];
         let n: usize = (cipher_text.len() as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
         let mut it_pt = plain_text.chunks_mut(MAM_SPONGE_RATE);
         let mut it_ch = cipher_text.chunks(MAM_SPONGE_RATE).enumerate();
+
         loop {
             match it_ch.next() {
                 Some((idx, chunk)) => {
@@ -272,7 +246,7 @@ impl ISponge for Sponge {
                     let t1 = if idx == (n - 1) { -1 } else { 1 };
                     // Control
                     self.state[489..492].copy_from_slice(&[t0, t1, -1]);
-                    self.transform();
+                    SpongeTransform::transform(&mut self.state);
 
                     for (it, value) in chunk
                         .iter()
@@ -297,25 +271,31 @@ impl ISponge for Sponge {
             }
         }
 
-        Ok(())
+        plain_text
+    }
+
+    fn reset(&mut self) {
+        self.state = [0; MAM_SPONGE_WIDTH];
     }
 }
 
 #[cfg(test)]
-mod tests {
-    use crate::sponge::{ISponge, Sponge, SpongeCtrl};
+mod should {
+    use crate::{
+        definitions::Sponge,
+        sponge::{MamSponge, SpongeCtrl},
+    };
     use iota_conversion::Trinary;
     const TRYTES: &str =
         "NOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLM";
 
     #[test]
     fn sponge_absorb_squeeze_data() {
-        let in_trits = TRYTES.trits();
-        let mut prn_trits = vec![0; 81 * 3];
-        let mut layer = Sponge::default();
-        layer.absorb(SpongeCtrl::Key, &in_trits).unwrap();
-        layer.squeeze(SpongeCtrl::Prn, &mut prn_trits).unwrap();
-        assert!(in_trits.len() == prn_trits.len())
+        let mut layer = MamSponge::default();
+        layer.absorb((SpongeCtrl::Key, TRYTES.trits())).unwrap();
+        let prn_trits = layer.squeeze((SpongeCtrl::Prn, 81 * 3));
+        println!("{} {}", TRYTES.trits().len(), prn_trits.len());
+        assert!(TRYTES.trits().len() == prn_trits.len())
     }
 
     #[test]
@@ -325,34 +305,32 @@ mod tests {
         ];
 
         let mut k = TRYTES.trits();
-        let mut sponge = Sponge::default();
-        sponge.absorb(SpongeCtrl::Key, &mut k).unwrap();
-        sponge.squeeze(SpongeCtrl::Prn, &mut k).unwrap();
+        let k_len = k.len();
+        let mut sponge = MamSponge::default();
+        sponge.absorb((SpongeCtrl::Key, k.clone())).unwrap();
+        k = sponge.squeeze((SpongeCtrl::Prn, k_len));
 
         for st in trits_size.iter() {
-            let x = vec![0; *st];
-            let mut y = vec![0; *st];
-            let mut z = vec![0; *st];
+            let x = vec![0_i8; *st];
 
             sponge.reset();
-            sponge.absorb(SpongeCtrl::Key, &mut k).unwrap();
-            sponge.encr(&x, &mut y).unwrap(); // Y = E(X)
+            sponge.absorb((SpongeCtrl::Key, k.clone())).unwrap();
+            let y = sponge.encr(&x); // Y = E(X)
 
             sponge.reset();
-            sponge.absorb(SpongeCtrl::Key, &mut k).unwrap();
-            sponge.decr(&y, &mut z).unwrap(); // Z = D(E(X))
+            sponge.absorb((SpongeCtrl::Key, k.clone())).unwrap();
+            let mut z = sponge.decr(&y); // Z = D(E(X))
             assert_eq!(x, z);
 
             sponge.reset();
-            sponge.absorb(SpongeCtrl::Key, &mut k).unwrap();
-            sponge.encr(&z.clone(), &mut z).unwrap(); // Z = E( Z = X )
+            sponge.absorb((SpongeCtrl::Key, k.clone())).unwrap();
+            z = sponge.encr(&z.clone()); // Z = E( Z = X )
             assert_eq!(y, z);
 
             sponge.reset();
-            sponge.absorb(SpongeCtrl::Key, &mut k).unwrap();
-            sponge.decr(&z.clone(), &mut z).unwrap(); //Z = D( Z = E ( X ))
+            sponge.absorb((SpongeCtrl::Key, k.clone())).unwrap();
+            z = sponge.decr(&z.clone()); //Z = D( Z = E ( X ))
             assert_eq!(x, z);
         }
     }
-
 }

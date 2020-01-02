@@ -5,7 +5,10 @@
 //!
 
 use crate::constants::Trit;
-use crate::sponge::{ISponge, Sponge, SpongeCtrl};
+use crate::{
+    definitions::Sponge,
+    sponge::{MamSponge, SpongeCtrl},
+};
 use std::fmt;
 
 /// PRNG Secret Key Size
@@ -62,21 +65,21 @@ impl Prng {
         &mut self,
         destination: PrngDestinationTryte,
         nonce: &[Trit],
-        output: &mut [Trit],
-    ) -> Result<(), String> {
-        let mut spg = Sponge::default();
+        n: usize,
+    ) -> Result<Vec<Trit>, String> {
+        let mut spg = MamSponge::default();
         let mut data: Vec<Trit> = vec![0; MAM_PRNG_SECRET_KEY_SIZE + 3 + nonce.len()];
         data[0..self.secret_key.len()].copy_from_slice(&self.secret_key);
         data[MAM_PRNG_SECRET_KEY_SIZE..MAM_PRNG_SECRET_KEY_SIZE + 3]
             .copy_from_slice(&destination.trits());
         data[3 + MAM_PRNG_SECRET_KEY_SIZE..].copy_from_slice(&nonce);
 
-        spg.absorb(SpongeCtrl::Key, &data)?;
-        spg.squeeze(SpongeCtrl::Prn, output)?;
-        Ok(())
+        spg.absorb((SpongeCtrl::Key, data))?;
+        Ok(spg.squeeze((SpongeCtrl::Prn, n)))
     }
 }
 
+#[cfg(test)]
 mod should {
     #[test]
     fn test_prng() {
@@ -87,13 +90,20 @@ mod should {
 
         let k = KEY_TRYTES.trits();
         let n = [0i8; 18];
-        let mut y1 = vec![0i8; MAM_PRNG_SECRET_KEY_SIZE * 2 + 18];
-        let mut y2 = vec![0i8; MAM_PRNG_SECRET_KEY_SIZE * 2 + 18];
-
         let mut prng = Prng::new(&k);
-        prng.gen(PrngDestinationTryte::DstSecKey, &n, &mut y1)
+        let y1 = prng
+            .gen(
+                PrngDestinationTryte::DstSecKey,
+                &n,
+                MAM_PRNG_SECRET_KEY_SIZE * 2 + 18,
+            )
             .unwrap();
-        prng.gen(PrngDestinationTryte::DstWotsKey, &n, &mut y2)
+        let y2 = prng
+            .gen(
+                PrngDestinationTryte::DstWotsKey,
+                &n,
+                MAM_PRNG_SECRET_KEY_SIZE * 2 + 18,
+            )
             .unwrap();
 
         assert_ne!(y1, y2)

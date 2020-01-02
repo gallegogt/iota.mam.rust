@@ -1,13 +1,13 @@
 //! Spongos Layer
 //!
-use crate::sponge::{Sponge, MAM_SPONGE_RATE};
-use crate::constants::Trit;
+use crate::sponge::{MamSponge, MAM_SPONGE_RATE};
+use iota_conversion::Trit;
 
 /// Spongos
 #[derive(Debug, Clone)]
 pub struct Spongos {
     /// Sponge
-    sponge: Sponge,
+    sponge: MamSponge,
     /// Pos
     pos: usize,
 }
@@ -16,7 +16,7 @@ impl Default for Spongos {
     /// Create Default instace of Spongos
     fn default() -> Self {
         Spongos {
-            sponge: Sponge::default(),
+            sponge: MamSponge::default(),
             pos: 0,
         }
     }
@@ -172,7 +172,7 @@ impl Spongos {
 
     /// Reset
     pub fn reset(&mut self) {
-        self.sponge = Sponge::default();
+        self.sponge = MamSponge::default();
         self.pos = 0;
     }
 }

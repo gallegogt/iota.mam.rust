@@ -3,10 +3,10 @@
 //! The WOTS Layer supports Winternitz One-Time Signatures
 //!
 
+use crate::constants::Trit;
 use crate::constants::{mam_divs, mam_mods, trits_get3};
 use crate::prng::{Prng, PrngDestinationTryte};
 use crate::spongos::{ISpongos, Spongos};
-use crate::constants::Trit;
 use std::fmt;
 
 /// Size of a WOTS public key
@@ -28,13 +28,13 @@ pub const MAM_WOTS_SIGNATURE_SIZE: usize = MAM_WOTS_PRIVATE_KEY_SIZE;
 ///
 #[derive(Clone)]
 struct Wots {
-    private_key: [Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
+    private_key: Vec<Trit>,
 }
 
 impl Default for Wots {
     fn default() -> Self {
         Wots {
-            private_key: [0i8; MAM_WOTS_PRIVATE_KEY_SIZE],
+            private_key: vec![0i8; MAM_WOTS_PRIVATE_KEY_SIZE],
         }
     }
 }
@@ -55,7 +55,7 @@ pub trait IWots {
     ///
     fn sign(
         &self,
-        hash: &[Trit; MAM_WOTS_HASH_SIZE],
+        hash: &[Trit],
         signature: &mut [Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
     ) -> Result<(), String>;
 
@@ -63,7 +63,7 @@ pub trait IWots {
     ///
     fn recover(
         &self,
-        hash: &[Trit; MAM_WOTS_HASH_SIZE],
+        hash: &[Trit],
         signature: &[Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
         public_key: &mut [Trit; MAM_WOTS_PUBLIC_KEY_SIZE],
     ) -> Result<(), String>;
@@ -77,11 +77,12 @@ impl IWots for Wots {
     /// Generates a WOTS private key with a nonce
     ///
     fn gen_sk(&mut self, prng: &mut Prng, nonce: &[Trit]) -> Result<(), String> {
-        prng.gen(
+        self.private_key = prng.gen(
             PrngDestinationTryte::DstWotsKey,
             nonce,
-            &mut self.private_key,
-        )
+            self.private_key.len(),
+        )?;
+        Ok(())
     }
 
     /// Generates a WOTS public key associated with a WOTS private key
@@ -117,7 +118,7 @@ impl IWots for Wots {
     ///
     fn sign(
         &self,
-        hash: &[Trit; MAM_WOTS_HASH_SIZE],
+        hash: &[Trit],
         signature: &mut [Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
     ) -> Result<(), String> {
         signature.copy_from_slice(&self.private_key);
@@ -130,7 +131,7 @@ impl IWots for Wots {
     ///
     fn recover(
         &self,
-        hash: &[Trit; MAM_WOTS_HASH_SIZE],
+        hash: &[Trit],
         signature: &[Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
         public_key: &mut [Trit; MAM_WOTS_PUBLIC_KEY_SIZE],
     ) -> Result<(), String> {
@@ -146,7 +147,7 @@ impl IWots for Wots {
     /// Resets a WOTS private key
     ///
     fn reset(&mut self) {
-        self.private_key = [0; MAM_WOTS_PRIVATE_KEY_SIZE];
+        self.private_key = vec![0; MAM_WOTS_PRIVATE_KEY_SIZE];
     }
 }
 
@@ -219,6 +220,7 @@ impl fmt::Debug for Wots {
     }
 }
 
+#[cfg(test)]
 mod should {
     use super::*;
     use crate::prng::{Prng, MAM_PRNG_SECRET_KEY_SIZE};
@@ -232,18 +234,19 @@ mod should {
         let nonce = [0; 18];
         let mut pk = [0i8; MAM_WOTS_PUBLIC_KEY_SIZE];
         let mut recovered_pk = [0; MAM_WOTS_PUBLIC_KEY_SIZE];
-        let mut hash = [0; MAM_WOTS_HASH_SIZE];
         let mut sign = [0; MAM_WOTS_SIGNATURE_SIZE];
 
         wots.reset();
-        prng.gen(PrngDestinationTryte::DstWotsKey, &nonce, &mut hash)
+        let mut hash = prng
+            .gen(PrngDestinationTryte::DstWotsKey, &nonce, MAM_WOTS_HASH_SIZE)
             .unwrap();
         wots.gen_sk(&mut prng, &nonce).unwrap();
         wots.gen_pk(&mut pk).unwrap();
 
-        wots.sign(&hash, &mut sign).unwrap();
+        wots.sign(hash.as_slice(), &mut sign).unwrap();
 
-        wots.recover(&hash, &sign, &mut recovered_pk).unwrap();
+        wots.recover(&hash.as_slice(), &sign, &mut recovered_pk)
+            .unwrap();
 
         assert_eq!(pk.to_vec(), recovered_pk.to_vec());
     }

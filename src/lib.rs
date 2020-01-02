@@ -12,6 +12,7 @@
 #![cfg_attr(not(debug_assertions), deny(warnings))]
 
 mod constants;
+mod definitions;
 /// PRNG Layer
 mod prng;
 /// Sponge Layer

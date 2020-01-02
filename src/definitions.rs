@@ -51,6 +51,24 @@ where
 }
 
 ///
+/// Spongos Interfaces
+///
+pub trait Spongos: Sponge
+where
+    Self: Default + Clone,
+{
+    /// Fork
+    ///
+    /// Create an equivalent instance
+    fn fork(&self) -> Self;
+
+    /// Commit
+    ///
+    /// Commit changes in the rate part
+    fn commit(&mut self);
+}
+
+///
 /// Transform Function
 ///
 pub trait Transform {
@@ -61,3 +79,4 @@ pub trait Transform {
     ///
     fn transform(state: &mut [Trit]);
 }
+

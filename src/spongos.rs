@@ -1,71 +1,114 @@
-//! Spongos Layer
+//! MamSpongos Layer
 //!
-use crate::sponge::{MamSponge, MAM_SPONGE_RATE};
+use crate::{
+    definitions::{Sponge, Spongos},
+    sponge::{MamSponge, MAM_SPONGE_RATE},
+};
 use iota_conversion::Trit;
 
-/// Spongos
+/// MamSpongos
 #[derive(Debug, Clone)]
-pub struct Spongos {
+pub struct MamSpongos {
     /// Sponge
     sponge: MamSponge,
     /// Pos
     pos: usize,
 }
 
-impl Default for Spongos {
-    /// Create Default instace of Spongos
+impl Default for MamSpongos {
+    /// Create Default instace of MamSpongos
     fn default() -> Self {
-        Spongos {
+        MamSpongos {
             sponge: MamSponge::default(),
             pos: 0,
         }
     }
 }
 
-///
-/// Spongos Interfaces
-///
-pub trait ISpongos
-where
-    Self: Default + Clone,
-{
-    /// Fork
-    ///
-    /// Create an equivalent instance
-    fn fork(&self) -> Self;
-
-    /// Commit
-    ///
-    /// Commit changes in the rate part
-    fn commit(&mut self);
+impl Sponge for MamSpongos {
+    type Error = String;
+    type AbsorbInput = Vec<Trit>;
+    type SqueezeInput = usize;
 
     /// Absorb
     ///
     /// Proccess input data
-    fn absorb(&mut self, trits: &[Trit]);
+    fn absorb(&mut self, trits: Self::AbsorbInput) -> Result<(), Self::Error> {
+        for trit in trits.iter() {
+            self.sponge.update_state_by_pos(self.pos, trit);
+            self.update();
+        }
+        Ok(())
+    }
 
     /// Squeeze
     ///
     /// Generate output data
-    fn squeeze(&mut self, squeezed: &mut [Trit]);
+    fn squeeze(&mut self, out_length: Self::SqueezeInput) -> Vec<Trit> {
+        let mut squeezed: Vec<Trit> = vec![0_i8; out_length];
+
+        for it in 0..out_length {
+            squeezed[it] = self.sponge.take_state(self.pos);
+            self.sponge.update_state_by_pos(self.pos, &0);
+            self.update()
+        }
+        squeezed
+    }
 
     /// Hash
     ///
     /// Hashing
-    fn hash(&mut self, data: &[Trit], hash: &mut [Trit]);
+    fn hash(&mut self, plain_text: &[Trit], hash_len: usize) -> Result<Vec<Trit>, Self::Error> {
+        self.reset();
+        self.absorb(plain_text.to_vec())?;
+        Ok(self.squeeze(hash_len))
+    }
 
     /// Encr
     ///
     /// Encrypt plaintext
-    fn encr(&mut self, plaintext: &[Trit], ciphertext: &mut [Trit]) -> Result<(), String>;
+    fn encr(&mut self, plain_text: &[Trit]) -> Vec<Trit> {
+        let mut ciphertext = vec![0_i8; plain_text.len()];
+
+        for idx in 0..plain_text.len() {
+            ciphertext[idx] = match plain_text[idx] + self.sponge.take_state(self.pos) {
+                2 => -1,
+                -2 => 1,
+                v => v,
+            };
+            self.sponge.update_state_by_pos(self.pos, &ciphertext[idx]);
+            self.update();
+        }
+
+        ciphertext
+    }
 
     /// Decr
     ///
     /// Decrypt ciphertext
-    fn decr(&mut self, ciphertext: &[Trit], plaintext: &mut [Trit]) -> Result<(), String>;
+    fn decr(&mut self, ciphertext: &[Trit]) -> Vec<Trit> {
+        let mut plaintext = vec![0_i8; ciphertext.len()];
+
+        for idx in 0..ciphertext.len() {
+            plaintext[idx] = match ciphertext[idx] - self.sponge.take_state(self.pos) {
+                2 => -1,
+                -2 => 1,
+                v => v,
+            };
+
+            self.sponge.update_state_by_pos(self.pos, &plaintext[idx]);
+            self.update();
+        }
+
+        plaintext
+    }
+
+    fn reset(&mut self) {
+        unimplemented!();
+    }
 }
 
-impl ISpongos for Spongos {
+impl Spongos for MamSpongos {
     /// Fork
     ///
     /// Create an equivalent instance
@@ -82,86 +125,9 @@ impl ISpongos for Spongos {
             self.pos = 0;
         }
     }
-
-    /// Absorb
-    ///
-    /// Proccess input data
-    fn absorb(&mut self, trits: &[Trit]) {
-        for trit in trits.iter() {
-            self.sponge.update_state_by_pos(self.pos, trit);
-            self.update();
-        }
-    }
-
-    /// Squeeze
-    ///
-    /// Generate output data
-    fn squeeze(&mut self, squeezed: &mut [Trit]) {
-        for it in 0..squeezed.len() {
-            squeezed[it] = self.sponge.take_state(self.pos);
-            self.sponge.update_state_by_pos(self.pos, &0);
-            self.update()
-        }
-    }
-
-    /// Hash
-    ///
-    /// Hashing
-    fn hash(&mut self, data: &[Trit], hash: &mut [Trit]) {
-        self.reset();
-        self.absorb(data);
-        self.squeeze(hash);
-    }
-
-    /// Encr
-    ///
-    /// Encrypt plaintext
-    fn encr(&mut self, plaintext: &[Trit], ciphertext: &mut [Trit]) -> Result<(), String> {
-        if plaintext.len() != ciphertext.len() {
-            return Err(format!(
-                "The Plain text and cipher text must be the same size"
-            ));
-        }
-
-        for idx in 0..plaintext.len() {
-            ciphertext[idx] = match plaintext[idx] + self.sponge.take_state(self.pos) {
-                2 => -1,
-                -2 => 1,
-                v => v,
-            };
-            self.sponge.update_state_by_pos(self.pos, &ciphertext[idx]);
-            self.update();
-        }
-
-        Ok(())
-    }
-
-    /// Decr
-    ///
-    /// Decrypt ciphertext
-    fn decr(&mut self, ciphertext: &[Trit], plaintext: &mut [Trit]) -> Result<(), String> {
-        if plaintext.len() != ciphertext.len() {
-            return Err(format!(
-                "The Plain text and cipher text must be the same size"
-            ));
-        }
-
-        for idx in 0..ciphertext.len() {
-            plaintext[idx] = match ciphertext[idx] - self.sponge.take_state(self.pos) {
-                2 => -1,
-                -2 => 1,
-                v => v,
-            };
-
-            self.sponge.update_state_by_pos(self.pos, &plaintext[idx]);
-            self.update();
-        }
-
-        Ok(())
-    }
 }
 
-impl Spongos {
+impl MamSpongos {
     /// Increment the pos and commit
     fn update(&mut self) {
         self.pos += 1;
@@ -177,32 +143,32 @@ impl Spongos {
     }
 }
 
+#[cfg(test)]
 mod should {
+    use super::*;
+
     #[test]
     fn spongos_test_encr_decr() {
-        use super::{ISpongos, Spongos};
         const FIXED_SIZE: usize = 243;
 
         let x = vec![0; FIXED_SIZE];
-        let mut y = vec![0; FIXED_SIZE];
-        let mut z = vec![0; FIXED_SIZE];
 
-        let mut spos = Spongos::default();
-        spos.absorb(&x);
+        let mut spos = MamSpongos::default();
+        spos.absorb(x.clone()).unwrap();
         spos.commit();
-        spos.squeeze(&mut y);
+        let y = spos.squeeze(FIXED_SIZE);
 
-        let mut spos1 = Spongos::default();
-        spos1.absorb(&x);
+        let mut spos1 = MamSpongos::default();
+        spos1.absorb(x.clone()).unwrap();
         spos1.commit();
-        spos1.encr(&x, &mut z).unwrap();
+        let mut z = spos1.encr(&x);
 
         assert_eq!(y, z);
 
         spos.reset();
-        spos.absorb(&x);
+        spos.absorb(x.clone()).unwrap();
         spos.commit();
-        spos.decr(&z.clone(), &mut z).unwrap();
+        z = spos.decr(&z.clone());
 
         assert_eq!(x, z);
     }

@@ -20,8 +20,6 @@ mod sponge;
 mod spongos;
 /// WOTS Layer
 mod wots;
-/// MSS Layer
-mod mss_classic;
 
 pub use crate::sponge::*;
 

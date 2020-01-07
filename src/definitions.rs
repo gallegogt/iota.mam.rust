@@ -81,6 +81,12 @@ pub trait Transform {
 }
 
 pub mod ss {
+    //!
+    //! Implementation of RFCs Signing Scheme
+    //!
+    //! https://github.com/iotaledger/bee-rfcs/pull/26
+    //!
+
     ///
     /// Signature Scheme PrivateKey
     ///

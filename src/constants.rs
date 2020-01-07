@@ -6,9 +6,7 @@ pub const MIN_TRIT_VALUE: i8 = -1;
 pub const MAX_TRIT_VALUE: i8 = 1;
 /// Base
 pub const RADIX: i8 = 3;
-
-/// Trit
-pub type Trit = i8;
+use iota_conversion::Trit;
 
 /// Utilities functions
 ///

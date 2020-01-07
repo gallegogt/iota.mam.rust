@@ -5,12 +5,13 @@
 
 use crate::{
     constants::{mam_divs, mam_mods, trits_get3},
-    definitions::Sponge,
+    definitions::{
+        ss::{PrivateKey, PublicKey, Signature},
+        Sponge,
+    },
     prng::{Prng, PrngDestinationTryte},
-    spongos::MamSpongos,
 };
 use iota_conversion::Trit;
-use std::fmt;
 
 /// Size of a WOTS public key
 pub const MAM_WOTS_PUBLIC_KEY_SIZE: usize = 243;
@@ -21,88 +22,104 @@ pub const MAM_WOTS_PRIVATE_KEY_PART_COUNT: usize = 81;
 /// Size of a WOTS private key
 pub const MAM_WOTS_PRIVATE_KEY_SIZE: usize =
     (MAM_WOTS_PRIVATE_KEY_PART_SIZE * MAM_WOTS_PRIVATE_KEY_PART_COUNT);
-/// Size of a WOTS signed hash
-pub const MAM_WOTS_HASH_SIZE: usize = 234;
-/// Size of a WOTS signature
-pub const MAM_WOTS_SIGNATURE_SIZE: usize = MAM_WOTS_PRIVATE_KEY_SIZE;
+use std::marker::PhantomData;
+
+/// Wots PrivateKey Generator
+///
+#[derive(Debug)]
+pub struct WotsV1PrivateKeyGenerator<S> {
+    _market: PhantomData<S>,
+}
 
 ///
-/// WOTS
+///
+/// WOTS Private Key
 ///
 #[derive(Clone)]
-struct Wots {
-    private_key: Vec<Trit>,
+pub struct WotsPrivateKey<S> {
+    /// Private Key
+    state: Vec<Trit>,
+    /// Market Data
+    _sponge: PhantomData<S>,
 }
 
-impl Default for Wots {
-    fn default() -> Self {
-        Wots {
-            private_key: vec![0i8; MAM_WOTS_PRIVATE_KEY_SIZE],
-        }
-    }
+///
+///
+/// WOTS Public Key
+///
+#[derive(Debug)]
+pub struct WotsPublicKey<S> {
+    /// Private Key
+    state: Vec<Trit>,
+    /// Market Data
+    _sponge: PhantomData<S>,
 }
 
-/// Interface for WOTS
-pub trait IWots {
-    /// Generates a WOTS private key with a nonce
-    ///
-    fn gen_sk(&mut self, prng: &mut Prng, nonce: &[Trit]) -> Result<(), String>;
-
-    /// Generates a WOTS public key associated with a WOTS private key
-    ///
-    /// The Private key must have already been generated
-    ///
-    fn gen_pk(&self) -> Result<Vec<Trit>, String>;
-
-    /// Generates a WOTS signature associated with a WOTS private key
-    ///
-    fn sign(
-        &self,
-        hash: &[Trit],
-        signature: &mut [Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
-    ) -> Result<(), String>;
-
-    /// Recover a presumed public key from a signature
-    ///
-    fn recover(
-        &self,
-        hash: &[Trit],
-        signature: &[Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
-    ) -> Result<Vec<Trit>, String>;
-
-    /// Resets a WOTS private key
-    ///
-    fn reset(&mut self);
+///
+///
+/// WOTS Signature
+///
+#[derive(Debug)]
+pub struct WotsSignature<S> {
+    /// Private Key
+    state: Vec<Trit>,
+    /// Market Data
+    _sponge: PhantomData<S>,
 }
 
-impl IWots for Wots {
-    /// Generates a WOTS private key with a nonce
-    ///
-    fn gen_sk(&mut self, prng: &mut Prng, nonce: &[Trit]) -> Result<(), String> {
-        self.private_key = prng.gen(
+///
+/// Trait for Wots Private Key Generator
+///
+pub trait WotsPrivateKeyGenerator<S> {
+    /// Private Key
+    type PrivateKey;
+    /// Generate Private Key
+    fn generate(seed: &[Trit], nonce: &[Trit]) -> Result<Self::PrivateKey, String>;
+}
+
+impl<S> WotsPrivateKeyGenerator<S> for WotsV1PrivateKeyGenerator<S> {
+    type PrivateKey = WotsPrivateKey<S>;
+
+    fn generate(seed: &[Trit], nonce: &[Trit]) -> Result<Self::PrivateKey, String> {
+        let mut prng = Prng::new(seed);
+        let state = prng.gen(
             PrngDestinationTryte::DstWotsKey,
             nonce,
-            self.private_key.len(),
+            MAM_WOTS_PRIVATE_KEY_SIZE,
         )?;
-        Ok(())
+
+        Ok(WotsPrivateKey {
+            state: state,
+            _sponge: PhantomData,
+        })
     }
+}
 
-    /// Generates a WOTS public key associated with a WOTS private key
-    ///
-    ///
-    fn gen_pk(&self) -> Result<Vec<Trit>, String> {
-        let mut pk_part: Vec<Trit> = [0i8; MAM_WOTS_PRIVATE_KEY_PART_SIZE].to_vec();
-        let mut pk_tmp: Vec<Trit> = [0i8; MAM_WOTS_PRIVATE_KEY_SIZE].to_vec();
+impl<S> PrivateKey for WotsPrivateKey<S>
+where
+    S: Default + Sponge<Error = String>,
+{
+    type PublicKey = WotsPublicKey<S>;
+    type Signature = WotsSignature<S>;
 
-        let mut spongos = MamSpongos::default();
+    ///
+    /// Generate Public Key
+    ///
+    fn generate_public_key(&self) -> Self::PublicKey {
+        let mut pk_part: Vec<Trit> = vec![0i8; MAM_WOTS_PRIVATE_KEY_PART_SIZE];
+        let mut pk_tmp: Vec<Trit> = vec![0i8; MAM_WOTS_PRIVATE_KEY_SIZE];
+
+        let mut spongos = S::default();
 
         for (idx, chunk) in self
-            .private_key
+            .state
             .chunks(MAM_WOTS_PRIVATE_KEY_PART_SIZE)
             .enumerate()
         {
             for _ in 0..26 {
-                pk_part = spongos.hash(chunk.clone(), MAM_WOTS_PRIVATE_KEY_PART_SIZE)?;
+                pk_part = spongos
+                    .hash(chunk.clone(), MAM_WOTS_PRIVATE_KEY_PART_SIZE)
+                    .unwrap();
             }
 
             let offset = idx * MAM_WOTS_PRIVATE_KEY_PART_SIZE;
@@ -110,61 +127,19 @@ impl IWots for Wots {
             pk_tmp[offset..length].copy_from_slice(&pk_part);
         }
 
-        spongos.hash(&pk_tmp, MAM_WOTS_PUBLIC_KEY_SIZE)
+        WotsPublicKey {
+            state: spongos.hash(&pk_tmp, MAM_WOTS_PUBLIC_KEY_SIZE).unwrap(),
+            _sponge: PhantomData,
+        }
     }
 
-    /// Generates a WOTS signature associated with a WOTS private key
     ///
-    fn sign(
-        &self,
-        hash: &[Trit],
-        signature: &mut [Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
-    ) -> Result<(), String> {
-        signature.copy_from_slice(&self.private_key);
-        let mut spongos = MamSpongos::default();
-        self.hash_sign_or_recover(&mut spongos, hash, signature, 0);
-        Ok(())
-    }
-
-    /// Recover a presumed public key from a signature
+    /// Sign
     ///
-    fn recover(
-        &self,
-        hash: &[Trit],
-        signature: &[Trit; MAM_WOTS_PRIVATE_KEY_SIZE],
-    ) -> Result<Vec<Trit>, String> {
-        let mut sig_pks = [0; MAM_WOTS_PRIVATE_KEY_SIZE];
-        sig_pks.copy_from_slice(signature);
-        let mut spongos = MamSpongos::default();
-
-        self.hash_sign_or_recover(&mut spongos, hash, &mut sig_pks, 1);
-        spongos.hash(&sig_pks, MAM_WOTS_PUBLIC_KEY_SIZE)
-    }
-
-    /// Resets a WOTS private key
-    ///
-    fn reset(&mut self) {
-        self.private_key = vec![0; MAM_WOTS_PRIVATE_KEY_SIZE];
-    }
-}
-
-impl Wots {
-    ///
-    /// Build WOTS HASH Sign or Recover
-    ///
-    /// Arguments
-    ///     spongos
-    ///     hash: Hash trits
-    ///     signature: Signature Trits
-    ///     operation: 0 => WOTS_HASH_SIGN, 1 => WOTS_HASH_RECOVER
-    ///
-    fn hash_sign_or_recover(
-        &self,
-        spongos: &mut MamSpongos,
-        hash: &[Trit],
-        signature: &mut [Trit],
-        operation: i8,
-    ) {
+    fn sign(&self, message: &[i8]) -> Self::Signature {
+        let mut signature = [0_i8; MAM_WOTS_PRIVATE_KEY_SIZE];
+        signature.copy_from_slice(&self.state);
+        let mut spongos = S::default();
         let mut t = 0;
         let mut idx = 0;
 
@@ -175,10 +150,10 @@ impl Wots {
             let offset_hash = idx * 3;
             let mut chk = vec![0; MAM_WOTS_PRIVATE_KEY_PART_SIZE];
 
-            let mut h = trits_get3(&hash[offset_hash..offset_hash + 3]);
+            let mut h = trits_get3(&message[offset_hash..offset_hash + 3]);
 
             t += h as i32;
-            h = if operation == 0 { h } else { -h };
+            h = h;
 
             for _ in -13..h {
                 chk = spongos
@@ -201,7 +176,7 @@ impl Wots {
             let mut h = mam_mods(t, 19683, 27);
             t = mam_divs(t, 19683, 27);
 
-            h = if operation == 0 { h } else { -h };
+            h = h;
 
             for _ in -13..h {
                 chk = spongos
@@ -211,41 +186,130 @@ impl Wots {
 
             chunk.copy_from_slice(&chk);
         }
+
+        WotsSignature {
+            state: signature.to_vec(),
+            _sponge: PhantomData,
+        }
     }
 }
 
-impl fmt::Debug for Wots {
-    /// Format
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "WOTS: [private_key: {:?}]", self.private_key.to_vec())
+impl<S> Default for WotsPrivateKey<S> {
+    fn default() -> Self {
+        WotsPrivateKey {
+            state: vec![0i8; MAM_WOTS_PRIVATE_KEY_SIZE],
+            _sponge: PhantomData,
+        }
+    }
+}
+
+impl<S> PublicKey for WotsPublicKey<S>
+where
+    S: Default + Sponge<Error = String>,
+{
+    type Signature = WotsSignature<S>;
+
+    ///
+    /// Verify
+    ///
+    fn verify(&self, message: &[i8], signature: &Self::Signature) -> bool {
+        let public_key = signature.recover_public_key(message);
+        for (st_it, pk_it) in self.state.iter().zip(public_key.state.iter()) {
+            if st_it != pk_it {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+impl<S> Signature for WotsSignature<S>
+where
+    S: Default + Sponge<Error = String>,
+{
+    type PublicKey = WotsPublicKey<S>;
+
+    ///
+    /// Recover Public Key
+    ///
+    fn recover_public_key(&self, message: &[i8]) -> Self::PublicKey {
+        let mut signature = [0_i8; MAM_WOTS_PRIVATE_KEY_SIZE];
+        signature.copy_from_slice(&self.state);
+        let mut spongos = S::default();
+
+        let mut t = 0;
+        let mut idx = 0;
+
+        for chunk in signature
+            .chunks_mut(MAM_WOTS_PRIVATE_KEY_PART_SIZE)
+            .take(77)
+        {
+            let offset_hash = idx * 3;
+            let mut chk = vec![0; MAM_WOTS_PRIVATE_KEY_PART_SIZE];
+
+            let mut h = trits_get3(&message[offset_hash..offset_hash + 3]);
+
+            t += h as i32;
+            h = -h;
+
+            for _ in -13..h {
+                chk = spongos
+                    .hash(&chunk, MAM_WOTS_PRIVATE_KEY_PART_SIZE)
+                    .unwrap();
+            }
+
+            chunk.copy_from_slice(&chk);
+
+            idx += 1;
+        }
+
+        t = -t;
+
+        for chunk in signature
+            .chunks_mut(MAM_WOTS_PRIVATE_KEY_PART_SIZE)
+            .skip(77)
+        {
+            let mut chk = vec![0; MAM_WOTS_PRIVATE_KEY_PART_SIZE];
+            let mut h = mam_mods(t, 19683, 27);
+            t = mam_divs(t, 19683, 27);
+
+            h = -h;
+
+            for _ in -13..h {
+                chk = spongos
+                    .hash(&chunk, MAM_WOTS_PRIVATE_KEY_PART_SIZE)
+                    .unwrap();
+            }
+
+            chunk.copy_from_slice(&chk);
+        }
+
+        WotsPublicKey {
+            state: spongos.hash(&signature, MAM_WOTS_PUBLIC_KEY_SIZE).unwrap(),
+            _sponge: PhantomData,
+        }
     }
 }
 
 #[cfg(test)]
 mod should {
     use super::*;
-    use crate::prng::{Prng, MAM_PRNG_SECRET_KEY_SIZE};
+    use crate::spongos::MamSpongos;
+    use iota_conversion::Trinary;
+
+    const SEED: &str =
+        "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN";
 
     #[test]
     fn wots_test() {
-        let sk = [0; MAM_PRNG_SECRET_KEY_SIZE];
-        let mut prng = Prng::new(&sk);
-        let mut wots = Wots::default();
-
+        let seed_trits = SEED.trits();
         let nonce = [0; 18];
-        let mut sign = [0; MAM_WOTS_SIGNATURE_SIZE];
+        let private_key: WotsPrivateKey<MamSpongos> =
+            WotsV1PrivateKeyGenerator::generate(&seed_trits, &nonce).unwrap();
+        let public_key = private_key.generate_public_key();
+        let signature = private_key.sign(&seed_trits);
+        let rpk = signature.recover_public_key(&seed_trits);
 
-        wots.reset();
-        let hash = prng
-            .gen(PrngDestinationTryte::DstWotsKey, &nonce, MAM_WOTS_HASH_SIZE)
-            .unwrap();
-        wots.gen_sk(&mut prng, &nonce).unwrap();
-        let pk = wots.gen_pk().unwrap();
-
-        wots.sign(hash.as_slice(), &mut sign).unwrap();
-
-        let recovered_pk = wots.recover(&hash.as_slice(), &sign).unwrap();
-
-        assert_eq!(pk.to_vec(), recovered_pk.to_vec());
+        assert_eq!(public_key.verify(&seed_trits, &signature), true);
     }
 }

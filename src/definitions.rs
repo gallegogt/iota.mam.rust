@@ -80,3 +80,43 @@ pub trait Transform {
     fn transform(state: &mut [Trit]);
 }
 
+pub mod ss {
+    ///
+    /// Signature Scheme PrivateKey
+    ///
+    pub trait PrivateKey {
+        type PublicKey;
+        type Signature;
+        ///
+        /// Generate Public Key
+        ///
+        fn generate_public_key(&self) -> Self::PublicKey;
+        ///
+        /// Sign
+        ///
+        fn sign(&self, message: &[i8]) -> Self::Signature;
+    }
+
+    ///
+    /// Signature Scheme PublicKey
+    ///
+    pub trait PublicKey {
+        type Signature;
+        ///
+        /// Verify
+        ///
+        fn verify(&self, message: &[i8], signature: &Self::Signature) -> bool;
+    }
+
+    ///
+    /// Signature Scheme
+    ///
+    pub trait Signature {
+        type PublicKey;
+
+        ///
+        /// Recover Public Key
+        ///
+        fn recover_public_key(&self, message: &[i8]) -> Self::PublicKey;
+    }
+}

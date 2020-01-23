@@ -72,25 +72,24 @@ impl fmt::Debug for MamSponge {
     }
 }
 
-struct SpongeTransform;
+///
+/// Sponge Transform
+///
+pub struct SpongeTransform;
 
 impl Transform for SpongeTransform {
     fn transform(state: &mut [Trit]) {
-        let mut fstate: [u8; MAM_SPONGE_WIDTH] = [0; MAM_SPONGE_WIDTH];
-
-        for (idx, t) in state.iter().enumerate() {
-            fstate[idx] = (*t + 1) as u8;
-        }
+        let mut fstate = state.iter().map(|t| (*t + 1) as u8).collect::<Vec<u8>>();
 
         let mut ftroika = Ftroika::default();
         ftroika.absorb(&fstate);
         ftroika.finalize();
         ftroika.squeeze(&mut fstate);
 
-        for (idx, t) in fstate.iter().enumerate() {
+        fstate.iter().enumerate().for_each(|(idx, t)| {
             let v = *t as i8;
             state[idx] = v - 1;
-        }
+        });
     }
 }
 
@@ -130,57 +129,67 @@ impl Sponge for MamSponge {
             ));
         }
 
-        let mut r_data = absorb_info.1.clone();
-        if r_data.is_empty() {
-            r_data = [0i8].to_vec();
-        }
+        let r_data = if absorb_info.1.len() == 0 {
+            [0i8].to_vec()
+        } else {
+            absorb_info.1
+        };
 
         let n: usize = (r_data.len() as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
-        for (idx, chunk) in r_data.chunks(MAM_SPONGE_RATE).enumerate() {
-            let c0 = if chunk.len() == MAM_SPONGE_RATE { 1 } else { 0 };
-            let c1 = if idx == (n - 1) { -1 } else { 1 };
+        r_data
+            .chunks(MAM_SPONGE_RATE)
+            .enumerate()
+            .for_each(|(idx, chunk)| {
+                let c0 = if chunk.len() == MAM_SPONGE_RATE { 1 } else { 0 };
+                let c1 = if idx == (n - 1) { -1 } else { 1 };
 
-            if self.state[MAM_SPONGE_RATE + 1] != 0 {
-                self.state[489..492].copy_from_slice(&[c0, c1, c2.ctrl()]);
-                SpongeTransform::transform(&mut self.state);
-            }
+                if self.state[MAM_SPONGE_RATE + 1] != 0 {
+                    self.state[489..492].copy_from_slice(&[c0, c1, c2.ctrl()]);
+                    SpongeTransform::transform(&mut self.state);
+                }
 
-            let mut padr = [0; MAM_SPONGE_RATE + 1];
-            padr[..chunk.len()].copy_from_slice(&chunk);
-            padr[chunk.len()] = 1;
+                let mut padr = [0; MAM_SPONGE_RATE + 1];
+                padr[..chunk.len()].copy_from_slice(&chunk);
+                padr[chunk.len()] = 1;
 
-            self.state[..487].copy_from_slice(&padr);
-            self.state[487..489].copy_from_slice(&[c1, c2.ctrl()]);
-        }
+                self.state[..487].copy_from_slice(&padr);
+                self.state[487..489].copy_from_slice(&[c1, c2.ctrl()]);
+            });
 
         Ok(())
     }
 
     fn squeeze(&mut self, data: Self::SqueezeInput) -> Vec<Trit> {
-        let squeezed_len = data.1;
-        let c2 = data.0;
-        let mut squeezed: Vec<Trit> = vec![0_i8; squeezed_len];
+        let n: usize = (data.1 as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
 
-        let n: usize = (squeezed_len as f32 / MAM_SPONGE_RATE as f32).ceil() as usize;
+        (0..data.1)
+            .collect::<Vec<_>>()
+            .chunks(MAM_SPONGE_RATE)
+            .enumerate()
+            .map(|(idx, c_data)| {
+                let mut chunk = vec![0_i8; c_data.len()];
 
-        for (idx, chunk) in squeezed.chunks_mut(MAM_SPONGE_RATE).enumerate() {
-            let t0: Trit = -1;
-            let t1: Trit = if idx == (n - 1) { -1 } else { 1 };
+                let t0: Trit = -1;
+                let t1: Trit = if idx == (n - 1) { -1 } else { 1 };
 
-            self.state[489..492].copy_from_slice(&[t0, t1, c2.ctrl()]);
-            SpongeTransform::transform(&mut self.state);
-            chunk.copy_from_slice(&self.state[..chunk.len()]);
+                self.state[489..492].copy_from_slice(&[t0, t1, data.0.ctrl()]);
 
-            if chunk.len() == MAM_SPONGE_RATE {
-                self.state[..MAM_SPONGE_RATE].copy_from_slice(&[0; MAM_SPONGE_RATE]);
-            } else {
-                let mut padr: [Trit; MAM_SPONGE_RATE] = [0; MAM_SPONGE_RATE];
-                padr[chunk.len() - 1] = 1;
-                self.state[..MAM_SPONGE_RATE].copy_from_slice(&padr);
-            }
-            self.state[MAM_SPONGE_RATE..489].copy_from_slice(&[t0, t1, c2.ctrl()]);
-        }
-        squeezed
+                SpongeTransform::transform(&mut self.state);
+
+                chunk.copy_from_slice(&self.state[..c_data.len()]);
+
+                if chunk.len() == MAM_SPONGE_RATE {
+                    self.state[..MAM_SPONGE_RATE].copy_from_slice(&[0; MAM_SPONGE_RATE]);
+                } else {
+                    let mut padr: [Trit; MAM_SPONGE_RATE] = [0; MAM_SPONGE_RATE];
+                    padr[chunk.len() - 1] = 1;
+                    self.state[..MAM_SPONGE_RATE].copy_from_slice(&padr);
+                }
+                self.state[MAM_SPONGE_RATE..489].copy_from_slice(&[t0, t1, data.0.ctrl()]);
+                chunk
+            })
+            .collect::<Vec<_>>()
+            .concat()
     }
 
     fn hash(&mut self, plain_text: &[Trit], hash_len: usize) -> Result<Vec<Trit>, Self::Error> {
@@ -294,7 +303,6 @@ mod should {
         let mut layer = MamSponge::default();
         layer.absorb((SpongeCtrl::Key, TRYTES.trits())).unwrap();
         let prn_trits = layer.squeeze((SpongeCtrl::Prn, 81 * 3));
-        println!("{} {}", TRYTES.trits().len(), prn_trits.len());
         assert!(TRYTES.trits().len() == prn_trits.len())
     }
 

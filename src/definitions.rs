@@ -91,7 +91,9 @@ pub mod ss {
     /// Signature Scheme PrivateKey
     ///
     pub trait PrivateKey {
+        /// PublicKey type
         type PublicKey;
+        /// Signature Type
         type Signature;
         ///
         /// Generate Public Key
@@ -100,29 +102,53 @@ pub mod ss {
         ///
         /// Sign
         ///
-        fn sign(&self, message: &[i8]) -> Self::Signature;
+        fn sign(&self, message: &[i8]) -> Result<Self::Signature, String>;
+        ///
+        /// Mut Sign
+        ///
+        fn sign_mut(&mut self, _message: &[i8]) -> Result<Self::Signature, String> {
+            unimplemented!()
+        }
     }
 
     ///
     /// Signature Scheme PublicKey
     ///
     pub trait PublicKey {
+        /// Signature Type
         type Signature;
         ///
         /// Verify
         ///
         fn verify(&self, message: &[i8], signature: &Self::Signature) -> bool;
+        ///
+        /// To Bytes
+        ///
+        fn to_bytes(&self) -> &[i8];
+        ///
+        /// To Bytes
+        ///
+        fn form_bytes(bytes: &[i8]) -> Self;
     }
 
     ///
     /// Signature Scheme
     ///
     pub trait Signature {
+        /// PublicKey Type
         type PublicKey;
 
         ///
         /// Recover Public Key
         ///
         fn recover_public_key(&self, message: &[i8]) -> Self::PublicKey;
+        ///
+        /// To Bytes
+        ///
+        fn to_bytes(&self) -> &[i8];
+        ///
+        /// To Bytes
+        ///
+        fn form_bytes(bytes: &[i8]) -> Self;
     }
 }

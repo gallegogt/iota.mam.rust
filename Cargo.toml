@@ -29,3 +29,18 @@ iota-crypto = "^0.2"
 troika-rust = "^0.1"
 log = "^0.4"
 env_logger = "^0.6"
+
+[dev-dependencies]
+criterion = "^0.3"
+
+[[bench]]
+name = "benchmark_mss"
+harness = false
+
+[[bench]]
+name = "benchmark_wots"
+harness = false
+
+[[bench]]
+name = "benchmark_sponge"
+harness = false

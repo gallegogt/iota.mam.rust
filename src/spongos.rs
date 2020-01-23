@@ -34,10 +34,10 @@ impl Sponge for MamSpongos {
     ///
     /// Proccess input data
     fn absorb(&mut self, trits: Self::AbsorbInput) -> Result<(), Self::Error> {
-        for trit in trits.iter() {
+        trits.iter().for_each(|trit| {
             self.sponge.update_state_by_pos(self.pos, trit);
             self.update();
-        }
+        });
         Ok(())
     }
 
@@ -45,14 +45,15 @@ impl Sponge for MamSpongos {
     ///
     /// Generate output data
     fn squeeze(&mut self, out_length: Self::SqueezeInput) -> Vec<Trit> {
-        let mut squeezed: Vec<Trit> = vec![0_i8; out_length];
+        (0..out_length)
+            .map(|_it| {
+                let squeezed_pos = self.sponge.take_state(self.pos);
+                self.sponge.update_state_by_pos(self.pos, &0);
+                self.update();
 
-        for it in 0..out_length {
-            squeezed[it] = self.sponge.take_state(self.pos);
-            self.sponge.update_state_by_pos(self.pos, &0);
-            self.update()
-        }
-        squeezed
+                squeezed_pos
+            })
+            .collect()
     }
 
     /// Hash

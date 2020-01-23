@@ -12,6 +12,7 @@ use crate::{
     prng::{Prng, PrngDestinationTryte},
 };
 use iota_conversion::Trit;
+use std::marker::PhantomData;
 
 /// Size of a WOTS public key
 pub const MAM_WOTS_PUBLIC_KEY_SIZE: usize = 243;
@@ -22,7 +23,6 @@ pub const MAM_WOTS_PRIVATE_KEY_PART_COUNT: usize = 81;
 /// Size of a WOTS private key
 pub const MAM_WOTS_PRIVATE_KEY_SIZE: usize =
     (MAM_WOTS_PRIVATE_KEY_PART_SIZE * MAM_WOTS_PRIVATE_KEY_PART_COUNT);
-use std::marker::PhantomData;
 
 /// Wots PrivateKey Generator
 ///
@@ -106,26 +106,22 @@ where
     /// Generate Public Key
     ///
     fn generate_public_key(&self) -> Self::PublicKey {
-        let mut pk_part: Vec<Trit> = vec![0i8; MAM_WOTS_PRIVATE_KEY_PART_SIZE];
-        let mut pk_tmp: Vec<Trit> = vec![0i8; MAM_WOTS_PRIVATE_KEY_SIZE];
-
         let mut spongos = S::default();
-
-        for (idx, chunk) in self
+        let pk_tmp = self
             .state
             .chunks(MAM_WOTS_PRIVATE_KEY_PART_SIZE)
-            .enumerate()
-        {
-            for _ in 0..26 {
-                pk_part = spongos
-                    .hash(chunk.clone(), MAM_WOTS_PRIVATE_KEY_PART_SIZE)
-                    .unwrap();
-            }
-
-            let offset = idx * MAM_WOTS_PRIVATE_KEY_PART_SIZE;
-            let length = offset + MAM_WOTS_PRIVATE_KEY_PART_SIZE;
-            pk_tmp[offset..length].copy_from_slice(&pk_part);
-        }
+            .map(|chunk| {
+                (0..26)
+                    .map(|_| {
+                        spongos
+                            .hash(&chunk, MAM_WOTS_PRIVATE_KEY_PART_SIZE)
+                            .unwrap()
+                    })
+                    .last()
+                    .unwrap()
+            })
+            .flatten()
+            .collect::<Vec<_>>();
 
         WotsPublicKey {
             state: spongos.hash(&pk_tmp, MAM_WOTS_PUBLIC_KEY_SIZE).unwrap(),
@@ -136,7 +132,7 @@ where
     ///
     /// Sign
     ///
-    fn sign(&self, message: &[i8]) -> Self::Signature {
+    fn sign(&self, message: &[i8]) -> Result<Self::Signature, String> {
         let mut signature = [0_i8; MAM_WOTS_PRIVATE_KEY_SIZE];
         signature.copy_from_slice(&self.state);
         let mut spongos = S::default();
@@ -187,10 +183,10 @@ where
             chunk.copy_from_slice(&chk);
         }
 
-        WotsSignature {
+        Ok(WotsSignature {
             state: signature.to_vec(),
             _sponge: PhantomData,
-        }
+        })
     }
 }
 
@@ -220,6 +216,21 @@ where
             }
         }
         return true;
+    }
+    ///
+    /// To Bytes
+    ///
+    fn to_bytes(&self) -> &[i8] {
+        &self.state
+    }
+    ///
+    /// To Bytes
+    ///
+    fn form_bytes(bytes: &[i8]) -> Self {
+        WotsPublicKey {
+            state: bytes.to_vec(),
+            _sponge: PhantomData,
+        }
     }
 }
 
@@ -289,6 +300,21 @@ where
             _sponge: PhantomData,
         }
     }
+    ///
+    /// To Bytes
+    ///
+    fn to_bytes(&self) -> &[i8] {
+        &self.state
+    }
+    ///
+    /// To Bytes
+    ///
+    fn form_bytes(bytes: &[i8]) -> Self {
+        WotsSignature {
+            state: bytes.to_vec(),
+            _sponge: PhantomData,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -307,8 +333,8 @@ mod should {
         let private_key: WotsPrivateKey<MamSpongos> =
             WotsV1PrivateKeyGenerator::generate(&seed_trits, &nonce).unwrap();
         let public_key = private_key.generate_public_key();
-        let signature = private_key.sign(&seed_trits);
-        let rpk = signature.recover_public_key(&seed_trits);
+        let signature = private_key.sign(&seed_trits).unwrap();
+        let _rpk = signature.recover_public_key(&seed_trits);
 
         assert_eq!(public_key.verify(&seed_trits, &signature), true);
     }

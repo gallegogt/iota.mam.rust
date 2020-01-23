@@ -18,8 +18,11 @@ pub const MAM_PRNG_SECRET_KEY_SIZE: usize = 243;
 /// PRNG Destination Tryte
 ///
 pub enum PrngDestinationTryte {
+    /// DstSecKey
     DstSecKey = 0,
+    /// DstWotsKey
     DstWotsKey = 1,
+    /// DstNtruKey
     DstNtruKey = 2,
 }
 
@@ -55,7 +58,6 @@ impl Prng {
     pub fn new(secret_key: &[Trit]) -> Self {
         let mut sk = [0i8; MAM_PRNG_SECRET_KEY_SIZE];
         sk[0..MAM_PRNG_SECRET_KEY_SIZE].copy_from_slice(secret_key);
-
         Prng { secret_key: sk }
     }
     ///
@@ -68,12 +70,7 @@ impl Prng {
         n: usize,
     ) -> Result<Vec<Trit>, String> {
         let mut spg = MamSponge::default();
-        let mut data: Vec<Trit> = vec![0; MAM_PRNG_SECRET_KEY_SIZE + 3 + nonce.len()];
-        data[0..self.secret_key.len()].copy_from_slice(&self.secret_key);
-        data[MAM_PRNG_SECRET_KEY_SIZE..MAM_PRNG_SECRET_KEY_SIZE + 3]
-            .copy_from_slice(&destination.trits());
-        data[3 + MAM_PRNG_SECRET_KEY_SIZE..].copy_from_slice(&nonce);
-
+        let data = [&self.secret_key, &destination.trits()[..], &nonce[..]].concat();
         spg.absorb((SpongeCtrl::Key, data))?;
         Ok(spg.squeeze((SpongeCtrl::Prn, n)))
     }

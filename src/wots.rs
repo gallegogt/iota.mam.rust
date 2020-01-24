@@ -210,12 +210,7 @@ where
     ///
     fn verify(&self, message: &[i8], signature: &Self::Signature) -> bool {
         let public_key = signature.recover_public_key(message);
-        for (st_it, pk_it) in self.state.iter().zip(public_key.state.iter()) {
-            if st_it != pk_it {
-                return false;
-            }
-        }
-        return true;
+        self.state.iter().zip(public_key.to_bytes().iter()).all(|(st, pk)| st == pk)
     }
     ///
     /// To Bytes
@@ -327,7 +322,7 @@ mod should {
         "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN";
 
     #[test]
-    fn wots_test() {
+    fn verify_wots_signature() {
         let seed_trits = SEED.trits();
         let nonce = [0; 18];
         let private_key: WotsPrivateKey<MamSpongos> =

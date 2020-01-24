@@ -3,7 +3,7 @@
 use crate::definitions::{Sponge, Transform};
 use iota_conversion::Trit;
 use std::fmt;
-use troika_rust::Ftroika;
+use troika::Ftroika;
 
 /// Sponge state rate
 pub const MAM_SPONGE_RATE: usize = 486;
@@ -83,7 +83,6 @@ impl Transform for SpongeTransform {
 
         let mut ftroika = Ftroika::default();
         ftroika.absorb(&fstate);
-        ftroika.finalize();
         ftroika.squeeze(&mut fstate);
 
         fstate.iter().enumerate().for_each(|(idx, t)| {

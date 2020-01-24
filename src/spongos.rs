@@ -105,7 +105,8 @@ impl Sponge for MamSpongos {
     }
 
     fn reset(&mut self) {
-        unimplemented!();
+        self.sponge.reset();
+        self.pos = 0;
     }
 }
 

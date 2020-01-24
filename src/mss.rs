@@ -6,10 +6,15 @@ use crate::{
         ss::{PrivateKey, PublicKey, Signature},
         Sponge,
     },
-    wots::WotsPrivateKeyGenerator,
+    wots::{WotsPrivateKeyGenerator, WotsSignature},
 };
-use iota_conversion::{Trinary, Trit};
+use iota_conversion::{long_value as trist_to_value, Trinary, Trit};
 use std::marker::PhantomData;
+
+///
+/// HASH LENGTH
+///
+const HASH_LEN: usize = 243;
 
 /// MSS PrivateKey Generator
 ///
@@ -158,7 +163,7 @@ where
         height: usize,
         level: usize,
     ) -> Result<Self::PrivateKey, String> {
-        let mut sponge = S::default();
+        let mut spongos = S::default();
         let hs = height / level;
         let mut mss_priv_key = MssPrivateKey::new(&seed, &nonce, height, level);
 
@@ -189,8 +194,8 @@ where
                 let l = item2.level + 1;
                 let p = item2.pos / 2;
 
-                let hash = sponge
-                    .hash(&[&item1.item[..], &item2.item[..]].concat(), 243)
+                let hash = spongos
+                    .hash(&[&item1.item[..], &item2.item[..]].concat(), HASH_LEN)
                     .unwrap();
 
                 stk.push(TreeStackItem {
@@ -233,21 +238,21 @@ where
     ///
     fn sign_mut(&mut self, message: &[i8]) -> Result<Self::Signature, String> {
         let hs = self.height / self.level;
-        let mut signature_state = vec![0_i8; 18 + 13122 + 243 * self.sigs_used];
+        let mut signature_state = vec![0_i8; 18 + 13122 + HASH_LEN * self.height ];
 
-        if self.check_privkey(hs) {
+        if !self.check_privkey(hs) {
             return Err("Secret Key error".to_owned());
         }
+
         signature_state[0..18].copy_from_slice(&self.skn());
 
         let trits = (self.sigs_used as i64).trits_with_length(6);
         let wots_priv_key =
             G::generate(&self.seed, &[&self.nonce[..], &trits[..]].concat()).unwrap();
 
-        let signature = wots_priv_key.sign(message).unwrap();
+         let signature = wots_priv_key.sign(message).unwrap();
         signature_state[18..(18 + 13122)].copy_from_slice(&signature.to_bytes());
         signature_state[(18 + 13122)..].copy_from_slice(&self.apath()[..]);
-
         self.update_private_key();
 
         Ok(MssSignature {
@@ -263,14 +268,18 @@ where
 
 impl<S> PublicKey for MssPublicKey<S>
 where
-    S: Sponge + Default,
+    S: Sponge<Error = String> + Default,
 {
     type Signature = MssSignature<S>;
     ///
     /// Verify
     ///
-    fn verify(&self, _message: &[i8], _signature: &Self::Signature) -> bool {
-        unimplemented!()
+    fn verify(&self, message: &[i8], signature: &Self::Signature) -> bool {
+        let pk = signature.recover_public_key(message);
+        self.state
+            .iter()
+            .zip(pk.to_bytes().iter())
+            .all(|(st, pk)| st == pk)
     }
     ///
     /// To Bytes
@@ -285,6 +294,80 @@ where
         MssPublicKey {
             state: bytes.to_vec(),
             h: 0,
+            _sponge: PhantomData,
+        }
+    }
+}
+
+impl<S> Default for MssPublicKey<S>
+where
+    S: Sponge<Error = String> + Default,
+{
+    fn default() -> Self {
+        MssPublicKey {
+            state: vec![0i8; 1],
+            h: 0,
+            _sponge: PhantomData,
+        }
+    }
+}
+
+impl<S> Signature for MssSignature<S>
+where
+    S: Sponge<Error = String> + Default,
+{
+    /// PublicKey Type
+    type PublicKey = MssPublicKey<S>;
+
+    ///
+    /// Recover Public Key
+    ///
+    fn recover_public_key(&self, message: &[i8]) -> Self::PublicKey {
+        if self.state.len() < 18 + 13122 {
+            return Self::PublicKey::default();
+        }
+        let d = trist_to_value(&self.state[..4].to_vec());
+        let mut skn = trist_to_value(&self.state[4..18].to_vec());
+
+        if d < 0 || skn < 0 || skn >= 2 ^ d || self.state.len() != (18 + 13122 + 243 * d) as usize {
+            return Self::PublicKey::default();
+        }
+        let wots: WotsSignature<S> = WotsSignature::form_bytes(&self.state[18..18 + 13122]);
+        let mut t = wots.recover_public_key(message).to_bytes().to_vec();
+        let mut p = self.state[13122..].to_vec();
+
+        let mut spongos = S::default();
+
+        for _ in 0..d {
+            if skn % 2 == 0 {
+                t = [&t, &p[..HASH_LEN]].concat();
+            } else {
+                t = [&p[..HASH_LEN], &t].concat();
+            }
+
+            t = spongos.hash(&t, HASH_LEN).unwrap();
+            p = p[HASH_LEN..].to_vec();
+            skn = skn / 2;
+        }
+
+        return MssPublicKey {
+            state: t,
+            h: d as usize,
+            _sponge: PhantomData,
+        };
+    }
+    ///
+    /// To Bytes
+    ///
+    fn to_bytes(&self) -> &[i8] {
+        &self.state
+    }
+    ///
+    /// To Bytes
+    ///
+    fn form_bytes(bytes: &[i8]) -> Self {
+        MssSignature {
+            state: bytes.to_vec(),
             _sponge: PhantomData,
         }
     }
@@ -311,7 +394,7 @@ where
             desired: vec![Vec::new(); level - 1],
             desired_stack: vec![Vec::new(); level - 1],
             desired_progress: vec![0; level - 1],
-            root: vec![0_i8; 243],
+            root: vec![0_i8; HASH_LEN],
             _sponge: PhantomData,
             _gen: PhantomData,
         }
@@ -323,7 +406,7 @@ where
     pub(crate) fn alloc_exist(&mut self, hs: usize) {
         let ts = (1 << (hs + 1)) - 2;
         for it in 0..self.level {
-            self.exist[it] = vec![0i8; ts * 243];
+            self.exist[it] = vec![0i8; ts * HASH_LEN];
         }
     }
     ///
@@ -332,9 +415,9 @@ where
     pub(crate) fn alloc_desired(&mut self, hs: usize) {
         for it in 0..self.level - 1 {
             let ts = (1 << (hs + 1)) - 2;
-            self.desired[it] = vec![0i8; ts * 243];
+            self.desired[it] = vec![0i8; ts * HASH_LEN];
             for jt in 0..ts {
-                self.desired[it][jt * 243..(jt + 1) * 243].copy_from_slice(&[0i8; 243])
+                self.desired[it][jt * HASH_LEN..(jt + 1) * HASH_LEN].copy_from_slice(&[0i8; HASH_LEN])
             }
         }
     }
@@ -354,7 +437,7 @@ where
             return;
         }
         let pos = item.pos + sublev_width - 2;
-        self.exist[level][pos * 243..(pos + 1) * 243].copy_from_slice(&item.item);
+        self.exist[level][pos * HASH_LEN..(pos + 1) * HASH_LEN].copy_from_slice(&item.item);
     }
 
     ///
@@ -370,7 +453,7 @@ where
             return;
         }
         let pos = item.pos + (1 << depth) - 2;
-        self.desired[did][pos * 243..(pos + 1) * 243].copy_from_slice(&item.item);
+        self.desired[did][pos * HASH_LEN..(pos + 1) * HASH_LEN].copy_from_slice(&item.item);
     }
 
     ///
@@ -384,7 +467,7 @@ where
         }
 
         for it in 0..self.exist.len() {
-            if self.exist[it].len() != ts * 243 {
+            if self.exist[it].len() != ts * HASH_LEN {
                 return false;
             }
         }
@@ -397,7 +480,7 @@ where
         }
 
         for it in 0..self.desired.len() {
-            if self.desired[it].len() != ts * 243 {
+            if self.desired[it].len() != ts * HASH_LEN {
                 return false;
             }
         }
@@ -409,7 +492,7 @@ where
         let hs = self.height / self.level;
 
         for it in 0..self.desired.len() {
-            let mut sponge = S::default();
+            let mut spongos = S::default();
             let d_h = (it + 1) * hs;
             let d_leaves = 1 << d_h;
 
@@ -442,16 +525,16 @@ where
                 {
                     break;
                 }
-                sponge.reset();
 
                 let item1 = self.desired_stack[it].pop().unwrap();
                 let item2 = self.desired_stack[it].pop().unwrap();
                 let l = item2.level + 1;
                 let p = item2.pos / 2;
 
-                let hash = sponge
-                    .hash(&[&item1.item[..], &item2.item[..]].concat(), 243)
+                let hash = spongos
+                    .hash(&[&item1.item[..], &item2.item[..]].concat(), HASH_LEN)
                     .unwrap();
+
                 let s_item = TreeStackItem::new(l, p, &hash);
                 self.desired_stack[it].push(s_item.clone());
                 self.store_exits(&s_item, hs);
@@ -504,7 +587,7 @@ where
             // flip the last bit of pos so it gets the neighbor
             let expos = (pos ^ 1) % (1 << exlev);
             let ep = expos + (1 << exlev) - 2;
-            p = [&p, &self.exist[exid][ep * 243..(ep + 1) * 243]].concat();
+            p = [&p, &self.exist[exid][ep * HASH_LEN..(ep + 1) * HASH_LEN]].concat();
             pos >>= 1
         }
 
@@ -525,9 +608,12 @@ where
         encoded_skn
     }
 
-    // pub(crate) fn sigs_remaining(&self, hs: usize) -> usize {
-    //    (1 << (self.level * hs) - self.sigs_used)
-    // }
+    ///
+    /// Sigs Remaning
+    ///
+    pub fn sigs_remaining(&self) -> usize {
+        (1 << self.height) - self.sigs_used
+    }
 }
 
 #[cfg(test)]
@@ -552,5 +638,49 @@ mod should {
         let pk = private_key.generate_public_key();
 
         assert!(pk.to_bytes().len() == 243);
+    }
+
+    #[test]
+    fn sign_message() {
+        let seed_trits = SEED.trits();
+        let message = SEED.trits();
+        let nonce = [0; 18];
+        let depth = 4;
+
+        let mut private_key = MssV1PrivateKeyGenerator::<
+            MamSpongos,
+            WotsV1PrivateKeyGenerator<MamSpongos>,
+        >::generate(&seed_trits, &nonce, depth, 2)
+        .unwrap();
+        let signature = private_key.sign_mut(&message).unwrap();
+
+        assert_eq!(signature.to_bytes().len(), 18 + 13122 + 243 * depth);
+    }
+
+    #[test]
+    fn verify_message() {
+        let seed_trits = SEED.trits();
+        let message = SEED.trits();
+        let nonce = [0; 18];
+        let depth = 4;
+
+        let mut private_key = MssV1PrivateKeyGenerator::<
+            MamSpongos,
+            WotsV1PrivateKeyGenerator<MamSpongos>,
+        >::generate(&seed_trits, &nonce, depth, 2)
+        .unwrap();
+        let public_key = private_key.generate_public_key();
+        println!("Sigs Remaining {}", private_key.sigs_remaining());
+
+        let _dsignature = private_key.sign_mut(&message).unwrap();
+
+        println!("Sigs Remaining {}", private_key.sigs_remaining());
+
+        let _signature = private_key.sign_mut(&message).unwrap();
+
+        println!("Sigs Remaining {}", private_key.sigs_remaining());
+
+        let _sig3 = private_key.sign_mut(&message).unwrap();
+        assert_eq!(public_key.verify(&seed_trits, &_sig3), true);
     }
 }

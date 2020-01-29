@@ -103,12 +103,6 @@ pub mod ss {
         /// Sign
         ///
         fn sign(&self, message: &[i8]) -> Result<Self::Signature, String>;
-        ///
-        /// Mut Sign
-        ///
-        fn sign_mut(&mut self, _message: &[i8]) -> Result<Self::Signature, String> {
-            unimplemented!()
-        }
     }
 
     ///

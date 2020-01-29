@@ -1,6 +1,8 @@
 //!
 //! Merkle Signature Scheme
 //!
+//! Based on FMTSEQ => https://github.com/exaexa/codecrypt/blob/master/src/fmtseq.h
+//!
 use crate::{
     definitions::{
         ss::{PrivateKey, PublicKey, Signature},
@@ -198,11 +200,7 @@ where
                     .hash(&[&item2.item[..], &item1.item[..]].concat(), HASH_LEN)
                     .unwrap();
 
-                stk.push(TreeStackItem {
-                    pos: p,
-                    level: l,
-                    item: hash,
-                });
+                stk.push(TreeStackItem::new(l, p,  &hash));
                 mss_priv_key.store_exist(&stk[stk.len() - 1]);
             }
         }
@@ -330,9 +328,10 @@ where
         let d = trist_to_value(&self.state[..4].to_vec());
         let mut skn = trist_to_value(&self.state[4..18].to_vec());
 
-        if d < 0 || skn < 0 || skn >= 2 ^ d || self.state.len() != (18 + 13122 + 243 * d) as usize {
+        if (d < 0) || (skn < 0) || (skn >= (1 << d)) || (self.state.len() != (18 + 13122 + 243 * d) as usize) {
             return Self::PublicKey::default();
         }
+
         let wots: WotsSignature<S> = WotsSignature::form_bytes(&self.state[18..(18 + 13122)]);
         let mut t = wots.recover_public_key(message).to_bytes().to_vec();
         let mut p = self.state[(18 + 13122)..].to_vec();
@@ -502,9 +501,9 @@ where
             let pk = wots_priv_key.generate_public_key();
 
             let item = TreeStackItem::new(0, self.desired_progress[it], pk.to_bytes());
-            self.store_desired(&item, it);
-
             self.desired_stack[it].push(item.clone());
+
+            self.store_desired(&item, it);
 
             self.desired_progress[it] += 1;
             let mut spongos = S::default();
@@ -547,16 +546,15 @@ where
                 continue;
             }
             // if nothing changed, do nothing
-            // if (! ( (subtree_changes >> (priv.h * (1 + idx)))
-		    //     & one_subtree_mask)) continue;
             if ((subtree_changes >> (self.height * (1 + idx))) & one_subtree_mask) == 0 {
                 continue;
             }
 
             // move desired to exist
-            self.exist[idx] = self.desired[idx].clone();
+            self.exist[idx].copy_from_slice(&self.desired[idx]);
             self.desired_progress[idx] = 0;
             self.desired_stack[idx].clear();
+
             // if there aren't more desired subtrees on this level,
             // strip it off.
             let next_subtree_start = (1 + (next_sigs_used >> ((1 + idx) * self.height))) << ((1 + idx) * self.height);
@@ -667,10 +665,8 @@ mod should {
 
         let public_key = private_key.generate_public_key();
 
-        for k in 0..sg {
-            println!("K --> {}/{}", k, sg);
+        for _ in 0..sg {
             let sig3 = private_key.sign_mut(&message).unwrap();
-            println!("R --> {}/{}", private_key.sigs_remaining(), sg);
             assert_eq!(public_key.verify(&message, &sig3), true);
         }
     }

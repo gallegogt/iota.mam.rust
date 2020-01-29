@@ -36,7 +36,7 @@ pub struct MssPrivateKey<S, G> {
     nonce: Vec<Trit>,
     /// Level count
     level: usize,
-    /// Tree Height
+    /// SubTree Height
     height: usize,
     /// Sigs used
     sigs_used: usize,
@@ -129,7 +129,7 @@ pub trait MssPrivateKeyGenerator<S, G> {
     /// Arguments:
     ///     `seed`: Secret Key
     ///     `nonce`: Nonce
-    ///     `height`: root-leaf path
+    ///     `height`: subtree height
     ///     `level`: level
     ///
     fn generate(
@@ -154,23 +154,23 @@ where
     /// Arguments:
     ///     `seed`: Secret Key
     ///     `nonce`: Nonce
-    ///     `height`: Tree Height
+    ///     `subtree_height`: SubTree Height
     ///     `level`: level count
     ///
     fn generate(
         seed: &[Trit],
         nonce: &[Trit],
-        height: usize,
+        subtree_height: usize,
         level: usize,
     ) -> Result<Self::PrivateKey, String> {
         let mut spongos = S::default();
-        let hs = height / level;
-        let mut mss_priv_key = MssPrivateKey::new(&seed, &nonce, height, level);
+        let height = subtree_height * level;
+        let mut mss_priv_key = MssPrivateKey::new(&seed, &nonce, subtree_height, level);
 
         let mut stk: Vec<TreeStackItem> = Vec::with_capacity(height + 1);
-        let sigs: usize = 1 << height;
+        let sigs: usize = 1 << height ;
 
-        mss_priv_key.alloc_exist(hs);
+        mss_priv_key.alloc_exist();
 
         for it in 0..sigs {
             let trits = (it as i64).trits_with_length(6);
@@ -178,7 +178,7 @@ where
             let pk = wots_priv_key.generate_public_key();
 
             stk.push(TreeStackItem::new(0, it, pk.to_bytes()));
-            mss_priv_key.store_exits(stk.last().unwrap(), hs);
+            mss_priv_key.store_exist(&stk[stk.len() - 1]);
 
             loop {
                 if stk.len() < 2 {
@@ -191,11 +191,11 @@ where
                 let item1 = stk.pop().unwrap();
                 let item2 = stk.pop().unwrap();
 
-                let l = item2.level + 1;
-                let p = item2.pos / 2;
+                let l = item1.level + 1;
+                let p = item1.pos / 2;
 
                 let hash = spongos
-                    .hash(&[&item1.item[..], &item2.item[..]].concat(), HASH_LEN)
+                    .hash(&[&item2.item[..], &item1.item[..]].concat(), HASH_LEN)
                     .unwrap();
 
                 stk.push(TreeStackItem {
@@ -203,12 +203,12 @@ where
                     level: l,
                     item: hash,
                 });
-                mss_priv_key.store_exits(stk.last().unwrap(), hs);
+                mss_priv_key.store_exist(&stk[stk.len() - 1]);
             }
         }
 
-        mss_priv_key.alloc_desired(hs);
-        mss_priv_key.root[..].copy_from_slice(&stk.last().unwrap().item);
+        mss_priv_key.alloc_desired();
+        mss_priv_key.root[..].copy_from_slice(&stk[stk.len() - 1].item);
         Ok(mss_priv_key)
     }
 }
@@ -229,7 +229,7 @@ where
     fn generate_public_key(&self) -> Self::PublicKey {
         MssPublicKey {
             state: self.root.to_vec(),
-            h: self.height,
+            h: self.height * self.level,
             _sponge: PhantomData,
         }
     }
@@ -237,10 +237,10 @@ where
     /// Sign
     ///
     fn sign_mut(&mut self, message: &[i8]) -> Result<Self::Signature, String> {
-        let hs = self.height / self.level;
-        let mut signature_state = vec![0_i8; 18 + 13122 + HASH_LEN * self.height ];
+        let t_height = self.height * self.level;
+        let mut signature_state = vec![0_i8; 18 + 13122 + HASH_LEN * t_height];
 
-        if !self.check_privkey(hs) {
+        if !self.check_privkey() {
             return Err("Secret Key error".to_owned());
         }
 
@@ -249,10 +249,11 @@ where
         let trits = (self.sigs_used as i64).trits_with_length(6);
         let wots_priv_key =
             G::generate(&self.seed, &[&self.nonce[..], &trits[..]].concat()).unwrap();
+        let signature = wots_priv_key.sign(message).unwrap();
 
-         let signature = wots_priv_key.sign(message).unwrap();
         signature_state[18..(18 + 13122)].copy_from_slice(&signature.to_bytes());
         signature_state[(18 + 13122)..].copy_from_slice(&self.apath()[..]);
+
         self.update_private_key();
 
         Ok(MssSignature {
@@ -332,10 +333,9 @@ where
         if d < 0 || skn < 0 || skn >= 2 ^ d || self.state.len() != (18 + 13122 + 243 * d) as usize {
             return Self::PublicKey::default();
         }
-        let wots: WotsSignature<S> = WotsSignature::form_bytes(&self.state[18..18 + 13122]);
+        let wots: WotsSignature<S> = WotsSignature::form_bytes(&self.state[18..(18 + 13122)]);
         let mut t = wots.recover_public_key(message).to_bytes().to_vec();
-        let mut p = self.state[13122..].to_vec();
-
+        let mut p = self.state[(18 + 13122)..].to_vec();
         let mut spongos = S::default();
 
         for _ in 0..d {
@@ -344,10 +344,9 @@ where
             } else {
                 t = [&p[..HASH_LEN], &t].concat();
             }
-
             t = spongos.hash(&t, HASH_LEN).unwrap();
             p = p[HASH_LEN..].to_vec();
-            skn = skn / 2;
+            skn = ((skn / 2) as f32).floor() as i64;
         }
 
         return MssPublicKey {
@@ -403,8 +402,8 @@ where
     ///
     /// Alloc exist tree
     ///
-    pub(crate) fn alloc_exist(&mut self, hs: usize) {
-        let ts = (1 << (hs + 1)) - 2;
+    pub(crate) fn alloc_exist(&mut self) {
+        let ts = (1 << (self.height + 1)) - 2;
         for it in 0..self.level {
             self.exist[it] = vec![0i8; ts * HASH_LEN];
         }
@@ -412,55 +411,52 @@ where
     ///
     /// Alloc Desired
     ///
-    pub(crate) fn alloc_desired(&mut self, hs: usize) {
+    pub(crate) fn alloc_desired(&mut self) {
         for it in 0..self.level - 1 {
-            let ts = (1 << (hs + 1)) - 2;
+            let ts = (1 << (self.height + 1)) - 2;
             self.desired[it] = vec![0i8; ts * HASH_LEN];
-            for jt in 0..ts {
-                self.desired[it][jt * HASH_LEN..(jt + 1) * HASH_LEN].copy_from_slice(&[0i8; HASH_LEN])
-            }
         }
     }
     ///
     /// Store Exits
     ///
-    pub(crate) fn store_exits(&mut self, item: &TreeStackItem, hs: usize) {
-        let level = item.level / hs;
+    pub(crate) fn store_exist(&mut self, item: &TreeStackItem) {
+        let level = item.level / self.height;
         if level >= self.level {
             // top node
             return;
         }
-        let sublevel = hs - (item.level % hs);
+        let sublevel = self.height - (item.level % self.height);
         let sublev_width = 1 << sublevel;
         if item.pos >= sublev_width {
             // too far right
             return;
         }
         let pos = item.pos + sublev_width - 2;
-        self.exist[level][pos * HASH_LEN..(pos + 1) * HASH_LEN].copy_from_slice(&item.item);
+        self.exist[level][(pos * HASH_LEN)..((pos + 1) * HASH_LEN)].copy_from_slice(&item.item);
     }
 
     ///
     /// Store Desired
     ///
-    pub(crate) fn store_desired(&mut self, item: &TreeStackItem, did: usize, hs: usize) {
-        if (item.level / hs) != did {
+    pub(crate) fn store_desired(&mut self, item: &TreeStackItem, did: usize) {
+        if (item.level / self.height) != did {
             // too below or above
             return;
         }
-        let depth = hs - (item.level % hs);
+        let depth = self.height - (item.level % self.height);
         if item.pos >= (1 << depth) {
             return;
         }
         let pos = item.pos + (1 << depth) - 2;
-        self.desired[did][pos * HASH_LEN..(pos + 1) * HASH_LEN].copy_from_slice(&item.item);
+        self.desired[did][(pos * HASH_LEN)..((pos + 1) * HASH_LEN)].copy_from_slice(&item.item);
     }
 
     ///
     /// Check Private Key
     ///
-    pub(crate) fn check_privkey(&self, hs: usize) -> bool {
-        let ts: usize = (1 << (hs + 1)) - 2;
+    pub(crate) fn check_privkey(&self) -> bool {
+        let ts: usize = (1 << (self.height + 1)) - 2;
         // exist tree count is always L
         if self.exist.len() != self.level {
             return false;
@@ -489,13 +485,10 @@ where
     }
 
     pub(crate) fn update_private_key(&mut self) {
-        let hs = self.height / self.level;
 
         for it in 0..self.desired.len() {
-            let mut spongos = S::default();
-            let d_h = (it + 1) * hs;
+            let d_h = (it + 1) * self.height;
             let d_leaves = 1 << d_h;
-
             if self.desired_progress[it] >= d_leaves {
                 continue; //already done
             }
@@ -509,11 +502,12 @@ where
             let pk = wots_priv_key.generate_public_key();
 
             let item = TreeStackItem::new(0, self.desired_progress[it], pk.to_bytes());
-            self.store_desired(&item, it, hs);
+            self.store_desired(&item, it);
 
             self.desired_stack[it].push(item.clone());
 
             self.desired_progress[it] += 1;
+            let mut spongos = S::default();
 
             // stack squashing
             loop {
@@ -528,32 +522,34 @@ where
 
                 let item1 = self.desired_stack[it].pop().unwrap();
                 let item2 = self.desired_stack[it].pop().unwrap();
-                let l = item2.level + 1;
-                let p = item2.pos / 2;
+                let l = item1.level + 1;
+                let p = item1.pos / 2;
 
                 let hash = spongos
-                    .hash(&[&item1.item[..], &item2.item[..]].concat(), HASH_LEN)
+                    .hash(&[&item2.item[..], &item1.item[..]].concat(), HASH_LEN)
                     .unwrap();
 
                 let s_item = TreeStackItem::new(l, p, &hash);
                 self.desired_stack[it].push(s_item.clone());
-                self.store_exits(&s_item, hs);
+                self.store_desired(&s_item, it);
             }
         }
 
         let next_sigs_used = self.sigs_used + 1;
         let subtree_changes = self.sigs_used ^ next_sigs_used;
-        let one_subtree_mask = (1 << hs) - 1;
+        let one_subtree_mask = (1 << self.height) - 1;
 
         // go from the topmost subtree.
         for it in 0..self.level {
-            let idx = hs - it - 1;
+            let idx = self.level - it - 1;
             // ignore unused top levels
             if idx > self.desired.len() {
                 continue;
             }
             // if nothing changed, do nothing
-            if ((subtree_changes >> (hs * (1 + idx))) & one_subtree_mask) == 0 {
+            // if (! ( (subtree_changes >> (priv.h * (1 + idx)))
+		    //     & one_subtree_mask)) continue;
+            if ((subtree_changes >> (self.height * (1 + idx))) & one_subtree_mask) == 0 {
                 continue;
             }
 
@@ -563,8 +559,8 @@ where
             self.desired_stack[idx].clear();
             // if there aren't more desired subtrees on this level,
             // strip it off.
-            let next_subtree_start = (1 + (next_sigs_used >> ((1 + idx) * hs))) << ((1 + idx) * hs);
-            if next_subtree_start >= (1 << self.height) {
+            let next_subtree_start = (1 + (next_sigs_used >> ((1 + idx) * self.height))) << ((1 + idx) * self.height);
+            if next_subtree_start >= (1 << (self.height * self.level)) {
                 self.desired.resize_with(idx, Default::default);
                 self.desired_stack.resize_with(idx, Default::default);
                 self.desired_progress.resize_with(idx, Default::default);
@@ -577,20 +573,21 @@ where
     /// Retrieve the Authentication Path
     ///
     pub fn apath(&self) -> Vec<Trit> {
-        let hs = self.height / self.level;
+        let t_height = self.height * self.level;
         let mut pos = self.sigs_used;
-        let mut p = Vec::new();
+        let mut p = vec![0i8; t_height * HASH_LEN];
 
-        for it in 0..self.height {
-            let exid = it / hs;
-            let exlev = hs - (it % hs);
+        for it in 0..t_height {
+            let exid = it / self.height;
+            let exlev = self.height - (it % self.height);
             // flip the last bit of pos so it gets the neighbor
             let expos = (pos ^ 1) % (1 << exlev);
             let ep = expos + (1 << exlev) - 2;
-            p = [&p, &self.exist[exid][ep * HASH_LEN..(ep + 1) * HASH_LEN]].concat();
+
+            p[(it * HASH_LEN)..((it + 1) * HASH_LEN)]
+                .copy_from_slice(&self.exist[exid][(ep * HASH_LEN)..((ep + 1) * HASH_LEN)]);
             pos >>= 1
         }
-
         p
     }
 
@@ -599,12 +596,12 @@ where
     ///
     pub fn skn(&self) -> [i8; 18] {
         let mut encoded_skn = [0i8; 18];
-        let t_depth = (self.height as i64).trits_with_length(6);
-        let t_skn = (self.sigs_used as i64).trits_with_length(18);
+        let t_height =  self.height * self.level;
+        let t_depth = (t_height as i64).trits_with_length(4);
+        let t_skn = (self.sigs_used as i64).trits_with_length(14);
 
-        encoded_skn[0..4].copy_from_slice(&t_depth[0..4]);
-        encoded_skn[4..].copy_from_slice(&t_skn[0..14]);
-
+        encoded_skn[..4].copy_from_slice(&t_depth[..]);
+        encoded_skn[4..].copy_from_slice(&t_skn[..]);
         encoded_skn
     }
 
@@ -612,7 +609,7 @@ where
     /// Sigs Remaning
     ///
     pub fn sigs_remaining(&self) -> usize {
-        (1 << self.height) - self.sigs_used
+        (1 << (self.height * self.level)) - self.sigs_used
     }
 }
 
@@ -632,7 +629,7 @@ mod should {
         let private_key = MssV1PrivateKeyGenerator::<
             MamSpongos,
             WotsV1PrivateKeyGenerator<MamSpongos>,
-        >::generate(&seed_trits, &nonce, 7, 2)
+        >::generate(&seed_trits, &nonce, 2, 2)
         .unwrap();
 
         let pk = private_key.generate_public_key();
@@ -645,16 +642,14 @@ mod should {
         let seed_trits = SEED.trits();
         let message = SEED.trits();
         let nonce = [0; 18];
-        let depth = 4;
-
         let mut private_key = MssV1PrivateKeyGenerator::<
             MamSpongos,
             WotsV1PrivateKeyGenerator<MamSpongos>,
-        >::generate(&seed_trits, &nonce, depth, 2)
+        >::generate(&seed_trits, &nonce, 2, 2)
         .unwrap();
         let signature = private_key.sign_mut(&message).unwrap();
 
-        assert_eq!(signature.to_bytes().len(), 18 + 13122 + 243 * depth);
+        assert_eq!(signature.to_bytes().len(), 18 + 13122 + 243 * 4);
     }
 
     #[test]
@@ -663,24 +658,20 @@ mod should {
         let message = SEED.trits();
         let nonce = [0; 18];
         let depth = 4;
-
         let mut private_key = MssV1PrivateKeyGenerator::<
             MamSpongos,
             WotsV1PrivateKeyGenerator<MamSpongos>,
-        >::generate(&seed_trits, &nonce, depth, 2)
+        >::generate(&seed_trits, &nonce, 2, 2)
         .unwrap();
+        let sg = (1 << depth) - 1;
+
         let public_key = private_key.generate_public_key();
-        println!("Sigs Remaining {}", private_key.sigs_remaining());
 
-        let _dsignature = private_key.sign_mut(&message).unwrap();
-
-        println!("Sigs Remaining {}", private_key.sigs_remaining());
-
-        let _signature = private_key.sign_mut(&message).unwrap();
-
-        println!("Sigs Remaining {}", private_key.sigs_remaining());
-
-        let _sig3 = private_key.sign_mut(&message).unwrap();
-        assert_eq!(public_key.verify(&seed_trits, &_sig3), true);
+        for k in 0..sg {
+            println!("K --> {}/{}", k, sg);
+            let sig3 = private_key.sign_mut(&message).unwrap();
+            println!("R --> {}/{}", private_key.sigs_remaining(), sg);
+            assert_eq!(public_key.verify(&message, &sig3), true);
+        }
     }
 }

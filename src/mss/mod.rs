@@ -7,14 +7,14 @@ mod internal;
 
 use crate::{
     definitions::{
-        ss::{PrivateKey, PublicKey, Signature},
+        ss::{PrivateKey, PrivateKeyGenerator, PublicKey, Signature},
         Sponge,
     },
-    wots::{WotsPrivateKeyGenerator, WotsSignature},
     mss::internal::{InternalPrivateKey, TreeStackItem},
+    wots::WotsSignature,
 };
 use iota_conversion::{long_value as trist_to_value, Trinary, Trit};
-use std::{marker::PhantomData, cell::RefCell};
+use std::{cell::RefCell, marker::PhantomData};
 
 ///
 /// HASH LENGTH
@@ -24,9 +24,14 @@ const HASH_LEN: usize = 243;
 /// MSS PrivateKey Generator
 ///
 #[derive(Debug)]
-pub struct MssV1PrivateKeyGenerator<S, G> {
-    _market: PhantomData<S>,
-    generator: G,
+pub struct MssPrivateKeyGenerator<S, G> {
+    /// Subtree Height
+    height: usize,
+    /// Tree Level
+    level: usize,
+    /// Sponge
+    _sponge: PhantomData<S>,
+    _generator: PhantomData<G>,
 }
 
 ///
@@ -36,7 +41,7 @@ pub struct MssV1PrivateKeyGenerator<S, G> {
 #[derive(Clone)]
 pub struct MssPrivateKey<S, G> {
     /// Intenal Implementation
-    i_mt: RefCell<InternalPrivateKey<S,G>>,
+    i_mt: RefCell<InternalPrivateKey<S, G>>,
     /// Public Key
     root: Vec<Trit>,
     /// Market Data
@@ -70,37 +75,15 @@ pub struct MssSignature<S> {
     _sponge: PhantomData<S>,
 }
 
-///
-/// Trait for Mss Private Key Generator
-///
-pub trait MssPrivateKeyGenerator<S, G> {
-    /// Private Key
-    type PrivateKey;
-
-    /// Generate Private Key
-    ///
-    /// Arguments:
-    ///     `seed`: Secret Key
-    ///     `nonce`: Nonce
-    ///     `height`: subtree height
-    ///     `level`: level
-    ///
-    fn generate(
-        seed: &[Trit],
-        nonce: &[Trit],
-        height: usize,
-        level: usize,
-    ) -> Result<Self::PrivateKey, String>;
-}
-
-impl<S, G> MssPrivateKeyGenerator<S, G> for MssV1PrivateKeyGenerator<S, G>
+impl<S, G> PrivateKeyGenerator<S> for MssPrivateKeyGenerator<S, G>
 where
     S: Sponge<Error = String> + Default,
-    G: WotsPrivateKeyGenerator<S>,
-    <G as WotsPrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
-    <<G as WotsPrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
+    G: Default + PrivateKeyGenerator<S, Error = String>,
+    <G as PrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
+    <<G as PrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
 {
     type PrivateKey = MssPrivateKey<S, G>;
+    type Error = String;
 
     /// Generate Private Key
     ///
@@ -110,24 +93,22 @@ where
     ///     `subtree_height`: SubTree Height
     ///     `level`: level count
     ///
-    fn generate(
-        seed: &[Trit],
-        nonce: &[Trit],
-        subtree_height: usize,
-        level: usize,
-    ) -> Result<Self::PrivateKey, String> {
+    fn generate(&self, seed: &[Trit], nonce: &[Trit]) -> Result<Self::PrivateKey, String> {
         let mut spongos = S::default();
-        let height = subtree_height * level;
-        let mut i_mt = InternalPrivateKey::new(&seed, &nonce, subtree_height, level);
+        let height = self.height * self.level;
+        let mut i_mt = InternalPrivateKey::new(&seed, &nonce, self.height, self.level);
 
         let mut stk: Vec<TreeStackItem> = Vec::with_capacity(height + 1);
-        let sigs: usize = 1 << height ;
+        let sigs: usize = 1 << height;
 
         i_mt.alloc_exist();
+        let wots_kgen = G::default();
 
         for it in 0..sigs {
             let trits = (it as i64).trits_with_length(6);
-            let wots_priv_key = G::generate(&seed, &[&nonce[..], &trits[..]].concat()).unwrap();
+            let wots_priv_key = wots_kgen
+                .generate(&seed, &[&nonce[..], &trits[..]].concat())
+                .unwrap();
             let pk = wots_priv_key.generate_public_key();
 
             stk.push(TreeStackItem::new(0, it, pk.to_bytes()));
@@ -151,7 +132,7 @@ where
                     .hash(&[&item2.item[..], &item1.item[..]].concat(), HASH_LEN)
                     .unwrap();
 
-                stk.push(TreeStackItem::new(l, p,  &hash));
+                stk.push(TreeStackItem::new(l, p, &hash));
                 i_mt.store_exist(&stk[stk.len() - 1]);
             }
         }
@@ -161,13 +142,50 @@ where
     }
 }
 
+impl<S, G> MssPrivateKeyGenerator<S, G>
+where
+    S: Sponge<Error = String> + Default,
+    G: Default + PrivateKeyGenerator<S, Error = String>,
+    <G as PrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
+    <<G as PrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
+{
+    ///
+    /// Create MSS Private Key Generator
+    ///
+    /// The depth of this tree is (height x level) and the total messages that you can sign are _2 ^ (height x level)_
+    ///
+    /// Arguments
+    ///     height Height of subtrees
+    ///     level Level of Merkle Tree
+    ///
+    pub fn new(height: usize, level: usize) -> Self {
+        MssPrivateKeyGenerator {
+            height,
+            level,
+            _sponge: PhantomData,
+            _generator: PhantomData,
+        }
+    }
+    ///
+    /// Create MSS Private Key Generator from Depth
+    ///
+    /// Arguments
+    ///     depth Mss depth
+    ///
+    pub fn from_depth(depth: usize) -> Self {
+        let h = (depth as f32).log2().floor();
+        let level = (depth as f32 / h).round();
+        Self::new(h as usize, level as usize)
+    }
+}
+
 impl<S, G> PrivateKey for MssPrivateKey<S, G>
 where
     S: Sponge<Error = String> + Default,
-    G: WotsPrivateKeyGenerator<S>,
-    <G as WotsPrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
-    <<G as WotsPrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
-    <<G as WotsPrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::Signature: Signature,
+    G: Default + PrivateKeyGenerator<S, Error = String>,
+    <G as PrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
+    <<G as PrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
+    <<G as PrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::Signature: Signature,
 {
     type PublicKey = MssPublicKey<S>;
     type Signature = MssSignature<S>;
@@ -191,11 +209,13 @@ where
             return Err("Secret Key error".to_owned());
         }
 
+        let wots_kgen = G::default();
         signature_state[0..18].copy_from_slice(&i_mt.skn());
 
         let trits = (i_mt.sigs_used as i64).trits_with_length(6);
-        let wots_priv_key =
-            G::generate(&i_mt.seed, &[&i_mt.nonce[..], &trits[..]].concat()).unwrap();
+        let wots_priv_key = wots_kgen
+            .generate(&i_mt.seed, &[&i_mt.nonce[..], &trits[..]].concat())
+            .unwrap();
         let signature = wots_priv_key.sign(message).unwrap();
 
         signature_state[18..(18 + 13122)].copy_from_slice(&signature.to_bytes());
@@ -273,7 +293,11 @@ where
         let d = trist_to_value(&self.state[..4].to_vec());
         let mut skn = trist_to_value(&self.state[4..18].to_vec());
 
-        if (d < 0) || (skn < 0) || (skn >= (1 << d)) || (self.state.len() != (18 + 13122 + 243 * d) as usize) {
+        if (d < 0)
+            || (skn < 0)
+            || (skn >= (1 << d))
+            || (self.state.len() != (18 + 13122 + 243 * d) as usize)
+        {
             return Self::PublicKey::default();
         }
 
@@ -319,9 +343,9 @@ where
 impl<S, G> MssPrivateKey<S, G>
 where
     S: Sponge<Error = String> + Default,
-    G: WotsPrivateKeyGenerator<S>,
-    <G as WotsPrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
-    <<G as WotsPrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
+    G: Default + PrivateKeyGenerator<S, Error = String>,
+    <G as PrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
+    <<G as PrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
 {
     ///
     /// Initiate Mss PrivateKey
@@ -339,7 +363,7 @@ where
 #[cfg(test)]
 mod should {
     use super::*;
-    use crate::{spongos::MamSpongos, wots::WotsV1PrivateKeyGenerator};
+    use crate::{spongos::MamSpongos, wots::WotsPrivateKeyGenerator};
     use iota_conversion::Trinary;
 
     const SEED: &str =
@@ -349,11 +373,9 @@ mod should {
     fn generate_private_key() {
         let seed_trits = SEED.trits();
         let nonce = [0; 18];
-        let private_key = MssV1PrivateKeyGenerator::<
-            MamSpongos,
-            WotsV1PrivateKeyGenerator<MamSpongos>,
-        >::generate(&seed_trits, &nonce, 2, 2)
-        .unwrap();
+        let mss_kg: MssPrivateKeyGenerator<MamSpongos, WotsPrivateKeyGenerator<MamSpongos>> =
+            MssPrivateKeyGenerator::new(2, 2);
+        let private_key = mss_kg.generate(&seed_trits, &nonce).unwrap();
 
         let pk = private_key.generate_public_key();
 
@@ -365,13 +387,23 @@ mod should {
         let seed_trits = SEED.trits();
         let message = SEED.trits();
         let nonce = [0; 18];
-        let private_key = MssV1PrivateKeyGenerator::<
-            MamSpongos,
-            WotsV1PrivateKeyGenerator<MamSpongos>,
-        >::generate(&seed_trits, &nonce, 2, 2)
-        .unwrap();
+        let mss_kg: MssPrivateKeyGenerator<MamSpongos, WotsPrivateKeyGenerator<MamSpongos>> =
+            MssPrivateKeyGenerator::new(2, 2);
+        let private_key = mss_kg.generate(&seed_trits, &nonce).unwrap();
         let signature = private_key.sign(&message).unwrap();
 
+        assert_eq!(signature.to_bytes().len(), 18 + 13122 + 243 * 4);
+    }
+
+    #[test]
+    fn generate_private_key_from_depth() {
+        let seed_trits = SEED.trits();
+        let message = SEED.trits();
+        let nonce = [0; 18];
+        let mss_kg: MssPrivateKeyGenerator<MamSpongos, WotsPrivateKeyGenerator<MamSpongos>> =
+            MssPrivateKeyGenerator::from_depth(4);
+        let private_key = mss_kg.generate(&seed_trits, &nonce).unwrap();
+        let signature = private_key.sign(&message).unwrap();
         assert_eq!(signature.to_bytes().len(), 18 + 13122 + 243 * 4);
     }
 
@@ -381,11 +413,9 @@ mod should {
         let message = SEED.trits();
         let nonce = [0; 18];
         let depth = 4;
-        let private_key = MssV1PrivateKeyGenerator::<
-            MamSpongos,
-            WotsV1PrivateKeyGenerator<MamSpongos>,
-        >::generate(&seed_trits, &nonce, 2, 2)
-        .unwrap();
+        let mss_kg: MssPrivateKeyGenerator<MamSpongos, WotsPrivateKeyGenerator<MamSpongos>> =
+            MssPrivateKeyGenerator::new(2, 2);
+        let private_key = mss_kg.generate(&seed_trits, &nonce).unwrap();
         let sg = (1 << depth) - 1;
 
         let public_key = private_key.generate_public_key();

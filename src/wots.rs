@@ -6,7 +6,7 @@
 use crate::{
     constants::{mam_divs, mam_mods, trits_get3},
     definitions::{
-        ss::{PrivateKey, PublicKey, Signature},
+        ss::{PrivateKey, PrivateKeyGenerator, PublicKey, Signature},
         Sponge,
     },
     prng::{Prng, PrngDestinationTryte},
@@ -27,7 +27,8 @@ pub const MAM_WOTS_PRIVATE_KEY_SIZE: usize =
 /// Wots PrivateKey Generator
 ///
 #[derive(Debug)]
-pub struct WotsV1PrivateKeyGenerator<S> {
+pub struct WotsPrivateKeyGenerator<S> {
+    /// Market
     _market: PhantomData<S>,
 }
 
@@ -67,20 +68,11 @@ pub struct WotsSignature<S> {
     _sponge: PhantomData<S>,
 }
 
-///
-/// Trait for Wots Private Key Generator
-///
-pub trait WotsPrivateKeyGenerator<S> {
-    /// Private Key
-    type PrivateKey;
-    /// Generate Private Key
-    fn generate(seed: &[Trit], nonce: &[Trit]) -> Result<Self::PrivateKey, String>;
-}
-
-impl<S> WotsPrivateKeyGenerator<S> for WotsV1PrivateKeyGenerator<S> {
+impl<S> PrivateKeyGenerator<S> for WotsPrivateKeyGenerator<S> {
     type PrivateKey = WotsPrivateKey<S>;
+    type Error = String;
 
-    fn generate(seed: &[Trit], nonce: &[Trit]) -> Result<Self::PrivateKey, String> {
+    fn generate(&self, seed: &[Trit], nonce: &[Trit]) -> Result<Self::PrivateKey, Self::Error> {
         let mut prng = Prng::new(seed);
         let state = prng.gen(
             PrngDestinationTryte::DstWotsKey,
@@ -92,6 +84,17 @@ impl<S> WotsPrivateKeyGenerator<S> for WotsV1PrivateKeyGenerator<S> {
             state: state,
             _sponge: PhantomData,
         })
+    }
+}
+
+impl<S> Default for WotsPrivateKeyGenerator<S>
+where
+    S: Default + Sponge<Error = String>,
+{
+    fn default() -> Self {
+        return WotsPrivateKeyGenerator {
+            _market: PhantomData,
+        };
     }
 }
 
@@ -210,7 +213,10 @@ where
     ///
     fn verify(&self, message: &[i8], signature: &Self::Signature) -> bool {
         let public_key = signature.recover_public_key(message);
-        self.state.iter().zip(public_key.to_bytes().iter()).all(|(st, pk)| st == pk)
+        self.state
+            .iter()
+            .zip(public_key.to_bytes().iter())
+            .all(|(st, pk)| st == pk)
     }
     ///
     /// To Bytes
@@ -325,8 +331,8 @@ mod should {
     fn verify_wots_signature() {
         let seed_trits = SEED.trits();
         let nonce = [0; 18];
-        let private_key: WotsPrivateKey<MamSpongos> =
-            WotsV1PrivateKeyGenerator::generate(&seed_trits, &nonce).unwrap();
+        let wkg: WotsPrivateKeyGenerator<MamSpongos> = WotsPrivateKeyGenerator::default();
+        let private_key: WotsPrivateKey<MamSpongos> = wkg.generate(&seed_trits, &nonce).unwrap();
         let public_key = private_key.generate_public_key();
         let signature = private_key.sign(&seed_trits).unwrap();
         let _rpk = signature.recover_public_key(&seed_trits);

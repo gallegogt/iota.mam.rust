@@ -4,9 +4,9 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use iota_conversion::Trinary;
 use mam_rs::{
-    definitions::ss::PrivateKey,
+    definitions::ss::{PrivateKey, PrivateKeyGenerator},
     spongos::MamSpongos,
-    wots::{WotsPrivateKey, WotsPrivateKeyGenerator, WotsV1PrivateKeyGenerator},
+    wots::{WotsPrivateKey, WotsPrivateKeyGenerator},
 };
 
 const SEED: &str =
@@ -15,17 +15,18 @@ const SEED: &str =
 fn wots_generate_private_key() -> WotsPrivateKey<MamSpongos> {
     let seed_trits = SEED.trits();
     let nonce = [0; 18];
-    WotsV1PrivateKeyGenerator::generate(&seed_trits, &nonce).unwrap()
+    let wots_kgen: WotsPrivateKeyGenerator<MamSpongos> = WotsPrivateKeyGenerator::default();
+    wots_kgen.generate(&seed_trits, &nonce).unwrap()
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
     let seed_trits = SEED.trits();
     let nonce = [0; 18];
+    let wots_kgen: WotsPrivateKeyGenerator<MamSpongos> = WotsPrivateKeyGenerator::default();
 
     c.bench_function("WOTS_GSK", |b| {
         b.iter(|| {
-            let _: WotsPrivateKey<MamSpongos> =
-                WotsV1PrivateKeyGenerator::generate(&seed_trits, &nonce).unwrap();
+            let _ = wots_kgen.generate(&seed_trits, &nonce).unwrap();
         })
     });
 

@@ -3,12 +3,9 @@
 //!
 //! Based on FMTSEQ => https://github.com/exaexa/codecrypt/blob/master/src/fmtseq.h
 //!
-use crate::{
-    definitions::{
-        ss::{PrivateKey, PublicKey},
-        Sponge,
-    },
-    wots::{WotsPrivateKeyGenerator},
+use crate::definitions::{
+    ss::{PrivateKey, PrivateKeyGenerator, PublicKey},
+    Sponge,
 };
 use iota_conversion::{Trinary, Trit};
 use std::marker::PhantomData;
@@ -86,9 +83,9 @@ impl TreeStackItem {
 impl<S, G> InternalPrivateKey<S, G>
 where
     S: Sponge<Error = String> + Default,
-    G: WotsPrivateKeyGenerator<S>,
-    <G as WotsPrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
-    <<G as WotsPrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
+    G: Default + PrivateKeyGenerator<S, Error = String>,
+    <G as PrivateKeyGenerator<S>>::PrivateKey: PrivateKey + Clone,
+    <<G as PrivateKeyGenerator<S>>::PrivateKey as PrivateKey>::PublicKey: PublicKey,
 {
     ///
     /// Initiate Mss PrivateKey
@@ -206,8 +203,10 @@ where
             let leaf_id = d_startpos + self.desired_progress[it];
 
             let trits = (leaf_id as i64).trits_with_length(6);
-            let wots_priv_key =
-                G::generate(&self.seed, &[&self.nonce[..], &trits[..]].concat()).unwrap();
+            let w_kg = G::default();
+            let wots_priv_key = w_kg
+                .generate(&self.seed, &[&self.nonce[..], &trits[..]].concat())
+                .unwrap();
             let pk = wots_priv_key.generate_public_key();
 
             let item = TreeStackItem::new(0, self.desired_progress[it], pk.to_bytes());

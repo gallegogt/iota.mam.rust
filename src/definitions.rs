@@ -88,6 +88,19 @@ pub mod ss {
     //!
 
     ///
+    /// Trait for Private Key Generator
+    ///
+    pub trait PrivateKeyGenerator<S> {
+        /// Private Key
+        type PrivateKey;
+        /// Error
+        type Error;
+
+        /// Generate Private Key
+        fn generate(&self, seed: &[i8], nonce: &[i8]) -> Result<Self::PrivateKey, Self::Error>;
+    }
+
+    ///
     /// Signature Scheme PrivateKey
     ///
     pub trait PrivateKey {

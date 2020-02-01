@@ -18,23 +18,17 @@ fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("Mss");
     group.sample_size(10);
     // We can also use loops to define multiple benchmarks, even over multiple dimensions.
-    for it in 0..7 {
-        let p_string = format!("Private Key With Level {}", it + 3);
-        group.bench_with_input(
-            BenchmarkId::new("Generate", p_string),
-            &(2, it + 3),
-            |b, (h_subtree, t_level)| {
-                b.iter(|| {
-                    let mss_kgen = MssPrivateKeyGenerator::<
-                        MamSpongos,
-                        WotsPrivateKeyGenerator<MamSpongos>,
-                    >::new(
-                        *h_subtree as usize, *t_level as usize
-                    );
-                    mss_kgen.generate(&seed_trits, &nonce).unwrap();
-                })
-            },
-        );
+    for it in 2..20 {
+        let p_string = format!("MSS With Depth {}", it);
+        group.bench_with_input(BenchmarkId::new("Generate", p_string), &it, |b, depth| {
+            b.iter(|| {
+                let mss_kgen = MssPrivateKeyGenerator::<
+                    MamSpongos,
+                    WotsPrivateKeyGenerator<MamSpongos>,
+                >::from_depth(*depth as usize);
+                mss_kgen.generate(&seed_trits, &nonce).unwrap();
+            })
+        });
     }
 
     group.finish();
